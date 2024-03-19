@@ -1,8 +1,9 @@
-package com.example.parkir.auth.views
+package com.example.parkir.views.auth.views
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,21 +37,24 @@ import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.parkir.R
-import com.example.parkir.composables.ParkirButton
-import com.example.parkir.composables.ParkirCheckBox
-import com.example.parkir.composables.ParkirField
-import com.example.parkir.ui.theme.grey
-import com.example.parkir.ui.theme.grey06
-import com.example.parkir.ui.theme.grey0B
-import com.example.parkir.ui.theme.grey24
-import com.example.parkir.ui.theme.primary
-import com.example.parkir.ui.theme.primary1A
-import com.example.parkir.ui.theme.white
+import com.example.parkir.views.auth.views.composables.OAuthBox
+import com.example.parkir.views.router.Router
+import com.example.parkir.views.ui.composables.ParkirButton
+import com.example.parkir.views.ui.composables.ParkirCheckBox
+import com.example.parkir.views.ui.composables.ParkirField
+import com.example.parkir.views.ui.theme.grey
+import com.example.parkir.views.ui.theme.grey06
+import com.example.parkir.views.ui.theme.grey0B
+import com.example.parkir.views.ui.theme.grey24
+import com.example.parkir.views.ui.theme.primary
+import com.example.parkir.views.ui.theme.primary1A
+import com.example.parkir.views.ui.theme.white
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginView() {
+fun RegisterView(navController: NavHostController) {
 
     var email by remember {
         mutableStateOf("")
@@ -72,9 +76,12 @@ fun LoginView() {
         Image(
             painter = painterResource(id = R.drawable.arrow_left_outline),
             contentDescription = "Go Back",
+            modifier = Modifier.clickable {
+                navController.popBackStack()
+            }
         )
         Text(
-            text = "Login to your\naccount",
+            text = "Create your\naccount",
             style = MaterialTheme.typography.displayLarge,
             textAlign = TextAlign.Left,
         )
@@ -97,16 +104,12 @@ fun LoginView() {
             leadingIconId = R.drawable.lock_bold,
             trailingIconId = R.drawable.show_outline,
         )
-        
+
         Row (
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-//            Checkbox(checked = rememberMe, onCheckedChange = {
-//                rememberMe = it
-//            })
-
             ParkirCheckBox(value = rememberMe) {
                 rememberMe = !rememberMe
             }
@@ -114,8 +117,11 @@ fun LoginView() {
             Text(text = "Remember me")
         }
 
+        ParkirButton(label = "Register", onClick = {
 
-        ParkirButton(label = "Login", onClick = { /*TODO*/ })
+            navController.navigate(Router.HomeScreen.route)
+        })
+
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
@@ -131,71 +137,28 @@ fun LoginView() {
                 modifier = Modifier.weight(1f)
             )
         }
-        Row(
-            modifier = Modifier
-//                .fillMaxWidth()
-                .align(Alignment.CenterHorizontally),
-            horizontalArrangement = Arrangement.spacedBy(20.dp),
-        ) {
-            Box(
-                modifier = Modifier
-                    .size(width = 90.dp, height = 60.dp)
-                    .border(width = 2.dp, color = grey06, shape = RoundedCornerShape(size = 16.dp)),
 
-                ) {
-                Image(
-                    painter = painterResource(id = R.drawable.facebook),
-                    contentDescription = "Facebook",
-                    modifier = Modifier
-                        .size(24.dp)
-                        .align(Alignment.Center)
-                )
-            }
-            Box(
-                modifier = Modifier
-                    .size(width = 90.dp, height = 60.dp)
-                    .border(width = 2.dp, color = grey06, shape = RoundedCornerShape(size = 16.dp)),
+        OAuthBox()
 
-                ) {
-                Image(
-                    painter = painterResource(id = R.drawable.google),
-                    contentDescription = "Google",
-                    modifier = Modifier
-                        .size(24.dp)
-                        .align(Alignment.Center)
-
-                )
-            }
-            Box(
-                modifier = Modifier
-                    .size(width = 90.dp, height = 60.dp)
-                    .border(width = 2.dp, color = grey06, shape = RoundedCornerShape(size = 16.dp)),
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.apple),
-                    contentDescription = "Apple",
-                    modifier = Modifier
-                        .size(24.dp)
-                        .align(Alignment.Center)
-
-                )
-            }
-        }
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center,
         ) {
             Text(
-                text = "Don't have an account? ",
+                text = "Already have an account? ",
                 color = grey,
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
             )
             Text(
-                text = "Register",
+                text = "Login",
                 color = primary,
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
+                modifier = Modifier.clickable {
+                    navController.popBackStack()
+                    navController.navigate(Router.LoginScreen.route)
+                }
             )
         }
         Box {}

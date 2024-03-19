@@ -1,4 +1,4 @@
-package com.example.parkir.on_boarding.views.composables
+package com.example.parkir.views.on_boarding.views.composables
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -15,7 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.parkir.on_boarding.model.OnBoardingItem
+import com.example.parkir.views.on_boarding.model.OnBoardingItem
 
 @Composable
 fun OnBoardingBox(onBoardingItem: OnBoardingItem) {

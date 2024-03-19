@@ -1,4 +1,4 @@
-package com.example.parkir.ui.theme
+package com.example.parkir.views.ui.theme
 
 import android.app.Activity
 import android.os.Build

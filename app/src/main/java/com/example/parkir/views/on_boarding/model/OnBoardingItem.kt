@@ -1,4 +1,4 @@
-package com.example.parkir.on_boarding.model
+package com.example.parkir.views.on_boarding.model
 
 import com.example.parkir.R
 

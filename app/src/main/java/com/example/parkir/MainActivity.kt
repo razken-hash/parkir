@@ -9,8 +9,12 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.parkir.auth.views.LoginView
-import com.example.parkir.ui.theme.ParkirTheme
+import androidx.navigation.compose.rememberNavController
+import com.example.parkir.views.auth.views.LoginView
+import com.example.parkir.views.auth.views.RegisterView
+import com.example.parkir.views.on_boarding.views.OnBoardingView
+import com.example.parkir.views.router.NavigationHost
+import com.example.parkir.views.ui.theme.ParkirTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +25,10 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    LoginView()
+                    val navController = rememberNavController()
+
+                    NavigationHost(navController = navController)
+
                 }
             }
         }

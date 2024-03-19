@@ -1,4 +1,4 @@
-package com.example.parkir.composables
+package com.example.parkir.views.ui.composables
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,10 +21,10 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.parkir.R
-import com.example.parkir.ui.theme.black
-import com.example.parkir.ui.theme.grey6F
-import com.example.parkir.ui.theme.primary
-import com.example.parkir.ui.theme.white
+import com.example.parkir.views.ui.theme.black
+import com.example.parkir.views.ui.theme.grey6F
+import com.example.parkir.views.ui.theme.primary
+import com.example.parkir.views.ui.theme.white
 
 @Composable
 fun ParkirCheckBox(value: Boolean, onClick: () -> Unit) {

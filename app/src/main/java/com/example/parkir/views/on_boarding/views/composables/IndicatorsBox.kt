@@ -1,4 +1,4 @@
-package com.example.parkir.on_boarding.views.composables
+package com.example.parkir.views.on_boarding.views.composables
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
@@ -13,8 +13,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.example.parkir.ui.theme.primary
-import com.example.parkir.ui.theme.primary1A
+import com.example.parkir.views.ui.theme.primary
+import com.example.parkir.views.ui.theme.primary1A
 
 @Composable
 fun Indicator(isSelected: Boolean) {

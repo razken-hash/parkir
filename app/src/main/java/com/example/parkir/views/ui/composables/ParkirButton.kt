@@ -1,4 +1,4 @@
-package com.example.parkir.composables
+package com.example.parkir.views.ui.composables
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -11,8 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.parkir.ui.theme.primary
-import com.example.parkir.ui.theme.white
+import com.example.parkir.views.ui.theme.primary
+import com.example.parkir.views.ui.theme.white
 
 @Composable
 fun ParkirButton(

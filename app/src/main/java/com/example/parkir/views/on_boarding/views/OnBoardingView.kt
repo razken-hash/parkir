@@ -1,4 +1,4 @@
-package com.example.parkir.on_boarding.views
+package com.example.parkir.views.on_boarding.views
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,15 +18,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.parkir.composables.ParkirButton
-import com.example.parkir.on_boarding.model.OnBoardingItem
-import com.example.parkir.on_boarding.views.composables.IndicatorsBox
-import com.example.parkir.on_boarding.views.composables.OnBoardingBox
-import com.example.parkir.ui.theme.primary
-import com.example.parkir.ui.theme.primary1A
+import androidx.navigation.NavHostController
+import com.example.parkir.views.ui.composables.ParkirButton
+import com.example.parkir.views.on_boarding.model.OnBoardingItem
+import com.example.parkir.views.on_boarding.views.composables.IndicatorsBox
+import com.example.parkir.views.on_boarding.views.composables.OnBoardingBox
+import com.example.parkir.views.router.Router
+import com.example.parkir.views.ui.theme.primary
+import com.example.parkir.views.ui.theme.primary1A
 
 @Composable
-fun OnBoardingView() {
+fun OnBoardingView(navController: NavHostController) {
     val onBoardingItems: List<OnBoardingItem> = OnBoardingItem.onBoardingItems;
     var selectedItem = remember { mutableStateOf(0) }
 
@@ -61,6 +63,8 @@ fun OnBoardingView() {
                     onClick = {
                         if (selectedItem.value < 2) {
                             selectedItem.value = selectedItem.value + 1;
+                        } else {
+                            navController.navigate(Router.AuthScreen.route)
                         }
                     },
                 )
@@ -69,9 +73,7 @@ fun OnBoardingView() {
                 ParkirButton(
                     label = "Skip",
                     onClick = {
-                        if (selectedItem.value > 0) {
-                            selectedItem.value = selectedItem.value - 1;
-                        }
+                        navController.navigate(Router.AuthScreen.route)
                     },
                     labelColor = primary,
                     bgColor = primary1A,
@@ -79,10 +81,4 @@ fun OnBoardingView() {
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun OnBoardingScreenPreview() {
-    OnBoardingView()
 }

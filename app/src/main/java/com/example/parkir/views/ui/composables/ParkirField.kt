@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package com.example.parkir.composables
+package com.example.parkir.views.ui.composables
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -35,11 +35,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import com.example.parkir.ui.theme.black
-import com.example.parkir.ui.theme.grey06
-import com.example.parkir.ui.theme.grey6F
-import com.example.parkir.ui.theme.primary
-import com.example.parkir.ui.theme.primary1A
+import com.example.parkir.views.ui.theme.black
+import com.example.parkir.views.ui.theme.grey06
+import com.example.parkir.views.ui.theme.grey6F
+import com.example.parkir.views.ui.theme.primary
+import com.example.parkir.views.ui.theme.primary1A
 
 @Composable
 fun ParkirField(
@@ -88,7 +88,9 @@ fun ParkirField(
                     contentDescription = leadingIconDescription,
                     colorFilter = ColorFilter.tint(
                         if (isFocused)
-                            black else grey6F
+                            primary else
+                            if (value.isNotEmpty()) black else
+                                grey6F
 
                     ),
                     modifier = Modifier
@@ -103,7 +105,9 @@ fun ParkirField(
                     contentDescription = trailingIconDescription,
                     colorFilter = ColorFilter.tint(
                         if (isFocused)
-                            black else grey6F
+                            primary else
+                            if (value.isNotEmpty()) black else
+                                grey6F
                     ),
                     modifier = Modifier
                         .size(20.dp),

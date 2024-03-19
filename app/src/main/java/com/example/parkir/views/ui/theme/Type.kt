@@ -1,4 +1,4 @@
-package com.example.parkir.ui.theme
+package com.example.parkir.views.ui.theme
 
 import androidx.compose.material3.Button
 import androidx.compose.material3.Typography
