@@ -10,8 +10,8 @@ data class OnBoardingItem(
     companion object {
         val onBoardingItems: List<OnBoardingItem> = listOf(
             OnBoardingItem(
-                title = "My Find Parking Places Around You Easily",
-                description = "Discover nearby parking spots effortlessly with our intuitive map-based search feature.",
+                title = "Find Parking Places Around You Easily",
+                description = "Discover nearby parking spots effortlessly with a set of intuitive map-based search features.",
                 image = R.drawable.map
             ),
             OnBoardingItem(
