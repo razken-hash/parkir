@@ -110,7 +110,7 @@ val Typography = Typography(
     ),
     labelLarge = TextStyle(
         fontFamily = Urbanist,
-        fontWeight = FontWeight.Medium,
+        fontWeight = FontWeight.Bold,
         fontSize = 14.sp,
         lineHeight = 20.sp,
         letterSpacing = 0.15.sp
@@ -124,7 +124,7 @@ val Typography = Typography(
     ),
     labelSmall = TextStyle(
         fontFamily = Urbanist,
-        fontWeight = FontWeight.Medium,
+        fontWeight = FontWeight.Normal,
         fontSize = 10.sp,
         lineHeight = 12.sp,
         letterSpacing = 1.5.sp

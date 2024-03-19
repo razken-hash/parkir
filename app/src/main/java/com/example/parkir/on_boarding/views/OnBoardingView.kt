@@ -18,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.parkir.composables.ParkirButton
 import com.example.parkir.on_boarding.model.OnBoardingItem
 import com.example.parkir.on_boarding.views.composables.IndicatorsBox
 import com.example.parkir.on_boarding.views.composables.OnBoardingBox
@@ -53,48 +54,28 @@ fun OnBoardingView() {
             Column(
                 verticalArrangement = Arrangement.spacedBy(15.dp)
             ) {
+
                 // Next Button
-                Button(
+                ParkirButton(
+                    label = "Next",
                     onClick = {
                         if (selectedItem.value < 2) {
                             selectedItem.value = selectedItem.value + 1;
                         }
                     },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(
-                            58.dp
-                        ),
-                    colors = ButtonDefaults.buttonColors(containerColor = primary)
-                ) {
-                    Text(
-                        text = "Next",
-                        style = MaterialTheme.typography.titleSmall,
-                    )
-                }
+                )
 
                 // Skip Button
-                Button(
+                ParkirButton(
+                    label = "Skip",
                     onClick = {
                         if (selectedItem.value > 0) {
                             selectedItem.value = selectedItem.value - 1;
                         }
                     },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(
-                            58.dp
-                        ),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = primary1A,
-                        contentColor = primary
-                    )
-                ) {
-                    Text(
-                        text = "Skip",
-                        style = MaterialTheme.typography.titleSmall,
-                    )
-                }
+                    labelColor = primary,
+                    bgColor = primary1A,
+                )
             }
         }
     }
