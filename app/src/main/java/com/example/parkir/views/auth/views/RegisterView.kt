@@ -39,7 +39,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.parkir.R
-import com.example.parkir.views.auth.views.composables.OAuthBox
+import com.example.parkir.views.auth.views.composables.OAuthSection
 import com.example.parkir.views.router.Router
 import com.example.parkir.views.ui.composables.ParkirButton
 import com.example.parkir.views.ui.composables.ParkirCheckBox
@@ -138,7 +138,7 @@ fun RegisterView(navController: NavHostController) {
             )
         }
 
-        OAuthBox()
+        OAuthSection(viewMode = 1)
 
         Row(
             modifier = Modifier.fillMaxWidth(),

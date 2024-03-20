@@ -38,6 +38,7 @@ val grey4C = Color(0x4C212121)
 val grey13 = Color(0x13212121)
 val grey0B = Color(0x0B212121)
 val grey06 = Color(0x06212121)
+val grey02 = Color(0xFFEEEEEE)
 val white = Color(0xFFFFFFFF)
 
 // Other Colors

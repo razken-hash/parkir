@@ -7,7 +7,11 @@ import androidx.navigation.compose.composable
 import com.example.parkir.views.auth.views.AuthView
 import com.example.parkir.views.auth.views.LoginView
 import com.example.parkir.views.auth.views.RegisterView
+import com.example.parkir.views.auth.views.forgot_password.ForgotPasswordView
+import com.example.parkir.views.auth.views.forgot_password.OTPScreen
+import com.example.parkir.views.auth.views.forgot_password.ResetPasswordView
 import com.example.parkir.views.core.home.HomeView
+import com.example.parkir.views.core.navigation.ParkirNavView
 import com.example.parkir.views.on_boarding.views.OnBoardingView
 
 @Composable
@@ -19,14 +23,23 @@ fun NavigationHost(navController: NavHostController) {
         composable(route = Router.AuthScreen.route) {
             AuthView(navController = navController)
         }
-        composable(route = Router.LoginScreen.route) {
-            LoginView(navController = navController)
-        }
         composable(route = Router.RegisterScreen.route) {
             RegisterView(navController = navController)
         }
+        composable(route = Router.LoginScreen.route) {
+            LoginView(navController = navController)
+        }
+        composable(route = Router.ForgotPasswordScreen.route) {
+            ForgotPasswordView(navController = navController)
+        }
+        composable(route = Router.OTPScreen.route) {
+            OTPScreen(navController = navController)
+        }
+        composable(route = Router.ResetPasswordScreen.route) {
+            ResetPasswordView(navController = navController)
+        }
         composable(route = Router.HomeScreen.route) {
-            HomeView(navController = navController)
+            ParkirNavView(navController = navController)
         }
     }
 }

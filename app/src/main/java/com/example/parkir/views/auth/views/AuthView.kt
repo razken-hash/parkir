@@ -23,7 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.parkir.R
-import com.example.parkir.views.auth.views.composables.OAuthBox
+import com.example.parkir.views.auth.views.composables.OAuthSection
 import com.example.parkir.views.router.Router
 import com.example.parkir.views.ui.composables.ParkirButton
 import com.example.parkir.views.ui.theme.grey
@@ -51,16 +51,9 @@ fun AuthView(navController: NavHostController) {
             textAlign = TextAlign.Center,
             modifier = Modifier.align(Alignment.CenterHorizontally),
         )
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(15.dp)
-        ) {
-            ParkirButton(label = "Login With Phone Number", onClick = {})
-            ParkirButton(label = "Login With Email", onClick = {
-                navController.navigate(Router.LoginScreen.route)
-            })
-        }
+
+        OAuthSection(viewMode = 0)
+
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
@@ -77,7 +70,9 @@ fun AuthView(navController: NavHostController) {
             )
         }
 
-        OAuthBox()
+        ParkirButton(label = "Login With Email", onClick = {
+            navController.navigate(Router.LoginScreen.route)
+        })
 
         Row(
             modifier = Modifier.fillMaxWidth(),

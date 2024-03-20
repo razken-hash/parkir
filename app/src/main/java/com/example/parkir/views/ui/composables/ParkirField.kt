@@ -36,6 +36,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.parkir.views.ui.theme.black
+import com.example.parkir.views.ui.theme.grey02
 import com.example.parkir.views.ui.theme.grey06
 import com.example.parkir.views.ui.theme.grey6F
 import com.example.parkir.views.ui.theme.primary
@@ -67,7 +68,7 @@ fun ParkirField(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     shape: Shape = RoundedCornerShape(size = 10.dp),
     colors: TextFieldColors = TextFieldDefaults.textFieldColors(),
-//    modifier: Modifier,
+    modifier: Modifier = Modifier,
 ) {
     var isFocused by remember { mutableStateOf(false) }
 
@@ -135,7 +136,7 @@ fun ParkirField(
         ).apply { colors },
         modifier = Modifier
             .border(
-                color = if (isFocused) primary else grey06,
+                color = if (isFocused) primary else grey02,
                 width = if (isFocused) 2.dp else 0.dp,
                 shape = RoundedCornerShape(size = 10.dp)
             )
@@ -145,7 +146,6 @@ fun ParkirField(
                 isFocused = it.isFocused
             }
             .height(58.dp)
-            .wrapContentHeight(align = Alignment.CenterVertically)
-//            .then(modifier),
+            .then(modifier)
     )
 }
