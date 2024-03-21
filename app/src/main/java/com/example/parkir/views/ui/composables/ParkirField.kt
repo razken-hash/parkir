@@ -128,7 +128,7 @@ fun ParkirField(
         shape = shape,
         colors = TextFieldDefaults.textFieldColors(
             containerColor = if (isFocused) primary1A else grey06,
-            placeholderColor = grey6F,
+//            placeholderColor = grey6F,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent,

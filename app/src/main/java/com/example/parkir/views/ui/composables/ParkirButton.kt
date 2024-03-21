@@ -1,8 +1,10 @@
 package com.example.parkir.views.ui.composables
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -20,14 +22,18 @@ fun ParkirButton(
     labelColor: Color = white,
     bgColor: Color = primary,
     onClick: () -> Unit,
+    borderColor: Color = bgColor,
     height: Int = 58,
-    width: Int = Int.MAX_VALUE
+    width: Int = Int.MAX_VALUE,
+    modifier: Modifier = Modifier
 ) {
     Button(
         onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
-            .height(height = height.dp),
+            .height(height = height.dp)
+            .border(width = 2.dp, color = borderColor, shape = RoundedCornerShape(percent = 50))
+            .then(modifier),
         colors = ButtonDefaults.buttonColors(containerColor = bgColor, contentColor = labelColor)
     ) {
         Text(

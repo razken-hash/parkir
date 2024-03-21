@@ -1,6 +1,8 @@
 package com.example.parkir.views.core.profile
 
+import android.os.Build
 import android.widget.Space
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -23,6 +25,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
@@ -39,14 +42,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.parkir.R
-import com.example.parkir.views.router.Router
 import com.example.parkir.views.ui.composables.ParkirButton
 import com.example.parkir.views.ui.composables.ParkirField
-import com.example.parkir.views.ui.theme.black
 import com.example.parkir.views.ui.theme.primary
-import com.example.parkir.views.ui.theme.red
-import com.example.parkir.views.ui.theme.white
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun EditProfileView(navController: NavHostController) {
     Column(
@@ -115,15 +115,17 @@ fun EditProfileView(navController: NavHostController) {
                 leadingIconId = R.drawable.profile_outline,
                 leadingIconDescription = "Full name"
             )
+
             ParkirField(
                 value = birthDate,
-                onValueChange = {
-                    birthDate = it
-                },
+                onValueChange = {},
+                readOnly = true,
                 placeHolderText = "Date of birth",
                 leadingIconId = R.drawable.calendar,
                 leadingIconDescription = "Date of birth",
+                modifier = Modifier.clickable {}
             )
+
             ParkirField(
                 value = email,
                 onValueChange = {},
@@ -132,6 +134,7 @@ fun EditProfileView(navController: NavHostController) {
                 leadingIconId = R.drawable.message_outline,
                 leadingIconDescription = "Email",
             )
+
             ParkirField(
                 value = phoneNumber,
                 onValueChange = {
@@ -141,11 +144,13 @@ fun EditProfileView(navController: NavHostController) {
                 leadingIconId = R.drawable.phone,
                 leadingIconDescription = "Phone number",
             )
+
             ParkirField(
                 value = gender, onValueChange = {
                     gender = it
                 }, placeHolderText = "Gender"
             )
+
         }
 
         ParkirButton(
