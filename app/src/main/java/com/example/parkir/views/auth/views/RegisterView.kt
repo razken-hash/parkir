@@ -119,7 +119,7 @@ fun RegisterView(navController: NavHostController) {
 
         ParkirButton(label = "Register", onClick = {
 
-            navController.navigate(Router.HomeScreen.route)
+            navController.navigate(Router.ParkirNavScreen.route)
         })
 
         Row(

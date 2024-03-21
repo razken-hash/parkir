@@ -142,7 +142,7 @@ fun ResetPasswordView(navController: NavHostController) {
 
         if (success) {
             ResetPasswordSuccessBox {
-                navController.navigate(Router.HomeScreen.route)
+                navController.navigate(Router.ParkirNavScreen.route)
             }
         }
 

@@ -12,12 +12,12 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 
 @Composable
-fun HomeView(navController: NavHostController) {
+fun ParkingsView(navController: NavHostController) {
     Column (
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(text = "HomeView", style = MaterialTheme.typography.displayLarge)
+        Text(text = "ParkingsView", style = MaterialTheme.typography.displayLarge)
     }
 }

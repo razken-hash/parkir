@@ -14,7 +14,9 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import com.example.parkir.views.core.navigation.model.NavItem
 import com.example.parkir.views.ui.theme.grey
+import com.example.parkir.views.ui.theme.grey4C
 import com.example.parkir.views.ui.theme.primary
+import com.example.parkir.views.ui.theme.white
 
 
 @Composable
@@ -40,7 +42,9 @@ fun RowScope.NavItemBox(
         alwaysShowLabel = true,
         onClick = onClick,
         colors = NavigationBarItemDefaults.colors(
-            indicatorColor = Color.Transparent,
+            indicatorColor = white,
+            selectedTextColor = primary,
+            unselectedIconColor = grey4C,
         ),
         modifier = Modifier.background(Color.Transparent),
     )

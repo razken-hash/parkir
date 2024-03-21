@@ -9,8 +9,11 @@ sealed class Router(val route: String) {
     object OTPScreen: Router("/auth/otp")
 
     object ResetPasswordScreen: Router("/auth/reset_password")
+    object ParkirNavScreen: Router("/nav")
     object HomeScreen: Router("/home")
     object ParkingsScreen: Router("/parkings")
     object BookingsScreen: Router("/bookings")
     object ProfileScreen: Router("/profile")
+    object EditProfileScreen: Router("/profile/edit")
+    object SecurityScreen: Router("/profile/security")
 }

@@ -54,14 +54,14 @@ val Typography = Typography(
     ),
     headlineMedium = TextStyle(
         fontFamily = Urbanist,
-        fontWeight = FontWeight.Bold,
+        fontWeight = FontWeight.Medium,
         fontSize = 18.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.15.sp
     ),
     headlineSmall = TextStyle(
         fontFamily = Urbanist,
-        fontWeight = FontWeight.Bold,
+        fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 20.sp,
         letterSpacing = 0.15.sp

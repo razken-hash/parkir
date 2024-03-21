@@ -1,4 +1,4 @@
-package com.example.parkir.views.core.home
+package com.example.parkir.views.core.bookings
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,12 +12,12 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 
 @Composable
-fun HomeView(navController: NavHostController) {
+fun BookingsView(navController: NavHostController) {
     Column (
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(text = "HomeView", style = MaterialTheme.typography.displayLarge)
+        Text(text = "BookingsView", style = MaterialTheme.typography.displayLarge)
     }
 }

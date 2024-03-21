@@ -22,7 +22,7 @@ sealed class NavItem(
 ) {
     object Home :
         NavItem(
-            1,
+            0,
             "Home",
             selectedIcon = R.drawable.home_bold,
             unselectedIcon = R.drawable.home_outline,
@@ -31,7 +31,7 @@ sealed class NavItem(
 
     object Parkings :
         NavItem(
-            2,
+            1,
             "Parkings",
             selectedIcon = R.drawable.bookmark_bold,
             unselectedIcon =R.drawable.bookmark_outline,
@@ -40,7 +40,7 @@ sealed class NavItem(
 
     object Bookings :
         NavItem(
-            3,
+            2,
             "Bookings",
             selectedIcon = R.drawable.doc_bold,
             unselectedIcon = R.drawable.doc_outline,
@@ -48,7 +48,7 @@ sealed class NavItem(
         )
     object Profile :
         NavItem(
-            4,
+            3,
             "Profile",
             selectedIcon = R.drawable.profile_bold,
             unselectedIcon = R.drawable.profile_outline,

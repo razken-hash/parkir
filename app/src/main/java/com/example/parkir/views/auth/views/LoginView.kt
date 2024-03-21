@@ -121,7 +121,7 @@ fun LoginView(navController: NavHostController) {
         ParkirButton(label = "Login", onClick = {
             navController.clearBackStack(Router.HomeScreen.route)
             navController.popBackStack()
-            navController.navigate(Router.HomeScreen.route)
+            navController.navigate(Router.ParkirNavScreen.route)
         })
 
         Text(

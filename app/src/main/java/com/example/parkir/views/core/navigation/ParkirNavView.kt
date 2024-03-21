@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -15,9 +16,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.parkir.views.core.bookings.BookingsView
+import com.example.parkir.views.core.home.HomeView
 import com.example.parkir.views.core.navigation.composables.NavItemBox
 import com.example.parkir.views.core.navigation.model.NavItem
+import com.example.parkir.views.core.parkings.ParkingsView
+import com.example.parkir.views.core.profile.ProfileView
 import com.example.parkir.views.router.NavigationHost
+import com.example.parkir.views.router.Router
+import com.example.parkir.views.ui.theme.white
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -25,19 +35,24 @@ fun ParkirNavView(navController: NavHostController) {
 
 
     val selectedItem = remember {
-        mutableStateOf(0)
+        mutableStateOf(3)
     }
+
+    val navBarController = rememberNavController()
 
     Scaffold(
         bottomBar = {
-            NavigationBar {
+            NavigationBar(
+                containerColor = white,
+
+                ) {
                 NavItem.navItems.forEach { item ->
                     NavItemBox(
                         item = item,
                         isSelected = selectedItem.value.equals(item.id),
                         onClick = {
                             selectedItem.value = item.id
-                            print(selectedItem.value)
+                            navBarController.navigate(item.destination)
                         },
                     )
                 }
@@ -50,12 +65,23 @@ fun ParkirNavView(navController: NavHostController) {
                     .fillMaxSize(),
 
                 ) {
-                Column (
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Text(text = "HomeView", style = MaterialTheme.typography.displayLarge)
+
+                NavHost(
+                    navController = navBarController, startDestination = Router.ProfileScreen.route,
+                )
+                {
+                    composable(route = Router.HomeScreen.route) {
+                        HomeView(navController = navController)
+                    }
+                    composable(route = Router.ParkingsScreen.route) {
+                        ParkingsView(navController = navController)
+                    }
+                    composable(route = Router.BookingsScreen.route) {
+                        BookingsView(navController = navController)
+                    }
+                    composable(route = Router.ProfileScreen.route) {
+                        ProfileView(navController = navController)
+                    }
                 }
             }
         }
