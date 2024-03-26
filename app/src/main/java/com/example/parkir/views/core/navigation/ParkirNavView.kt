@@ -11,8 +11,11 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -24,7 +27,10 @@ import com.example.parkir.views.core.home.HomeView
 import com.example.parkir.views.core.navigation.composables.NavItemBox
 import com.example.parkir.views.core.navigation.model.NavItem
 import com.example.parkir.views.core.parkings.ParkingsView
+import com.example.parkir.views.core.profile.EditProfileView
+import com.example.parkir.views.core.profile.NotificationsSettingsView
 import com.example.parkir.views.core.profile.ProfileView
+import com.example.parkir.views.core.profile.SecurityView
 import com.example.parkir.views.router.NavigationHost
 import com.example.parkir.views.router.Router
 import com.example.parkir.views.ui.theme.white
@@ -34,8 +40,8 @@ import com.example.parkir.views.ui.theme.white
 fun ParkirNavView(navController: NavHostController) {
 
 
-    val selectedItem = remember {
-        mutableStateOf(3)
+    var selectedItem by remember {
+        mutableIntStateOf(3)
     }
 
     val navBarController = rememberNavController()
@@ -49,9 +55,9 @@ fun ParkirNavView(navController: NavHostController) {
                 NavItem.navItems.forEach { item ->
                     NavItemBox(
                         item = item,
-                        isSelected = selectedItem.value.equals(item.id),
+                        isSelected = selectedItem == item.id,
                         onClick = {
-                            selectedItem.value = item.id
+                            selectedItem = item.id
                             navBarController.navigate(item.destination)
                         },
                     )

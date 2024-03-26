@@ -113,7 +113,9 @@ fun ProfileView(navController: NavHostController) {
 
         val scope = rememberCoroutineScope()
 
-        var bottomSheetState = rememberModalBottomSheetState()
+        var bottomSheetState = rememberModalBottomSheetState(
+            skipPartiallyExpanded = true
+        )
 
         var showLogoutBottomSheet by rememberSaveable {
             mutableStateOf(false)
@@ -121,37 +123,39 @@ fun ProfileView(navController: NavHostController) {
 
         Column {
             ProfileItem(title = "Edit Profile", icon = R.drawable.profile_outline) {
-                navController.navigate(Router.ProfileScreen.route)
+                navController.navigate(Router.EditProfileScreen.route)
             }
             ProfileItem(title = "Payment", icon = R.drawable.wallet_outline) {
 
             }
+            ProfileItem(title = "Security", icon = R.drawable.shield_tick_outline) {
+                navController.navigate(Router.SecurityScreen.route)
+            }
             ProfileItem(title = "Notifications", icon = R.drawable.notification_outline) {
                 navController.navigate(Router.NotificationsSettingsScreen.route)
             }
-            ProfileItem(title = "Security", icon = R.drawable.shield_tick_outline) {
-                navController.navigate(Router.SecurityScreen.route)
+            ProfileItem(title = "Themes", icon = R.drawable.show_outline) {
+                navController.navigate(Router.ThemesSettingsScreen.route)
+
             }
             ProfileItem(title = "Help", icon = R.drawable.info_square_outline) {
 
             }
-            ProfileItem(title = "Dark Theme", icon = R.drawable.show_outline) {
-
-            }
             ProfileItem(title = "Logout", icon = R.drawable.logout_outline, color = red) {
-                scope.launch { bottomSheetState.show() }
                 showLogoutBottomSheet = true
-                print("Hello")
             }
         }
-
 
 
         if (showLogoutBottomSheet)
             ModalBottomSheet(
                 sheetState = bottomSheetState,
                 onDismissRequest = {
-                    showLogoutBottomSheet = false
+                    scope.launch { bottomSheetState.hide() }.invokeOnCompletion {
+                        if (!bottomSheetState.isVisible) {
+                            showLogoutBottomSheet = false
+                        }
+                    }
                 },
             ) {
                 Column(
@@ -210,7 +214,7 @@ fun ProfileItem(
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
-                onClick
+                onClick()
             }
             .padding(
                 horizontal = 20.dp,

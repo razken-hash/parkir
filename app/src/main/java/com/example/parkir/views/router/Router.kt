@@ -17,4 +17,5 @@ sealed class Router(val route: String) {
     object EditProfileScreen: Router("/profile/edit")
     object SecurityScreen: Router("/profile/security")
     object NotificationsSettingsScreen: Router("/profile/notifications")
+    object ThemesSettingsScreen: Router("/profile/theme")
 }

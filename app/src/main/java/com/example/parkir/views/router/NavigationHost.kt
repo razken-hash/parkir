@@ -18,11 +18,12 @@ import com.example.parkir.views.core.profile.EditProfileView
 import com.example.parkir.views.core.profile.NotificationsSettingsView
 import com.example.parkir.views.core.profile.ProfileView
 import com.example.parkir.views.core.profile.SecurityView
+import com.example.parkir.views.core.profile.ThemesSettingsView
 import com.example.parkir.views.on_boarding.views.OnBoardingView
 
 @Composable
 fun NavigationHost(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = Router.ParkirNavScreen.route) {
+    NavHost(navController = navController, startDestination = Router.OnBoardingScreen.route) {
         composable(route = Router.OnBoardingScreen.route) {
             OnBoardingView(navController = navController)
         }
@@ -68,6 +69,8 @@ fun NavigationHost(navController: NavHostController) {
         composable(route = Router.NotificationsSettingsScreen.route) {
             NotificationsSettingsView(navController = navController)
         }
-
+        composable(route = Router.ThemesSettingsScreen.route) {
+            ThemesSettingsView(navController = navController)
+        }
     }
 }

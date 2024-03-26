@@ -46,7 +46,6 @@ import com.example.parkir.views.ui.composables.ParkirButton
 import com.example.parkir.views.ui.composables.ParkirField
 import com.example.parkir.views.ui.theme.primary
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun EditProfileView(navController: NavHostController) {
     Column(

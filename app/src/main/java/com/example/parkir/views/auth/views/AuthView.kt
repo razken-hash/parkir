@@ -80,7 +80,7 @@ fun AuthView(navController: NavHostController) {
         ) {
             Text(
                 text = "Don't have an account? ",
-                color = grey,
+//                color = grey,
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
             )
