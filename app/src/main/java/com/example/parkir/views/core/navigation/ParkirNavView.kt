@@ -41,7 +41,7 @@ fun ParkirNavView(navController: NavHostController) {
 
 
     var selectedItem by remember {
-        mutableIntStateOf(3)
+        mutableIntStateOf(0)
     }
 
     val navBarController = rememberNavController()
@@ -73,7 +73,7 @@ fun ParkirNavView(navController: NavHostController) {
                 ) {
 
                 NavHost(
-                    navController = navBarController, startDestination = Router.ProfileScreen.route,
+                    navController = navBarController, startDestination = Router.HomeScreen.route,
                 )
                 {
                     composable(route = Router.HomeScreen.route) {
