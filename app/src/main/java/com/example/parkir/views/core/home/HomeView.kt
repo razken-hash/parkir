@@ -26,6 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.parkir.R
+import com.example.parkir.views.router.Router
 import com.example.parkir.views.ui.theme.primary
 import com.example.parkir.views.ui.theme.white
 import com.example.parkir.views.ui.utils.GoogleMapStyle
@@ -37,6 +38,7 @@ import com.google.maps.android.compose.CameraPositionState
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapUiSettings
+import com.google.maps.android.compose.Marker
 
 @Composable
 fun HomeView(navController: NavHostController) {
@@ -44,41 +46,38 @@ fun HomeView(navController: NavHostController) {
         modifier = Modifier.fillMaxSize(),
     ) {
         GoogleMap(
-            modifier = Modifier.fillMaxSize(),
-            properties = MapProperties(
+            modifier = Modifier.fillMaxSize(), properties = MapProperties(
                 mapStyleOptions = MapStyleOptions(GoogleMapStyle.style),
-            ),
-            uiSettings = MapUiSettings(
-                zoomControlsEnabled = false,
+            ), uiSettings = MapUiSettings(
+                zoomControlsEnabled = true,
                 zoomGesturesEnabled = true,
-            ),
-            cameraPositionState = CameraPositionState(
+            ), cameraPositionState = CameraPositionState(
                 position = CameraPosition(
-                    LatLng(36.7538, 3.0588),
-                    14F,
-                    1F,
-                    1F
+                    LatLng(36.7538, 3.0588), 14F, 1F, 1F
                 )
             )
         ) {
+            Marker(position = LatLng(36.7538, 3.0588))
+            Marker(position = LatLng(36.7, 3.0))
         }
 
-        Row (
-            modifier = Modifier.fillMaxWidth().padding(20.dp),
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp),
             horizontalArrangement = Arrangement.End,
 
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.loop_outline),
+            ) {
+            Image(painter = painterResource(id = R.drawable.loop_outline),
                 contentDescription = "Search",
                 colorFilter = ColorFilter.tint(primary),
                 modifier = Modifier
                     .size(45.dp)
+                    .clickable {
+                        navController.navigate(Router.ParkingsBrowserView.route)
+                    }
                     .background(white, shape = CircleShape)
-                    .padding(8.dp)
-                    .clickable {  }
-
-            )
+                    .padding(8.dp))
             Spacer(modifier = Modifier.width(10.dp))
             Image(
                 painter = painterResource(id = R.drawable.notification_outline),
@@ -87,8 +86,10 @@ fun HomeView(navController: NavHostController) {
                 modifier = Modifier
                     .size(45.dp)
                     .background(white, shape = CircleShape)
-                    .padding(8.dp)
-                    .clickable {  }
+                    .clickable {
+                        navController.navigate(Router.NotificationsScreen.route)
+                    }
+                    .padding(8.dp),
             )
         }
     }

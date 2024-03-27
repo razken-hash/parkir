@@ -22,6 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.parkir.R
+import com.example.parkir.views.ui.composables.BackUpBar
 import com.example.parkir.views.ui.composables.ParkirSwitch
 
 @Composable
@@ -32,21 +33,7 @@ fun ThemesSettingsView(navController: NavHostController) {
             .padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(20.dp),
     ) {
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(15.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Image(painter = painterResource(id = R.drawable.arrow_left_outline),
-                contentDescription = "Go Back",
-                modifier = Modifier.clickable {
-                    navController.popBackStack()
-                })
-            Text(
-                text = "Themes",
-                style = MaterialTheme.typography.displaySmall,
-                textAlign = TextAlign.Center,
-            )
-        }
+        BackUpBar(title = "Themes", navController = navController)
 
         Column(
             modifier = Modifier.fillMaxWidth(),

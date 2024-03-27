@@ -40,6 +40,7 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavHostController
 import com.example.parkir.R
 import com.example.parkir.views.router.Router
+import com.example.parkir.views.ui.composables.BackUpBar
 import com.example.parkir.views.ui.composables.ParkirButton
 import com.example.parkir.views.ui.composables.ParkirCheckBox
 import com.example.parkir.views.ui.composables.ParkirField
@@ -72,23 +73,7 @@ fun ResetPasswordView(navController: NavHostController) {
             .padding(20.dp),
         verticalArrangement = Arrangement.SpaceBetween,
     ) {
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(15.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.arrow_left_outline),
-                contentDescription = "Go Back",
-                modifier = Modifier.clickable {
-                    navController.popBackStack()
-                }
-            )
-            Text(
-                text = "Create New Password",
-                style = MaterialTheme.typography.displaySmall,
-                textAlign = TextAlign.Center,
-            )
-        }
+        BackUpBar(title = "Create New Password", navController = navController)
 
         Image(
             painter = painterResource(id = R.drawable.password),

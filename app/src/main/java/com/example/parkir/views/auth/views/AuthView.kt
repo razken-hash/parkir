@@ -25,6 +25,7 @@ import androidx.navigation.NavHostController
 import com.example.parkir.R
 import com.example.parkir.views.auth.views.composables.OAuthSection
 import com.example.parkir.views.router.Router
+import com.example.parkir.views.ui.composables.BackUpBar
 import com.example.parkir.views.ui.composables.ParkirButton
 import com.example.parkir.views.ui.theme.grey
 import com.example.parkir.views.ui.theme.grey06
@@ -38,13 +39,8 @@ fun AuthView(navController: NavHostController) {
             .padding(20.dp),
         verticalArrangement = Arrangement.SpaceBetween,
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.arrow_left_outline),
-            contentDescription = "Go Back",
-            modifier = Modifier.clickable {
-                navController.popBackStack()
-            }
-        )
+        BackUpBar(title = "", navController = navController)
+
         Text(
             text = "Let's you in",
             style = MaterialTheme.typography.displayLarge,

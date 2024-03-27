@@ -13,6 +13,8 @@ import com.example.parkir.views.auth.views.forgot_password.ResetPasswordView
 import com.example.parkir.views.core.bookings.BookingsView
 import com.example.parkir.views.core.home.HomeView
 import com.example.parkir.views.core.navigation.ParkirNavView
+import com.example.parkir.views.core.notifications.NotificationsView
+import com.example.parkir.views.core.parkings.ParkingsBrowserView
 import com.example.parkir.views.core.parkings.ParkingsView
 import com.example.parkir.views.core.profile.EditProfileView
 import com.example.parkir.views.core.profile.NotificationsSettingsView
@@ -71,6 +73,12 @@ fun NavigationHost(navController: NavHostController) {
         }
         composable(route = Router.ThemesSettingsScreen.route) {
             ThemesSettingsView(navController = navController)
+        }
+        composable(route = Router.NotificationsScreen.route) {
+            NotificationsView(navController = navController)
+        }
+        composable(route = Router.ParkingsBrowserView.route) {
+            ParkingsBrowserView(navController = navController)
         }
     }
 }

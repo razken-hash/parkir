@@ -42,6 +42,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.parkir.R
+import com.example.parkir.views.ui.composables.BackUpBar
 import com.example.parkir.views.ui.composables.ParkirButton
 import com.example.parkir.views.ui.composables.ParkirField
 import com.example.parkir.views.ui.theme.primary
@@ -54,21 +55,8 @@ fun EditProfileView(navController: NavHostController) {
             .padding(20.dp),
         verticalArrangement = Arrangement.SpaceBetween,
     ) {
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(15.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Image(painter = painterResource(id = R.drawable.arrow_left_outline),
-                contentDescription = "Go Back",
-                modifier = Modifier.clickable {
-                    navController.popBackStack()
-                })
-            Text(
-                text = "Edit Profile",
-                style = MaterialTheme.typography.displaySmall,
-                textAlign = TextAlign.Center,
-            )
-        }
+        BackUpBar(title = "Edit Profile", navController = navController)
+
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,

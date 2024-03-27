@@ -69,6 +69,7 @@ fun ProfileView(navController: NavHostController) {
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
             )
             {
                 Image(
@@ -76,7 +77,6 @@ fun ProfileView(navController: NavHostController) {
                     contentDescription = "Parkir",
                     modifier = Modifier.size(35.dp),
                 )
-                Spacer(modifier = Modifier.width(10.dp))
                 Text(
                     text = "Profile", style = MaterialTheme.typography.displaySmall,
                 )

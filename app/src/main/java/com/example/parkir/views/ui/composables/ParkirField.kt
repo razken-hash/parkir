@@ -72,8 +72,7 @@ fun ParkirField(
 ) {
     var isFocused by remember { mutableStateOf(false) }
 
-    TextField(
-        value = value,
+    TextField(value = value,
         onValueChange = onValueChange,
         placeholder = {
             Text(
@@ -83,39 +82,28 @@ fun ParkirField(
         },
         textStyle = MaterialTheme.typography.labelLarge.merge(textStyle),
         leadingIcon = {
-            if (leadingIconId != null)
-                Image(
-                    painter = painterResource(id = leadingIconId),
-                    contentDescription = leadingIconDescription,
-                    colorFilter = ColorFilter.tint(
-                        if (isFocused)
-                            primary else
-                            if (value.isNotEmpty()) black else
-                                grey6F
-
-                    ),
-                    modifier = Modifier
-                        .size(20.dp),
-                ) else {
-            }
+            if (leadingIconId != null) Image(
+                painter = painterResource(id = leadingIconId),
+                contentDescription = leadingIconDescription,
+                colorFilter = ColorFilter.tint(
+                    if (isFocused) primary else if (value.isNotEmpty()) black else grey6F
+                ),
+                modifier = Modifier.size(20.dp),
+            ) else if (leadingIcon != null) leadingIconId
         },
         trailingIcon = {
-            if (trailingIconId != null)
-                Image(
-                    painter = painterResource(id = trailingIconId),
-                    contentDescription = trailingIconDescription,
-                    colorFilter = ColorFilter.tint(
-                        if (isFocused)
-                            primary else
-                            if (value.isNotEmpty()) black else
-                                grey6F
-                    ),
-                    modifier = Modifier
-                        .size(20.dp),
-                ) else {
+            if (trailingIconId != null) Image(
+                painter = painterResource(id = trailingIconId),
+                contentDescription = trailingIconDescription,
+                colorFilter = ColorFilter.tint(
+                    if (isFocused) primary else if (value.isNotEmpty()) black else grey6F
+                ),
+                modifier = Modifier.size(20.dp),
+            ) else {
             }
         },
-        maxLines = maxLines, enabled = enabled,
+        maxLines = maxLines,
+        enabled = enabled,
         readOnly = readOnly,
         label = label,
         supportingText = supportingText,
@@ -146,6 +134,5 @@ fun ParkirField(
                 isFocused = it.isFocused
             }
             .height(58.dp)
-            .then(modifier)
-    )
+            .then(modifier))
 }
