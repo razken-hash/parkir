@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,13 +25,19 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.parkir.R
 import com.example.parkir.views.ui.composables.ParkirButton
 import com.example.parkir.views.ui.theme.green
 import com.example.parkir.views.ui.theme.grey
+import com.example.parkir.views.ui.theme.lightGreen
 import com.example.parkir.views.ui.theme.primary
 import com.example.parkir.views.ui.theme.white
 
@@ -112,10 +119,10 @@ fun BookingsView(navController: NavHostController) {
                 .verticalScroll(bookingsScrollState)
         ) {
             for (i in 1..10) {
-                Row(
+                Row (
 
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxSize()
                         .border(
                             width = 2.dp,
                             color = grey,
@@ -123,24 +130,56 @@ fun BookingsView(navController: NavHostController) {
                         )
                         .padding(10.dp)
                 ) {
-                    Column {
-                        Text(text = "Allington Poddock")
+                    Image(
+                        painter = painterResource(id = R.drawable.parking),
+                        contentDescription = "Parking Picture",
+                        modifier = Modifier
+                            .size(100.dp)
+                            .clip(RoundedCornerShape(size = 30.dp)),
+                        contentScale = ContentScale.FillBounds,
+                    )
+                    Spacer(modifier = Modifier.width(15.dp))
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.SpaceEvenly,
+                    ) {
+                        Text(
+                            text = "Allington Poddock",
+                            style = MaterialTheme.typography.titleSmall,
+                        )
                         Text(text = "982 Linden Trail")
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
+
                         ) {
-                            Text(text = "$6.48", color = primary)
-                            Text(text = "/ 6 hours", color = grey)
+                            Row (
+                                verticalAlignment = Alignment.Bottom,
+
+                            ){
+
+                                Text(
+                                    text = "$6.48",
+                                    color = primary,
+                                    style = MaterialTheme.typography.titleSmall,
+                                )
+                                Text(
+                                    text = " / 6 hours",
+                                    color = grey,
+                                    style = MaterialTheme.typography.bodySmall,
+                                )
+                            }
+                            Spacer(modifier = Modifier.width(15.dp))
                             Text(
                                 text = "Completed",
-                                color = green,
+                                style = MaterialTheme.typography.bodySmall,
+                                color = Color(0xFF4ADE80),
                                 modifier = Modifier
                                     .border(
-                                        width = 2.dp,
-                                        color = green,
-                                        shape = RoundedCornerShape(5.dp),
+                                        width = 1.dp,
+                                        color = Color(0xFF4ADE80),
+                                        shape = RoundedCornerShape(percent = 50),
                                     )
-                                    .padding(10.dp)
+                                    .padding(10.dp, 5.dp)
                             )
                         }
                     }
