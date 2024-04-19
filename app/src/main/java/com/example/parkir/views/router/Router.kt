@@ -12,6 +12,7 @@ sealed class Router(val route: String) {
     object ParkirNavScreen: Router("/nav")
     object HomeScreen: Router("/home")
     object ParkingsScreen: Router("/parkings")
+    object ParkingDetailsScreen: Router("/parkings/details")
     object ParkingsBrowserView: Router("/parkings/browser")
 
     object BookingsScreen: Router("/bookings")

@@ -74,7 +74,7 @@ fun HomeView(navController: NavHostController) {
                 modifier = Modifier
                     .size(45.dp)
                     .clickable {
-                        navController.navigate(Router.ParkingsBrowserView.route)
+                        navController.navigate(Router.ParkingDetailsScreen.route)
                     }
                     .background(white, shape = CircleShape)
                     .padding(8.dp))
