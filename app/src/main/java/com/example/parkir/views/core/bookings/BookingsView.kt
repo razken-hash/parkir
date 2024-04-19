@@ -26,7 +26,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,6 +40,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -54,6 +61,17 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BookingsView(navController: NavHostController) {
+
+    val scope = rememberCoroutineScope()
+
+    var cancelBookingSheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true
+    )
+
+    var showCancelBookingSheet by rememberSaveable {
+        mutableStateOf(false)
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -89,7 +107,6 @@ fun BookingsView(navController: NavHostController) {
 
         val scrollState = rememberScrollState()
 
-
         Row(
             horizontalArrangement = Arrangement.spacedBy(10.dp),
             modifier = Modifier
@@ -114,7 +131,11 @@ fun BookingsView(navController: NavHostController) {
 
                 )
             ParkirButton(
-                label = "Canceled", onClick = {}, bgColor = white, labelColor = primary,
+                label = "Canceled",
+                onClick = {
+                    showCancelBookingSheet = true
+                },
+                bgColor = white, labelColor = primary,
                 borderColor = primary,
 
                 modifier = Modifier
@@ -125,6 +146,7 @@ fun BookingsView(navController: NavHostController) {
         }
 
         val bookingsScrollState = rememberScrollState()
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -134,6 +156,83 @@ fun BookingsView(navController: NavHostController) {
             for (i in 1..10) {
                 BookingCard()
                 Spacer(modifier = Modifier.height(20.dp))
+            }
+        }
+
+        if (showCancelBookingSheet) {
+
+            ModalBottomSheet(
+                sheetState = cancelBookingSheetState,
+                onDismissRequest = {
+                    scope.launch { cancelBookingSheetState.hide() }.invokeOnCompletion {
+                        if (!cancelBookingSheetState.isVisible) {
+                            showCancelBookingSheet = false
+                        }
+                    }
+                },
+            ) {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(15.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.padding(
+                        start = 20.dp,
+                        top = 0.dp,
+                        end = 20.dp,
+                        bottom = 30.dp
+                    )
+                ) {
+                    Text(
+                        text = "Cancel Booking",
+                        color = red,
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                    Divider()
+                    Text(
+                        text = "Are you sure you want to cancel your parking reservation?",
+                        style = MaterialTheme.typography.titleMedium,
+                        textAlign = TextAlign.Center,
+                    )
+                    Text(
+                        text = "Only 80% of the money you can refund from your payment according to our policy",
+                        style = MaterialTheme.typography.bodyMedium,
+                        textAlign = TextAlign.Center,
+                    )
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                    ) {
+                        ParkirButton(
+                            label = "Cancel",
+                            onClick = {
+                                scope.launch { cancelBookingSheetState.hide() }.invokeOnCompletion {
+                                    if (!cancelBookingSheetState.isVisible) {
+                                        showCancelBookingSheet = false
+                                    }
+                                }
+                            },
+                            modifier = Modifier
+                                .height(50.dp)
+                                .width(170.dp),
+                            labelColor = primary,
+                            bgColor = primary1A,
+                            borderColor = primary1A,
+                        )
+
+                        ParkirButton(
+                            label = "Yes, Continue",
+                            onClick = {
+                                showCancelBookingSheet = false
+                                navController.popBackStack()
+                                navController.navigate(Router.AuthScreen.route)
+
+                            },
+                            modifier = Modifier
+                                .height(50.dp)
+                                .width(170.dp),
+                        )
+                    }
+                }
             }
         }
     }

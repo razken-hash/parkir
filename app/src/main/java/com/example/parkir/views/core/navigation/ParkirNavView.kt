@@ -73,7 +73,7 @@ fun ParkirNavView(navController: NavHostController) {
                 ) {
 
                 NavHost(
-                    navController = navBarController, startDestination = Router.BookingsScreen.route,
+                    navController = navBarController, startDestination = Router.HomeScreen.route,
                 )
                 {
                     composable(route = Router.HomeScreen.route) {
