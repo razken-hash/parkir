@@ -2,6 +2,7 @@ package com.example.parkir.views.core.bookings
 
 import android.widget.Space
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.horizontalScroll
@@ -120,7 +121,6 @@ fun BookingsView(navController: NavHostController) {
         ) {
             for (i in 1..10) {
                 Row (
-
                     modifier = Modifier
                         .fillMaxSize()
                         .border(
@@ -128,7 +128,8 @@ fun BookingsView(navController: NavHostController) {
                             color = grey,
                             shape = RoundedCornerShape(5.dp),
                         )
-                        .padding(10.dp)
+                        .padding(10.dp),
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.parking),
@@ -140,7 +141,9 @@ fun BookingsView(navController: NavHostController) {
                     )
                     Spacer(modifier = Modifier.width(15.dp))
                     Column(
-                        modifier = Modifier.fillMaxSize(),
+                        modifier = Modifier
+                            .height(100.dp)
+                            .fillMaxWidth(),
                         verticalArrangement = Arrangement.SpaceEvenly,
                     ) {
                         Text(
@@ -148,13 +151,12 @@ fun BookingsView(navController: NavHostController) {
                             style = MaterialTheme.typography.titleSmall,
                         )
                         Text(text = "982 Linden Trail")
+                        Spacer(modifier = Modifier.height(10.dp))
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-
                         ) {
                             Row (
                                 verticalAlignment = Alignment.Bottom,
-
                             ){
 
                                 Text(
