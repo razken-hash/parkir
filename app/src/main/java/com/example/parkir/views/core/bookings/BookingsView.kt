@@ -20,7 +20,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -35,17 +38,26 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.parkir.R
+import com.example.parkir.views.core.bookings.composables.BookingCard
+import com.example.parkir.views.router.Router
 import com.example.parkir.views.ui.composables.ParkirButton
 import com.example.parkir.views.ui.theme.green
 import com.example.parkir.views.ui.theme.grey
+import com.example.parkir.views.ui.theme.grey02
 import com.example.parkir.views.ui.theme.lightGreen
 import com.example.parkir.views.ui.theme.primary
+import com.example.parkir.views.ui.theme.primary1A
+import com.example.parkir.views.ui.theme.red
 import com.example.parkir.views.ui.theme.white
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BookingsView(navController: NavHostController) {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(grey02),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Row(
@@ -92,13 +104,13 @@ fun BookingsView(navController: NavHostController) {
                 borderColor = primary,
                 modifier = Modifier
                     .width(140.dp)
-                    .height(35.dp),
+                    .height(45.dp),
             )
             ParkirButton(
                 label = "Completed", onClick = {},
                 modifier = Modifier
                     .width(140.dp)
-                    .height(35.dp),
+                    .height(45.dp),
 
                 )
             ParkirButton(
@@ -107,7 +119,7 @@ fun BookingsView(navController: NavHostController) {
 
                 modifier = Modifier
                     .width(140.dp)
-                    .height(35.dp),
+                    .height(45.dp),
 
                 )
         }
@@ -120,75 +132,10 @@ fun BookingsView(navController: NavHostController) {
                 .verticalScroll(bookingsScrollState)
         ) {
             for (i in 1..10) {
-                Row (
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .border(
-                            width = 2.dp,
-                            color = grey,
-                            shape = RoundedCornerShape(5.dp),
-                        )
-                        .padding(10.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.parking),
-                        contentDescription = "Parking Picture",
-                        modifier = Modifier
-                            .size(100.dp)
-                            .clip(RoundedCornerShape(size = 30.dp)),
-                        contentScale = ContentScale.FillBounds,
-                    )
-                    Spacer(modifier = Modifier.width(15.dp))
-                    Column(
-                        modifier = Modifier
-                            .height(100.dp)
-                            .fillMaxWidth(),
-                        verticalArrangement = Arrangement.SpaceEvenly,
-                    ) {
-                        Text(
-                            text = "Allington Poddock",
-                            style = MaterialTheme.typography.titleSmall,
-                        )
-                        Text(text = "982 Linden Trail")
-                        Spacer(modifier = Modifier.height(10.dp))
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            Row (
-                                verticalAlignment = Alignment.Bottom,
-                            ){
-
-                                Text(
-                                    text = "$6.48",
-                                    color = primary,
-                                    style = MaterialTheme.typography.titleSmall,
-                                )
-                                Text(
-                                    text = " / 6 hours",
-                                    color = grey,
-                                    style = MaterialTheme.typography.bodySmall,
-                                )
-                            }
-                            Spacer(modifier = Modifier.width(15.dp))
-                            Text(
-                                text = "Completed",
-                                style = MaterialTheme.typography.bodySmall,
-                                color = Color(0xFF4ADE80),
-                                modifier = Modifier
-                                    .border(
-                                        width = 1.dp,
-                                        color = Color(0xFF4ADE80),
-                                        shape = RoundedCornerShape(percent = 50),
-                                    )
-                                    .padding(10.dp, 5.dp)
-                            )
-                        }
-                    }
-                }
-                Spacer(modifier = Modifier.height(5.dp))
+                BookingCard()
+                Spacer(modifier = Modifier.height(20.dp))
             }
         }
-
     }
 }
+

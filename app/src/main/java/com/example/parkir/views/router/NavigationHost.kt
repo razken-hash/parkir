@@ -25,7 +25,7 @@ import com.example.parkir.views.on_boarding.views.OnBoardingView
 
 @Composable
 fun NavigationHost(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = Router.OnBoardingScreen.route) {
+    NavHost(navController = navController, startDestination = Router.ParkirNavScreen.route) {
         composable(route = Router.OnBoardingScreen.route) {
             OnBoardingView(navController = navController)
         }

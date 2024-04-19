@@ -176,7 +176,7 @@ fun ProfileView(navController: NavHostController) {
                     Divider()
                     Text(
                         text = "Are you sure you want to logout?",
-                        style = MaterialTheme.typography.bodyLarge,
+                        style = MaterialTheme.typography.titleMedium,
                     )
 
                     ParkirButton(label = "Logout", onClick = {

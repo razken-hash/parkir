@@ -43,7 +43,7 @@ val white = Color(0xFFFFFFFF)
 
 // Other Colors
 
-val red = Color(0xFFD25C4A)
+val red = Color(0xFFF75555)
 val pink = Color(0xFFC64664)
 val purple = Color(0xFF8639A1)
 val indigo = Color(0xFF5C3EA6)
@@ -51,7 +51,7 @@ val blue = Color(0xFF4550A6)
 val lightBlue = Color(0xFF5B92E3)
 val skyBlue = Color(0xFF64A4E5)
 val lightCyan = Color(0xFF6FB7CD)
-val green = Color(0xFF589289)
+val green = Color(0xFF4ADE80)
 val lightGreen = Color(0xFF77AA68)
 val lime = Color(0xFFA0BF6F)
 val yellow = Color(0xFFD2DC75)
