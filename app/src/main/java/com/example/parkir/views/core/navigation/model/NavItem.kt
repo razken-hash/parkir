@@ -32,7 +32,7 @@ sealed class NavItem(
     object Parkings :
         NavItem(
             1,
-            "Parkings",
+            "Bookmarks",
             selectedIcon = R.drawable.bookmark_bold,
             unselectedIcon =R.drawable.bookmark_outline,
             destination = Router.ParkingsScreen.route,

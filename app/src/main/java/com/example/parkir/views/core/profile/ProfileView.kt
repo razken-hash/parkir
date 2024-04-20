@@ -122,7 +122,6 @@ fun ProfileView(navController: NavHostController) {
             }
             ProfileItem(title = "Themes", icon = R.drawable.show_outline) {
                 navController.navigate(Router.ThemesSettingsScreen.route)
-
             }
             ProfileItem(title = "Help", icon = R.drawable.info_square_outline) {
 
