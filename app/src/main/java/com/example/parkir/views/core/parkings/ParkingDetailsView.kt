@@ -200,6 +200,7 @@ fun ParkingDetailsView(navController: NavHostController) {
             ParkirButton(
                 label = "Book Parking",
                 onClick = {
+                    navController.navigate(Router.ParkingBookingDetailsScreen.route)
                 },
                 modifier = Modifier
                     .height(50.dp)

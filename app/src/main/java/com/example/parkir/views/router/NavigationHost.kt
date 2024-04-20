@@ -14,6 +14,7 @@ import com.example.parkir.views.core.bookings.BookingsView
 import com.example.parkir.views.core.home.HomeView
 import com.example.parkir.views.core.navigation.ParkirNavView
 import com.example.parkir.views.core.notifications.NotificationsView
+import com.example.parkir.views.core.parkings.ParkingBookingDetailsScreen
 import com.example.parkir.views.core.parkings.ParkingDetailsView
 import com.example.parkir.views.core.parkings.ParkingsBrowserView
 import com.example.parkir.views.core.parkings.ParkingsView
@@ -26,7 +27,7 @@ import com.example.parkir.views.on_boarding.views.OnBoardingView
 
 @Composable
 fun NavigationHost(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = Router.ParkingDetailsScreen.route) {
+    NavHost(navController = navController, startDestination = Router.OnBoardingScreen.route) {
         composable(route = Router.OnBoardingScreen.route) {
             OnBoardingView(navController = navController)
         }
@@ -78,11 +79,14 @@ fun NavigationHost(navController: NavHostController) {
         composable(route = Router.NotificationsScreen.route) {
             NotificationsView(navController = navController)
         }
-        composable(route = Router.ParkingsBrowserView.route) {
+        composable(route = Router.ParkingsBrowserScreen.route) {
             ParkingsBrowserView(navController = navController)
         }
         composable(route = Router.ParkingDetailsScreen.route) {
             ParkingDetailsView(navController = navController)
+        }
+        composable(route = Router.ParkingBookingDetailsScreen.route) {
+            ParkingBookingDetailsScreen(navController = navController)
         }
     }
 }

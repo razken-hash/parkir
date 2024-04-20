@@ -13,7 +13,8 @@ sealed class Router(val route: String) {
     object HomeScreen: Router("/home")
     object ParkingsScreen: Router("/parkings")
     object ParkingDetailsScreen: Router("/parkings/details")
-    object ParkingsBrowserView: Router("/parkings/browser")
+    object ParkingsBrowserScreen: Router("/parkings/browser")
+    object ParkingBookingDetailsScreen: Router("/parkings/booking")
 
     object BookingsScreen: Router("/bookings")
     object ProfileScreen: Router("/profile")
