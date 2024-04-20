@@ -7,6 +7,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,9 +20,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -62,6 +65,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.parkir.R
+import com.example.parkir.views.core.notifications.composables.NotificationCard
 import com.example.parkir.views.router.Router
 import com.example.parkir.views.ui.composables.BackUpBar
 import com.example.parkir.views.ui.composables.ParkirButton
@@ -72,7 +76,9 @@ import com.example.parkir.views.ui.theme.grey02
 import com.example.parkir.views.ui.theme.grey06
 import com.example.parkir.views.ui.theme.primary
 import com.example.parkir.views.ui.theme.primary1A
+import com.example.parkir.views.ui.theme.purple
 import com.example.parkir.views.ui.theme.red
+import com.example.parkir.views.ui.theme.turquoise
 import com.example.parkir.views.ui.theme.white
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -103,5 +109,59 @@ fun NotificationsView(navController: NavHostController) {
                 modifier = Modifier.size(35.dp),
             )
         }
+
+        val vScrollState = rememberScrollState()
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp)
+                .verticalScroll(vScrollState),
+            horizontalAlignment = Alignment.Start,
+            verticalArrangement = Arrangement.spacedBy(15.dp),
+        ) {
+            Text(text = "Today", style = MaterialTheme.typography.titleLarge)
+
+            NotificationCard(
+                title = "Payment Successful!",
+                subTitle = "Parking booking at Portley was successful",
+                icon = R.drawable.tick_square_bold,
+                color = green
+            )
+            NotificationCard(
+                title = "Parking Booking Canceled",
+                subTitle = "Parking booking at Gousel has been canceled successfully",
+                icon = R.drawable.close_square_bold,
+                color = red
+            )
+
+            Text(text = "Yesterday", style = MaterialTheme.typography.titleLarge)
+
+            NotificationCard(
+                title = "2 Steps Verification Successful!",
+                subTitle = "Google Authenticator was successful",
+                icon = R.drawable.lock_bold,
+                color = primary
+            )
+
+            Text(text = "December 11, 2024", style = MaterialTheme.typography.titleLarge)
+
+            NotificationCard(
+                title = "E-Wallet Connected",
+                subTitle = "Wallet has been connected successfully",
+                icon = R.drawable.wallet_bold,
+                color = turquoise
+            )
+            NotificationCard(
+                title = "Verification Successful!",
+                subTitle = "Account verification completed",
+                icon = R.drawable.tick_square_bold,
+                color = green
+            )
+
+            Spacer(modifier = Modifier.height(20.dp))
+        }
     }
 }
+
+
