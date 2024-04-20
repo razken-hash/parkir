@@ -56,7 +56,6 @@ import kotlinx.coroutines.launch
 fun HomeView(navController: NavHostController) {
     Box(
         modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center,
     ) {
         val scope = rememberCoroutineScope()
 
@@ -106,7 +105,7 @@ fun HomeView(navController: NavHostController) {
                 modifier = Modifier
                     .size(45.dp)
                     .clickable {
-                        navController.navigate(Router.ParkingDetailsScreen.route)
+                        navController.navigate(Router.ParkingsScreen.route)
                     }
                     .background(white, shape = CircleShape)
                     .padding(8.dp))
@@ -189,7 +188,6 @@ fun HomeView(navController: NavHostController) {
                             label = "Cancel",
                             onClick = {
                                 showParkingBottomSheet = false
-                                navController.popBackStack()
                             },
                             modifier = Modifier
                                 .height(55.dp)
@@ -206,6 +204,7 @@ fun HomeView(navController: NavHostController) {
                                     if (!parkingSheetState.isVisible) {
                                         showParkingBottomSheet = false
                                     }
+                                    navController.navigate(Router.ParkingDetailsScreen.route)
                                 }
                             },
                             modifier = Modifier

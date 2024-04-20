@@ -15,6 +15,7 @@ import com.example.parkir.views.core.bookings.BookingsView
 import com.example.parkir.views.core.home.HomeView
 import com.example.parkir.views.core.navigation.ParkirNavView
 import com.example.parkir.views.core.notifications.NotificationsView
+import com.example.parkir.views.core.bookmarks.BookmarksView
 import com.example.parkir.views.core.parkings.ParkingBookingDetailsScreen
 import com.example.parkir.views.core.parkings.ParkingDetailsView
 import com.example.parkir.views.core.parkings.ParkingsBrowserView
@@ -55,6 +56,9 @@ fun NavigationHost(navController: NavHostController) {
         }
         composable(route = Router.HomeScreen.route) {
             HomeView(navController = navController)
+        }
+       composable(route = Router.BookmarksScreen.route) {
+            BookmarksView(navController = navController)
         }
         composable(route = Router.ParkingsScreen.route) {
             ParkingsView(navController = navController)

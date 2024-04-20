@@ -11,6 +11,7 @@ sealed class Router(val route: String) {
     object ResetPasswordScreen: Router("/auth/reset_password")
     object ParkirNavScreen: Router("/nav")
     object HomeScreen: Router("/home")
+    object BookmarksScreen: Router("/bookmarks")
     object ParkingsScreen: Router("/parkings")
     object ParkingDetailsScreen: Router("/parkings/details")
     object ParkingsBrowserScreen: Router("/parkings/browser")

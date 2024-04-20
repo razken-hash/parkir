@@ -35,7 +35,7 @@ sealed class NavItem(
             "Bookmarks",
             selectedIcon = R.drawable.bookmark_bold,
             unselectedIcon =R.drawable.bookmark_outline,
-            destination = Router.ParkingsScreen.route,
+            destination = Router.BookmarksScreen.route,
         )
 
     object Bookings :
@@ -46,6 +46,7 @@ sealed class NavItem(
             unselectedIcon = R.drawable.doc_outline,
             destination = Router.BookingsScreen.route,
         )
+
     object Profile :
         NavItem(
             3,
