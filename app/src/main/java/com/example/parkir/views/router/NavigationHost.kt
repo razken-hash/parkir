@@ -10,6 +10,7 @@ import com.example.parkir.views.auth.views.RegisterView
 import com.example.parkir.views.auth.views.forgot_password.ForgotPasswordView
 import com.example.parkir.views.auth.views.forgot_password.OTPScreen
 import com.example.parkir.views.auth.views.forgot_password.ResetPasswordView
+import com.example.parkir.views.core.bookings.BookingTicketView
 import com.example.parkir.views.core.bookings.BookingsView
 import com.example.parkir.views.core.home.HomeView
 import com.example.parkir.views.core.navigation.ParkirNavView
@@ -60,6 +61,9 @@ fun NavigationHost(navController: NavHostController) {
         }
         composable(route = Router.BookingsScreen.route) {
             BookingsView(navController = navController)
+        }
+        composable(route = Router.BookingTicketScreen.route) {
+            BookingTicketView(navController = navController)
         }
         composable(route = Router.ProfileScreen.route) {
             ProfileView(navController = navController)

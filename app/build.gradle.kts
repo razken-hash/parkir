@@ -75,4 +75,7 @@ dependencies {
 
     // Google Maps
     implementation ("com.google.android.gms:play-services-maps:18.0.2")
+
+    // QR Code
+    implementation("com.lightspark:compose-qr-code:1.0.1")
 }
