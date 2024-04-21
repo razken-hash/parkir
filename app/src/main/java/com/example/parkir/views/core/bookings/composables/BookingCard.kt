@@ -25,7 +25,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.example.parkir.R
+import com.example.parkir.views.router.Router
 import com.example.parkir.views.ui.composables.ParkirButton
 import com.example.parkir.views.ui.theme.green
 import com.example.parkir.views.ui.theme.grey
@@ -35,7 +38,7 @@ import com.example.parkir.views.ui.theme.white
 
 
 @Composable
-fun BookingCard() {
+fun BookingCard(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -114,20 +117,8 @@ fun BookingCard() {
 //                            )
 //                            .padding(10.dp, 5.dp)
 //                    )
-                    Text(
-                        text = "Paid",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = primary,
-                        modifier = Modifier
-                            .border(
-                                width = 1.dp,
-                                color = primary,
-                                shape = RoundedCornerShape(percent = 50),
-                            )
-                            .padding(15.dp, 5.dp)
-                    )
 //                    Text(
-//                        text = "Active",
+//                        text = "Paid",
 //                        style = MaterialTheme.typography.bodySmall,
 //                        color = primary,
 //                        modifier = Modifier
@@ -136,8 +127,20 @@ fun BookingCard() {
 //                                color = primary,
 //                                shape = RoundedCornerShape(percent = 50),
 //                            )
-//                            .padding(10.dp, 5.dp)
+//                            .padding(15.dp, 5.dp)
 //                    )
+                    Text(
+                        text = "Active",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = primary,
+                        modifier = Modifier
+                            .border(
+                                width = 1.dp,
+                                color = primary,
+                                shape = RoundedCornerShape(percent = 50),
+                            )
+                            .padding(10.dp, 5.dp)
+                    )
                 }
             }
         }
@@ -157,26 +160,28 @@ fun BookingCard() {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-//            ParkirButton(
-//                label = "View Ticket",
-//                onClick = { },
-//                modifier = Modifier
-//                    .height(40.dp)
-//                    .width(150.dp),
-//                labelColor = primary,
-//                bgColor = white,
-//                borderColor = primary,
-//            )
             ParkirButton(
-                label = "Cancel Booking",
-                onClick = { },
+                label = "View Ticket",
+                onClick = {
+                    navController.navigate(Router.BookingTicketScreen.route)
+                },
                 modifier = Modifier
                     .height(40.dp)
-                    .width(155.dp),
+                    .width(150.dp),
                 labelColor = primary,
                 bgColor = white,
                 borderColor = primary,
             )
+//            ParkirButton(
+//                label = "Cancel Booking",
+//                onClick = { },
+//                modifier = Modifier
+//                    .height(40.dp)
+//                    .width(155.dp),
+//                labelColor = primary,
+//                bgColor = white,
+//                borderColor = primary,
+//            )
 
             ParkirButton(
                 label = "View Timer",

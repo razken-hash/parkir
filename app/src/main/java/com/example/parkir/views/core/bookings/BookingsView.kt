@@ -154,7 +154,7 @@ fun BookingsView(navController: NavHostController) {
                 .verticalScroll(bookingsScrollState)
         ) {
             for (i in 1..10) {
-                BookingCard()
+                BookingCard(navController = navController)
                 Spacer(modifier = Modifier.height(20.dp))
             }
         }
