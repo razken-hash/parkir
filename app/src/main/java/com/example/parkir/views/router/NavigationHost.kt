@@ -1,5 +1,7 @@
 package com.example.parkir.views.router
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -27,9 +29,10 @@ import com.example.parkir.views.core.profile.SecurityView
 import com.example.parkir.views.core.profile.ThemesSettingsView
 import com.example.parkir.views.on_boarding.views.OnBoardingView
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NavigationHost(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = Router.OnBoardingScreen.route) {
+    NavHost(navController = navController, startDestination = Router.ParkirNavScreen.route) {
         composable(route = Router.OnBoardingScreen.route) {
             OnBoardingView(navController = navController)
         }
