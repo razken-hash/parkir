@@ -33,6 +33,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.parkir.R
+import com.example.parkir.views.router.Router
 import com.example.parkir.views.ui.composables.BackUpBar
 import com.example.parkir.views.ui.composables.InfiniteCircularList
 import com.example.parkir.views.ui.composables.ParkirButton
@@ -310,7 +311,9 @@ fun ParkingBookingDetailsScreen(navController: NavHostController) {
 
         Divider()
 
-        ParkirButton(label = "Continue", onClick = {})
+        ParkirButton(label = "Continue", onClick = {
+            navController.navigate(Router.PaymentMethodsScreen.route)
+        })
 
     }
 
