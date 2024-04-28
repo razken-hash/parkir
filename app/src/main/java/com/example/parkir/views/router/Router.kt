@@ -26,4 +26,5 @@ sealed class Router(val route: String) {
     object ThemesSettingsScreen: Router("/profile/theme")
     object NotificationsScreen: Router("/notifications")
     object PaymentMethodsScreen: Router("/payment")
+    object NewCardScreen: Router("/payment/addcard")
 }

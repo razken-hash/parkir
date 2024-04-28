@@ -22,6 +22,7 @@ import com.example.parkir.views.core.parkings.ParkingBookingDetailsScreen
 import com.example.parkir.views.core.parkings.ParkingDetailsView
 import com.example.parkir.views.core.parkings.ParkingsBrowserView
 import com.example.parkir.views.core.parkings.ParkingsView
+import com.example.parkir.views.core.payment.NewCardView
 import com.example.parkir.views.core.payment.PaymentMethodsView
 import com.example.parkir.views.core.profile.EditProfileView
 import com.example.parkir.views.core.profile.NotificationsSettingsView
@@ -61,7 +62,7 @@ fun NavigationHost(navController: NavHostController) {
         composable(route = Router.HomeScreen.route) {
             HomeView(navController = navController)
         }
-       composable(route = Router.BookmarksScreen.route) {
+        composable(route = Router.BookmarksScreen.route) {
             BookmarksView(navController = navController)
         }
         composable(route = Router.ParkingsScreen.route) {
@@ -102,6 +103,9 @@ fun NavigationHost(navController: NavHostController) {
         }
         composable(route = Router.PaymentMethodsScreen.route) {
             PaymentMethodsView(navController = navController)
+        }
+        composable(route = Router.NewCardScreen.route) {
+            NewCardView(navController = navController)
         }
     }
 }

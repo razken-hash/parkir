@@ -38,6 +38,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.parkir.R
+import com.example.parkir.views.router.Router
 import com.example.parkir.views.ui.composables.BackUpBar
 import com.example.parkir.views.ui.composables.ParkirButton
 import com.example.parkir.views.ui.theme.grey02
@@ -169,7 +170,9 @@ fun PaymentMethodsView(navController: NavHostController) {
             labelColor = primary,
             bgColor = primary1A,
             borderColor = primary1A,
-            onClick = {},
+            onClick = {
+                navController.navigate(Router.NewCardScreen.route)
+            },
         )
 
         Spacer(modifier = Modifier.weight(1f))
