@@ -1,5 +1,6 @@
 package com.example.parkir.views.ui.composables
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.defaultMinSize
@@ -33,7 +34,13 @@ fun ParkirButton(
         onClick = onClick,
         modifier = Modifier
             .defaultMinSize(minWidth = 1.dp, minHeight = 1.dp)
-            .border(width = 2.dp, color = borderColor, shape = RoundedCornerShape(percent = 50))
+            .border(
+                BorderStroke(
+                    width = 2.dp,
+                    color = if (bgColor == borderColor) Color.Transparent else borderColor
+                ),
+                shape = RoundedCornerShape(percent = 50)
+            )
             .then(modifier)
             .fillMaxWidth()
             .height(height = height.dp),

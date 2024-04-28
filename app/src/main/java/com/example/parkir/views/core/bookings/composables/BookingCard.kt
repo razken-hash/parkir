@@ -158,7 +158,7 @@ fun BookingCard(navController: NavHostController) {
 //        )
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             ParkirButton(
                 label = "View Ticket",
@@ -167,7 +167,7 @@ fun BookingCard(navController: NavHostController) {
                 },
                 modifier = Modifier
                     .height(40.dp)
-                    .width(150.dp),
+                    .weight(1f),
                 labelColor = primary,
                 bgColor = white,
                 borderColor = primary,
@@ -177,7 +177,7 @@ fun BookingCard(navController: NavHostController) {
 //                onClick = { },
 //                modifier = Modifier
 //                    .height(40.dp)
-//                    .width(155.dp),
+//                    .weight(1f),
 //                labelColor = primary,
 //                bgColor = white,
 //                borderColor = primary,
@@ -188,7 +188,7 @@ fun BookingCard(navController: NavHostController) {
                 onClick = { },
                 modifier = Modifier
                     .height(40.dp)
-                    .width(155.dp),
+                    .weight(1f),
                 height = 40,
             )
         }

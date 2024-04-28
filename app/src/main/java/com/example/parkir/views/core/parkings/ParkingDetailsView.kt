@@ -188,6 +188,7 @@ fun ParkingDetailsView(navController: NavHostController) {
             ParkirButton(
                 label = "Cancel",
                 onClick = {
+                    navController.popBackStack()
                 },
                 modifier = Modifier
                     .height(50.dp)

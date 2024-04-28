@@ -200,7 +200,7 @@ fun BookingsView(navController: NavHostController) {
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
+                        horizontalArrangement = Arrangement.spacedBy(20.dp),
                     ) {
                         ParkirButton(
                             label = "Cancel",
@@ -213,7 +213,7 @@ fun BookingsView(navController: NavHostController) {
                             },
                             modifier = Modifier
                                 .height(50.dp)
-                                .width(170.dp),
+                                .weight(1f),
                             labelColor = primary,
                             bgColor = primary1A,
                             borderColor = primary1A,
@@ -229,7 +229,7 @@ fun BookingsView(navController: NavHostController) {
                             },
                             modifier = Modifier
                                 .height(50.dp)
-                                .width(170.dp),
+                                .weight(1f),
                         )
                     }
                 }

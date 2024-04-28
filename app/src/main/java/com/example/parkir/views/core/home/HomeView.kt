@@ -187,7 +187,9 @@ fun HomeView(navController: NavHostController) {
                         ParkirButton(
                             label = "Cancel",
                             onClick = {
-                                showParkingBottomSheet = false
+                                scope.launch { parkingSheetState.hide() }.invokeOnCompletion {
+                                    showParkingBottomSheet = false
+                                }
                             },
                             modifier = Modifier
                                 .height(55.dp)
@@ -201,9 +203,7 @@ fun HomeView(navController: NavHostController) {
                             label = "Details",
                             onClick = {
                                 scope.launch { parkingSheetState.hide() }.invokeOnCompletion {
-                                    if (!parkingSheetState.isVisible) {
-                                        showParkingBottomSheet = false
-                                    }
+                                    showParkingBottomSheet = false
                                     navController.navigate(Router.ParkingDetailsScreen.route)
                                 }
                             },
@@ -213,7 +213,6 @@ fun HomeView(navController: NavHostController) {
                         )
                     }
                 }
-
             }
     }
 }
