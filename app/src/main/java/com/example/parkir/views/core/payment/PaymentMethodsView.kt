@@ -179,6 +179,8 @@ fun PaymentMethodsView(navController: NavHostController) {
 
         Divider()
 
-        ParkirButton(label = "Continue", onClick = {})
+        ParkirButton(label = "Continue", onClick = {
+            navController.navigate(Router.SummaryReviewScreen.route)
+        })
     }
 }
