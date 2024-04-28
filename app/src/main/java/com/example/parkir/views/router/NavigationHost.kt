@@ -32,7 +32,7 @@ import com.example.parkir.views.on_boarding.views.OnBoardingView
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NavigationHost(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = Router.ParkirNavScreen.route) {
+    NavHost(navController = navController, startDestination = Router.ParkingBookingDetailsScreen.route) {
         composable(route = Router.OnBoardingScreen.route) {
             OnBoardingView(navController = navController)
         }

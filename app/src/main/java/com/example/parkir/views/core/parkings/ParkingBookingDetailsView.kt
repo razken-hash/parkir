@@ -6,26 +6,21 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
-import androidx.compose.material3.SliderColors
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collection.mutableVectorOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,10 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.substring
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.parkir.R
 import com.example.parkir.views.ui.composables.BackUpBar
@@ -46,13 +38,9 @@ import com.example.parkir.views.ui.composables.InfiniteCircularList
 import com.example.parkir.views.ui.composables.ParkirButton
 import com.example.parkir.views.ui.composables.ParkirField
 import com.example.parkir.views.ui.theme.grey
-import com.example.parkir.views.ui.theme.grey02
-import com.example.parkir.views.ui.theme.grey06
-import com.example.parkir.views.ui.theme.grey13
 import com.example.parkir.views.ui.theme.primary
 import com.example.parkir.views.ui.utils.TimeConsts
 import java.time.LocalDate
-import java.util.Calendar
 import java.util.Date
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -131,39 +119,42 @@ fun ParkingBookingDetailsScreen(navController: NavHostController) {
             horizontalArrangement = Arrangement.Center,
         ) {
 
-            InfiniteCircularList(width = 50.dp,
+            InfiniteCircularList(
+                width = 50.dp,
                 itemHeight = 35.dp,
                 items = (1..lastDayInMonth).toMutableList(),
                 initialItem = selectedDate.dayOfMonth,
                 textStyle = MaterialTheme.typography.titleMedium,
                 textColor = Color.LightGray,
-                selectedTextColor = Color.Black,
-                onItemSelected = { i, item ->
-                    selectedDate = selectedDate.withDayOfMonth(item)
-                })
+                selectedTextColor = Color.Black
+            ) { i, item ->
+                selectedDate = selectedDate.withDayOfMonth(item)
+            }
 
-            InfiniteCircularList(width = 80.dp,
+            InfiniteCircularList(
+                width = 80.dp,
                 itemHeight = 35.dp,
                 items = months.map { it.substring(0..2) },
                 initialItem = months[TimeConsts.currentMonth - 1],
                 textStyle = MaterialTheme.typography.titleMedium,
                 textColor = Color.LightGray,
-                selectedTextColor = Color.Black,
-                onItemSelected = { i, item ->
-                    selectedDate = selectedDate.withMonth(i + 1)
-                    adjustDay(selectedDate.monthValue, selectedDate.year)
-                })
-            InfiniteCircularList(width = 80.dp,
+                selectedTextColor = Color.Black
+            ) { i, item ->
+                selectedDate = selectedDate.withMonth(i + 1)
+                adjustDay(selectedDate.monthValue, selectedDate.year)
+            }
+            InfiniteCircularList(
+                width = 80.dp,
                 itemHeight = 35.dp,
                 items = (TimeConsts.currentYear - 1..TimeConsts.currentYear + 2).toList(),
                 initialItem = TimeConsts.currentYear,
                 textStyle = MaterialTheme.typography.titleMedium,
                 textColor = Color.LightGray,
-                selectedTextColor = Color.Black,
-                onItemSelected = { i, item ->
-                    selectedDate = selectedDate.withYear(item)
-                    adjustDay(selectedDate.monthValue, selectedDate.year)
-                })
+                selectedTextColor = Color.Black
+            ) { i, item ->
+                selectedDate = selectedDate.withYear(item)
+                adjustDay(selectedDate.monthValue, selectedDate.year)
+            }
         }
 
         Column {
@@ -195,6 +186,7 @@ fun ParkingBookingDetailsScreen(navController: NavHostController) {
 
                 style = MaterialTheme.typography.titleLarge,
             )
+            Spacer(modifier = Modifier.width(100.dp))
             Text(
                 text = "End Hour",
                 modifier = Modifier.weight(1f),
@@ -205,27 +197,95 @@ fun ParkingBookingDetailsScreen(navController: NavHostController) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
         ) {
-            ParkirField(
-                value = "09:00 AM",
-                onValueChange = {},
-                trailingIconId = R.drawable.clock_outline,
-                modifier = Modifier.weight(1f),
-            )
+            Row(
+                modifier = Modifier
+                    .background(Color.Transparent, shape = RoundedCornerShape(10))
+                    .weight(1f)
+            ) {
+                InfiniteCircularList(
+                    width = 35.dp,
+                    itemHeight = 35.dp,
+                    items = (1..12).toMutableList(),
+                    initialItem = 10,
+                    textStyle = MaterialTheme.typography.titleMedium,
+                    textColor = Color.LightGray,
+                    selectedTextColor = Color.Black,
+                ) { i, item ->
+                }
+
+                InfiniteCircularList(
+                    width = 35.dp,
+                    itemHeight = 35.dp,
+                    items = (0..55 step 5).toList(),
+                    initialItem = 15,
+                    textStyle = MaterialTheme.typography.titleMedium,
+                    textColor = Color.LightGray,
+                    selectedTextColor = Color.Black,
+                ) { i, item ->
+                }
+                InfiniteCircularList(
+                    width = 45.dp,
+                    itemHeight = 35.dp,
+                    items = listOf<String>("AM", "PM"),
+                    initialItem = "AM",
+                    textStyle = MaterialTheme.typography.titleMedium,
+                    textColor = Color.LightGray,
+                    selectedTextColor = Color.Black,
+                ) { i, item ->
+                }
+
+            }
+
             Image(
                 painter = painterResource(id = R.drawable.arrow_right_bold),
                 contentDescription = "Parking Screen",
                 modifier = Modifier
                     .clip(shape = RoundedCornerShape(10))
+                    .width(100.dp)
                     .padding(10.dp),
+
             )
 
-            ParkirField(
-                value = "09:00 AM",
-                onValueChange = {},
-                trailingIconId = R.drawable.clock_outline,
-                modifier = Modifier.weight(1f),
-            )
+            Row(
+                modifier = Modifier
+                    .background(Color.Transparent, shape = RoundedCornerShape(10))
+                    .weight(1f)
+            ) {
+                InfiniteCircularList(
+                    width = 35.dp,
+                    itemHeight = 35.dp,
+                    items = (1..12).toMutableList(),
+                    initialItem = 10,
+                    textStyle = MaterialTheme.typography.titleMedium,
+                    textColor = Color.LightGray,
+                    selectedTextColor = Color.Black,
+                ) { i, item ->
+                }
+
+                InfiniteCircularList(
+                    width = 35.dp,
+                    itemHeight = 35.dp,
+                    items = (0..55 step 5).toList(),
+                    initialItem = 15,
+                    textStyle = MaterialTheme.typography.titleMedium,
+                    textColor = Color.LightGray,
+                    selectedTextColor = Color.Black,
+                ) { i, item ->
+                }
+                InfiniteCircularList(
+                    width = 45.dp,
+                    itemHeight = 35.dp,
+                    items = listOf<String>("AM", "PM"),
+                    initialItem = "AM",
+                    textStyle = MaterialTheme.typography.titleMedium,
+                    textColor = Color.LightGray,
+                    selectedTextColor = Color.Black,
+                ) { i, item ->
+                }
+
+            }
         }
 
         Text(text = "Total", style = MaterialTheme.typography.titleLarge)
