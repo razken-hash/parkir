@@ -28,4 +28,5 @@ sealed class Router(val route: String) {
     object PaymentMethodsScreen: Router("/payment")
     object NewCardScreen: Router("/payment/addcard")
     object SummaryReviewScreen: Router("/review")
+    object ParkingTimerScreen: Router("/timer")
 }

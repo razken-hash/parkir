@@ -12,16 +12,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
-import com.example.parkir.views.auth.views.LoginView
-import com.example.parkir.views.auth.views.RegisterView
-import com.example.parkir.views.on_boarding.views.OnBoardingView
 import com.example.parkir.views.router.NavigationHost
 import com.example.parkir.views.ui.theme.ParkirTheme
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        installSplashScreen()
         setContent {
             ParkirTheme {
                 Surface(

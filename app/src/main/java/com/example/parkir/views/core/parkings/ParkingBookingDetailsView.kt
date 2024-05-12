@@ -227,7 +227,7 @@ fun ParkingBookingDetailsScreen(navController: NavHostController) {
                 ) { i, item ->
                 }
                 InfiniteCircularList(
-                    width = 45.dp,
+                    width = 50.dp,
                     itemHeight = 35.dp,
                     items = listOf<String>("AM", "PM"),
                     initialItem = "AM",
@@ -246,7 +246,6 @@ fun ParkingBookingDetailsScreen(navController: NavHostController) {
                     .clip(shape = RoundedCornerShape(10))
                     .width(100.dp)
                     .padding(10.dp),
-
             )
 
             Row(
@@ -276,7 +275,7 @@ fun ParkingBookingDetailsScreen(navController: NavHostController) {
                 ) { i, item ->
                 }
                 InfiniteCircularList(
-                    width = 45.dp,
+                    width = 50.dp,
                     itemHeight = 35.dp,
                     items = listOf<String>("AM", "PM"),
                     initialItem = "AM",

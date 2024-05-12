@@ -77,11 +77,12 @@ fun BookingsView(navController: NavHostController) {
             .fillMaxSize()
             .background(grey02),
         horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(20.dp),
+                .padding(20.dp, 20.dp, 20.dp, 0.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
@@ -111,7 +112,7 @@ fun BookingsView(navController: NavHostController) {
             horizontalArrangement = Arrangement.spacedBy(10.dp),
             modifier = Modifier
                 .horizontalScroll(scrollState)
-                .padding(horizontal = 20.dp, vertical = 10.dp)
+                .padding(horizontal = 20.dp)
         ) {
             ParkirButton(
                 label = "On going",
@@ -150,7 +151,7 @@ fun BookingsView(navController: NavHostController) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(20.dp)
+                .padding(horizontal = 20.dp)
                 .verticalScroll(bookingsScrollState)
         ) {
             for (i in 1..10) {

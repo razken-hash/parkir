@@ -66,6 +66,8 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
+    // Splash Screen
+    implementation("androidx.core:core-splashscreen:1.0.1")
 
     // Compose dependencies
     implementation("com.google.maps.android:maps-compose:1.0.0")
@@ -78,4 +80,12 @@ dependencies {
 
     // QR Code
     implementation("com.lightspark:compose-qr-code:1.0.1")
+
+    //Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.6.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.6.0")
+    implementation ("com.google.code.gson:gson:2.8.5")
+
+    // Coil
+    implementation("io.coil-kt:coil-compose:2.4.0")
 }
