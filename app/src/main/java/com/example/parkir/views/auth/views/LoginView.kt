@@ -26,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -52,21 +53,16 @@ import com.example.parkir.views.ui.theme.grey24
 import com.example.parkir.views.ui.theme.primary
 import com.example.parkir.views.ui.theme.primary1A
 import com.example.parkir.views.ui.theme.white
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.util.logging.Logger
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginView(navController: NavHostController) {
+fun LoginView(navController: NavHostController, authViewModel: AuthViewModel) {
 
-    var email by remember {
-        mutableStateOf("")
-    }
-    var password by remember {
-        mutableStateOf("")
-    }
 
-    var rememberMe by remember {
-        mutableStateOf(false)
-    }
 
     Column(
         modifier = Modifier
@@ -83,18 +79,18 @@ fun LoginView(navController: NavHostController) {
         )
 
         ParkirField(
-            value = email,
+            value = authViewModel.email,
             onValueChange = {
-                email = it
+                authViewModel.email = it
             },
             placeHolderText = "Email",
             leadingIconId = R.drawable.message_bold,
         )
 
         ParkirField(
-            value = password,
+            value = authViewModel.password,
             onValueChange = {
-                password = it
+                authViewModel.password = it
             },
             placeHolderText = "Password",
             leadingIconId = R.drawable.lock_bold,
@@ -106,8 +102,8 @@ fun LoginView(navController: NavHostController) {
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            ParkirCheckBox(value = rememberMe) {
-                rememberMe = !rememberMe
+            ParkirCheckBox(value = authViewModel.rememberMe) {
+                authViewModel.rememberMe = !authViewModel.rememberMe
             }
             Spacer(modifier = Modifier.width(10.dp))
             Text(text = "Remember me")
@@ -115,9 +111,14 @@ fun LoginView(navController: NavHostController) {
 
 
         ParkirButton(label = "Login", onClick = {
-            navController.clearBackStack(Router.HomeScreen.route)
-            navController.popBackStack()
-            navController.navigate(Router.ParkirNavScreen.route)
+            CoroutineScope(Dispatchers.IO).launch {
+                authViewModel.login()
+            }
+//            val log = Logger.getLogger("Auther")
+//            log.info("Goooood")
+//            navController.clearBackStack(Router.HomeScreen.route)
+//            navController.popBackStack()
+//            navController.navigate(Router.ParkirNavScreen.route)
         })
 
         Text(

@@ -1,4 +1,4 @@
-package com.example.parkir.views.core.parkings
+package com.example.parkir.views.core.parkings.views
 
 import android.os.Build
 import android.util.Log
@@ -37,12 +37,10 @@ import com.example.parkir.views.router.Router
 import com.example.parkir.views.ui.composables.BackUpBar
 import com.example.parkir.views.ui.composables.InfiniteCircularList
 import com.example.parkir.views.ui.composables.ParkirButton
-import com.example.parkir.views.ui.composables.ParkirField
 import com.example.parkir.views.ui.theme.grey
 import com.example.parkir.views.ui.theme.primary
 import com.example.parkir.views.ui.utils.TimeConsts
 import java.time.LocalDate
-import java.util.Date
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable

@@ -1,4 +1,4 @@
-package com.example.parkir.views.core.parkings.composables
+package com.example.parkir.views.core.parkings.views.composables
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

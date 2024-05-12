@@ -1,4 +1,4 @@
-package com.example.parkir.views.core.parkings
+package com.example.parkir.views.core.parkings.views
 
 import android.widget.Space
 import androidx.compose.foundation.Image
@@ -35,7 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.parkir.R
-import com.example.parkir.views.core.parkings.composables.ParkingCard
+import com.example.parkir.views.core.parkings.views.composables.ParkingCard
 import com.example.parkir.views.ui.composables.ParkingIcon
 import com.example.parkir.views.ui.composables.ParkirField
 import com.example.parkir.views.ui.theme.green

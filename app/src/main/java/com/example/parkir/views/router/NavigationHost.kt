@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.parkir.views.auth.views.AuthView
+import com.example.parkir.views.auth.views.AuthViewModel
 import com.example.parkir.views.auth.views.LoginView
 import com.example.parkir.views.auth.views.RegisterView
 import com.example.parkir.views.auth.views.forgot_password.ForgotPasswordView
@@ -18,10 +19,10 @@ import com.example.parkir.views.core.home.HomeView
 import com.example.parkir.views.core.navigation.ParkirNavView
 import com.example.parkir.views.core.notifications.NotificationsView
 import com.example.parkir.views.core.bookmarks.BookmarksView
-import com.example.parkir.views.core.parkings.ParkingBookingDetailsScreen
-import com.example.parkir.views.core.parkings.ParkingDetailsView
-import com.example.parkir.views.core.parkings.ParkingsBrowserView
-import com.example.parkir.views.core.parkings.ParkingsView
+import com.example.parkir.views.core.parkings.views.ParkingBookingDetailsScreen
+import com.example.parkir.views.core.parkings.views.ParkingDetailsView
+import com.example.parkir.views.core.parkings.views.ParkingsBrowserView
+import com.example.parkir.views.core.parkings.views.ParkingsView
 import com.example.parkir.views.core.payment.NewCardView
 import com.example.parkir.views.core.payment.ParkingTimerView
 import com.example.parkir.views.core.payment.PaymentMethodsView
@@ -35,7 +36,8 @@ import com.example.parkir.views.on_boarding.views.OnBoardingView
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun NavigationHost(navController: NavHostController) {
+fun NavigationHost(authViewModel: AuthViewModel, navController: NavHostController) {
+
     NavHost(navController = navController, startDestination = Router.OnBoardingScreen.route) {
         composable(route = Router.OnBoardingScreen.route) {
             OnBoardingView(navController = navController)
@@ -47,7 +49,7 @@ fun NavigationHost(navController: NavHostController) {
             RegisterView(navController = navController)
         }
         composable(route = Router.LoginScreen.route) {
-            LoginView(navController = navController)
+            LoginView(navController = navController, authViewModel = authViewModel)
         }
         composable(route = Router.ForgotPasswordScreen.route) {
             ForgotPasswordView(navController = navController)
