@@ -1,4 +1,4 @@
-package com.example.parkir.views.core.bookmarks
+package com.example.parkir.views.core.bookmarks.views
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

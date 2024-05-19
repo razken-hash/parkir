@@ -1,4 +1,4 @@
-package com.example.parkir.views.core.payment
+package com.example.parkir.views.core.payment.views
 
 import android.os.Build
 import androidx.annotation.RequiresApi

@@ -18,23 +18,22 @@ import com.example.parkir.views.core.bookings.BookingsView
 import com.example.parkir.views.core.home.HomeView
 import com.example.parkir.views.core.navigation.ParkirNavView
 import com.example.parkir.views.core.notifications.NotificationsView
-import com.example.parkir.views.core.bookmarks.BookmarksView
+import com.example.parkir.views.core.bookmarks.views.BookmarksView
 import com.example.parkir.views.core.parkings.views.ParkingBookingDetailsScreen
 import com.example.parkir.views.core.parkings.views.ParkingDetailsView
 import com.example.parkir.views.core.parkings.views.ParkingsBrowserView
 import com.example.parkir.views.core.parkings.views.ParkingsView
 import com.example.parkir.views.core.parkings.views.ParkingsViewModel
-import com.example.parkir.views.core.payment.NewCardView
-import com.example.parkir.views.core.payment.ParkingTimerView
-import com.example.parkir.views.core.payment.PaymentMethodsView
-import com.example.parkir.views.core.payment.ReviewSummaryView
+import com.example.parkir.views.core.payment.views.NewCardView
+import com.example.parkir.views.core.payment.views.ParkingTimerView
+import com.example.parkir.views.core.payment.views.PaymentMethodsView
+import com.example.parkir.views.core.payment.views.ReviewSummaryView
 import com.example.parkir.views.core.profile.EditProfileView
 import com.example.parkir.views.core.profile.NotificationsSettingsView
 import com.example.parkir.views.core.profile.ProfileView
 import com.example.parkir.views.core.profile.SecurityView
 import com.example.parkir.views.core.profile.ThemesSettingsView
 import com.example.parkir.views.on_boarding.views.OnBoardingView
-import java.util.logging.Logger
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable

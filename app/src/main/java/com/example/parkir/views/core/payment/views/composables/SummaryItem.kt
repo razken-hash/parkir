@@ -1,4 +1,4 @@
-package com.example.parkir.views.core.payment.composables
+package com.example.parkir.views.core.payment.views.composables
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

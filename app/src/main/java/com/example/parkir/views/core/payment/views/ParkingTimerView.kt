@@ -1,4 +1,4 @@
-package com.example.parkir.views.core.payment
+package com.example.parkir.views.core.payment.views
 
 
 import android.os.Build
@@ -26,7 +26,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.parkir.views.core.payment.composables.SummaryItem
+import com.example.parkir.views.core.payment.views.composables.SummaryItem
 import com.example.parkir.views.ui.composables.BackUpBar
 import com.example.parkir.views.ui.theme.grey02
 import com.example.parkir.views.ui.theme.white

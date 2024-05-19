@@ -20,7 +20,7 @@ import com.example.parkir.views.core.bookings.BookingsView
 import com.example.parkir.views.core.home.HomeView
 import com.example.parkir.views.core.navigation.composables.NavItemBox
 import com.example.parkir.views.core.navigation.model.NavItem
-import com.example.parkir.views.core.bookmarks.BookmarksView
+import com.example.parkir.views.core.bookmarks.views.BookmarksView
 import com.example.parkir.views.core.parkings.views.ParkingsViewModel
 import com.example.parkir.views.core.profile.ProfileView
 import com.example.parkir.views.router.Router

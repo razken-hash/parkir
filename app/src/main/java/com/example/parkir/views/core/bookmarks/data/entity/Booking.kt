@@ -2,6 +2,7 @@ package com.example.parkir.views.core.bookmarks.data.entity
 
 import com.example.parkir.views.core.parkings.data.entity.Address
 import com.example.parkir.views.core.parkings.data.entity.ParkingSpot
+import com.example.parkir.views.core.payment.data.entity.Payment
 import java.time.LocalDate
 
 data class Booking(
@@ -11,6 +12,10 @@ data class Booking(
     val beginTime: String,
     val endTime: Address,
     val duration: String,
-    val status: String,
-    val payment: Map<String, Object>
+    val status: BookingStatus,
+    val payment: Payment?
 )
+
+enum class BookingStatus {
+    Canceled, Completed, OnGoing, Paid
+}
