@@ -16,7 +16,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.parkir.views.core.bookings.BookingsView
+import com.example.parkir.views.core.bookings.views.BookingsView
+import com.example.parkir.views.core.bookings.views.BookingsViewModel
 import com.example.parkir.views.core.home.HomeView
 import com.example.parkir.views.core.navigation.composables.NavItemBox
 import com.example.parkir.views.core.navigation.model.NavItem
@@ -28,7 +29,11 @@ import com.example.parkir.views.ui.theme.white
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ParkirNavView(navController: NavHostController, parkingsViewModel: ParkingsViewModel) {
+fun ParkirNavView(
+    navController: NavHostController,
+    parkingsViewModel: ParkingsViewModel,
+    bookingsViewModel: BookingsViewModel
+) {
 
 
     var selectedItem by remember {
@@ -68,13 +73,19 @@ fun ParkirNavView(navController: NavHostController, parkingsViewModel: ParkingsV
                 )
                 {
                     composable(route = Router.HomeScreen.route) {
-                        HomeView(navController = navController, parkingsViewModel = parkingsViewModel)
+                        HomeView(
+                            navController = navController,
+                            parkingsViewModel = parkingsViewModel
+                        )
                     }
                     composable(route = Router.BookmarksScreen.route) {
                         BookmarksView(navController = navController)
                     }
                     composable(route = Router.BookingsScreen.route) {
-                        BookingsView(navController = navController)
+                        BookingsView(
+                            navController = navController,
+                            bookingsViewModel = bookingsViewModel
+                        )
                     }
                     composable(route = Router.ProfileScreen.route) {
                         ProfileView(navController = navController)

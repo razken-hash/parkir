@@ -1,4 +1,4 @@
-package com.example.parkir.views.core.bookings
+package com.example.parkir.views.core.bookings.views
 
 import android.widget.Space
 import androidx.compose.foundation.Image
@@ -28,8 +28,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -45,7 +47,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.parkir.R
-import com.example.parkir.views.core.bookings.composables.BookingCard
+import com.example.parkir.views.core.bookings.data.entity.Booking
+import com.example.parkir.views.core.bookings.data.entity.BookingStatus
+import com.example.parkir.views.core.bookings.views.composables.BookingCard
+import com.example.parkir.views.core.parkings.data.entity.Parking
 import com.example.parkir.views.router.Router
 import com.example.parkir.views.ui.composables.ParkirButton
 import com.example.parkir.views.ui.theme.green
@@ -56,11 +61,23 @@ import com.example.parkir.views.ui.theme.primary
 import com.example.parkir.views.ui.theme.primary1A
 import com.example.parkir.views.ui.theme.red
 import com.example.parkir.views.ui.theme.white
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BookingsView(navController: NavHostController) {
+fun BookingsView(navController: NavHostController, bookingsViewModel: BookingsViewModel) {
+
+    LaunchedEffect(key1 = 1) {
+        CoroutineScope(Dispatchers.IO).launch {
+            bookingsViewModel.getAllBookings()
+        }
+    }
+
+    var selectedBooking: Booking? by remember {
+        mutableStateOf(null)
+    }
 
     val scope = rememberCoroutineScope()
 
@@ -115,8 +132,26 @@ fun BookingsView(navController: NavHostController) {
                 .padding(horizontal = 20.dp)
         ) {
             ParkirButton(
+                label = "All",
+                onClick = {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        bookingsViewModel.getAllBookings()
+                    }
+                },
+                bgColor = primary,
+                labelColor = white,
+                borderColor = primary,
+                modifier = Modifier
+                    .width(140.dp)
+                    .height(45.dp),
+            )
+            ParkirButton(
                 label = "On going",
-                onClick = {},
+                onClick = {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        bookingsViewModel.getBookingsByStatus(BookingStatus.OnGoing)
+                    }
+                },
                 bgColor = white,
                 labelColor = primary,
                 borderColor = primary,
@@ -125,7 +160,15 @@ fun BookingsView(navController: NavHostController) {
                     .height(45.dp),
             )
             ParkirButton(
-                label = "Completed", onClick = {},
+                label = "Completed",
+                onClick = {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        bookingsViewModel.getBookingsByStatus(BookingStatus.Completed)
+                    }
+                },
+                bgColor = white,
+                labelColor = primary,
+                borderColor = primary,
                 modifier = Modifier
                     .width(140.dp)
                     .height(45.dp),
@@ -134,7 +177,9 @@ fun BookingsView(navController: NavHostController) {
             ParkirButton(
                 label = "Canceled",
                 onClick = {
-                    showCancelBookingSheet = true
+                    CoroutineScope(Dispatchers.IO).launch {
+                        bookingsViewModel.getBookingsByStatus(BookingStatus.Canceled)
+                    }
                 },
                 bgColor = white, labelColor = primary,
                 borderColor = primary,
@@ -148,15 +193,17 @@ fun BookingsView(navController: NavHostController) {
 
         val bookingsScrollState = rememberScrollState()
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 20.dp)
-                .verticalScroll(bookingsScrollState)
-        ) {
-            for (i in 1..10) {
-                BookingCard(navController = navController)
-                Spacer(modifier = Modifier.height(20.dp))
+        bookingsViewModel.bookings?.let { bookings ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 20.dp)
+                    .verticalScroll(bookingsScrollState)
+            ) {
+                for (booking in bookings) {
+                    BookingCard(navController = navController, booking = booking)
+                    Spacer(modifier = Modifier.height(20.dp))
+                }
             }
         }
 

@@ -13,8 +13,9 @@ import com.example.parkir.views.auth.views.RegisterView
 import com.example.parkir.views.auth.views.forgot_password.ForgotPasswordView
 import com.example.parkir.views.auth.views.forgot_password.OTPScreen
 import com.example.parkir.views.auth.views.forgot_password.ResetPasswordView
-import com.example.parkir.views.core.bookings.BookingTicketView
-import com.example.parkir.views.core.bookings.BookingsView
+import com.example.parkir.views.core.bookings.views.BookingTicketView
+import com.example.parkir.views.core.bookings.views.BookingsView
+import com.example.parkir.views.core.bookings.views.BookingsViewModel
 import com.example.parkir.views.core.home.HomeView
 import com.example.parkir.views.core.navigation.ParkirNavView
 import com.example.parkir.views.core.notifications.NotificationsView
@@ -40,6 +41,7 @@ import com.example.parkir.views.on_boarding.views.OnBoardingView
 fun NavigationHost(
     authViewModel: AuthViewModel,
     parkingsViewModel: ParkingsViewModel,
+    bookingsViewModel: BookingsViewModel,
     navController: NavHostController
 ) {
 
@@ -67,7 +69,7 @@ fun NavigationHost(
             ResetPasswordView(navController = navController)
         }
         composable(route = Router.ParkirNavScreen.route) {
-            ParkirNavView(navController = navController, parkingsViewModel = parkingsViewModel)
+            ParkirNavView(navController = navController, parkingsViewModel = parkingsViewModel, bookingsViewModel = bookingsViewModel)
         }
         composable(route = Router.HomeScreen.route) {
             HomeView(navController = navController, parkingsViewModel = parkingsViewModel)
@@ -79,7 +81,9 @@ fun NavigationHost(
             ParkingsView(navController = navController)
         }
         composable(route = Router.BookingsScreen.route) {
-            BookingsView(navController = navController)
+            BookingsView(
+                navController = navController, bookingsViewModel = bookingsViewModel
+            )
         }
         composable(route = Router.BookingTicketScreen.route) {
             BookingTicketView(navController = navController)

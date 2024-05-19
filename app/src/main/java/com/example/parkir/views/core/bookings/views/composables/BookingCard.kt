@@ -1,4 +1,4 @@
-package com.example.parkir.views.core.bookings.composables
+package com.example.parkir.views.core.bookings.views.composables
 
 import android.widget.Space
 import androidx.compose.foundation.Image
@@ -27,7 +27,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
 import com.example.parkir.R
+import com.example.parkir.views.core.bookings.data.entity.Booking
+import com.example.parkir.views.core.bookings.data.entity.BookingStatus
 import com.example.parkir.views.router.Router
 import com.example.parkir.views.ui.composables.ParkirButton
 import com.example.parkir.views.ui.theme.green
@@ -38,7 +41,7 @@ import com.example.parkir.views.ui.theme.white
 
 
 @Composable
-fun BookingCard(navController: NavHostController) {
+fun BookingCard(navController: NavHostController, booking: Booking) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -52,14 +55,26 @@ fun BookingCard(navController: NavHostController) {
 
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.parking),
-                contentDescription = "Parking Picture",
-                modifier = Modifier
+//            Image(
+//                painter = painterResource(id = R.drawable.parking),
+//                contentDescription = "Parking Picture",
+//                modifier = Modifier
+//                    .size(120.dp)
+//                    .clip(RoundedCornerShape(size = 30.dp)),
+//                contentScale = ContentScale.FillBounds,
+//            )
+
+            AsyncImage(
+                model = booking.parkingSpot.floor.parking.image,
+                contentDescription = "Parking Image",
+                modifier =
+                Modifier
                     .size(120.dp)
                     .clip(RoundedCornerShape(size = 30.dp)),
+                placeholder = painterResource(id = R.drawable.parking),
                 contentScale = ContentScale.FillBounds,
             )
+
             Spacer(modifier = Modifier.width(15.dp))
             Column(
                 modifier = Modifier
@@ -68,10 +83,10 @@ fun BookingCard(navController: NavHostController) {
                 verticalArrangement = Arrangement.SpaceEvenly,
             ) {
                 Text(
-                    text = "Allington Poddock",
+                    text = booking.parkingSpot.floor.parking.name,
                     style = MaterialTheme.typography.headlineLarge,
                 )
-                Text(text = "982 Linden Trail")
+                Text(text = booking.parkingSpot.floor.parking.address.street)
                 Spacer(modifier = Modifier.height(10.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -88,55 +103,19 @@ fun BookingCard(navController: NavHostController) {
                             style = MaterialTheme.typography.titleMedium,
                         )
                         Text(
-                            text = " / 6 hours",
+                            text = " / 4 hours",
                             color = grey,
                             style = MaterialTheme.typography.bodySmall,
                         )
                     }
-//                    Text(
-//                        text = "Canceled",
-//                        style = MaterialTheme.typography.bodySmall,
-//                        color = red,
-//                        modifier = Modifier
-//                            .border(
-//                                width = 1.dp,
-//                                color = red,
-//                                shape = RoundedCornerShape(percent = 50),
-//                            )
-//                            .padding(10.dp, 5.dp)
-//                    )
-//                    Text(
-//                        text = "Completed",
-//                        style = MaterialTheme.typography.bodySmall,
-//                        color = green,
-//                        modifier = Modifier
-//                            .border(
-//                                width = 1.dp,
-//                                color = green,
-//                                shape = RoundedCornerShape(percent = 50),
-//                            )
-//                            .padding(10.dp, 5.dp)
-//                    )
-//                    Text(
-//                        text = "Paid",
-//                        style = MaterialTheme.typography.bodySmall,
-//                        color = primary,
-//                        modifier = Modifier
-//                            .border(
-//                                width = 1.dp,
-//                                color = primary,
-//                                shape = RoundedCornerShape(percent = 50),
-//                            )
-//                            .padding(15.dp, 5.dp)
-//                    )
                     Text(
-                        text = "Active",
+                        text = booking.status.name,
                         style = MaterialTheme.typography.bodySmall,
-                        color = primary,
+                        color = if (booking.status == BookingStatus.Canceled) red else if (booking.status == BookingStatus.Completed) green else primary,
                         modifier = Modifier
                             .border(
                                 width = 1.dp,
-                                color = primary,
+                                color = if (booking.status == BookingStatus.Canceled) red else if (booking.status == BookingStatus.Completed) green else primary,
                                 shape = RoundedCornerShape(percent = 50),
                             )
                             .padding(10.dp, 5.dp)
@@ -147,50 +126,59 @@ fun BookingCard(navController: NavHostController) {
         Divider(
             modifier = Modifier.padding(20.dp),
         )
-//        ParkirButton(
-//            label = "View Ticket",
-//            onClick = { },
-//            modifier = Modifier
-//                .height(40.dp),
-//            labelColor = primary,
-//            bgColor = white,
-//            borderColor = primary,
-//        )
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(20.dp),
-        ) {
+
+        if (booking.status == BookingStatus.Completed) {
             ParkirButton(
                 label = "View Ticket",
-                onClick = {
-                    navController.navigate(Router.BookingTicketScreen.route)
-                },
+                onClick = { },
                 modifier = Modifier
-                    .height(40.dp)
-                    .weight(1f),
+                    .height(40.dp),
                 labelColor = primary,
                 bgColor = white,
                 borderColor = primary,
             )
-//            ParkirButton(
-//                label = "Cancel Booking",
-//                onClick = { },
-//                modifier = Modifier
-//                    .height(40.dp)
-//                    .weight(1f),
-//                labelColor = primary,
-//                bgColor = white,
-//                borderColor = primary,
-//            )
+        } else if (booking.status == BookingStatus.Paid || booking.status == BookingStatus.OnGoing) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(20.dp),
+            ) {
+                ParkirButton(
+                    label = "View Ticket",
+                    onClick = {
+                        navController.navigate(Router.BookingTicketScreen.route)
+                    },
+                    modifier = Modifier
+                        .height(40.dp)
+                        .weight(1f),
+                    labelColor = primary,
+                    bgColor = white,
+                    borderColor = primary,
+                )
+                if (booking.status == BookingStatus.Paid) {
+                    ParkirButton(
+                        label = "Cancel Booking",
+                        onClick = { },
+                        modifier = Modifier
+                            .height(40.dp)
+                            .weight(1f),
+                        labelColor = primary,
+                        bgColor = white,
+                        borderColor = primary,
+                    )
+                } else {
+                    ParkirButton(
+                        label = "View Timer",
+                        onClick = { },
+                        modifier = Modifier
+                            .height(40.dp)
+                            .weight(1f),
+                        height = 40,
+                    )
+                }
+            }
 
-            ParkirButton(
-                label = "View Timer",
-                onClick = { },
-                modifier = Modifier
-                    .height(40.dp)
-                    .weight(1f),
-                height = 40,
-            )
         }
+
+
     }
 }

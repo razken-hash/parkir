@@ -1,6 +1,6 @@
 package com.example.parkir.views.core.payment.data.entity
 
-import com.example.parkir.views.core.bookmarks.data.entity.Booking
+import com.example.parkir.views.core.bookings.data.entity.Booking
 import java.time.LocalDate
 import java.time.LocalTime
 

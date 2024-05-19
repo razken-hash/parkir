@@ -1,8 +1,7 @@
-package com.example.parkir.views.core.bookings
+package com.example.parkir.views.core.bookings.views
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,9 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicText
-import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,22 +28,15 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathOperation
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.parkir.R
 import com.example.parkir.views.ui.theme.black
 import com.example.parkir.views.ui.theme.grey
-import com.example.parkir.views.ui.theme.grey13
 import com.example.parkir.views.ui.theme.primary
-import com.example.parkir.views.ui.theme.primary66
 import com.example.parkir.views.ui.theme.primaryCC
 import com.example.parkir.views.ui.theme.white
 import com.lightspark.composeqr.DotShape

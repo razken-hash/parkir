@@ -41,7 +41,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.parkir.R
-import com.example.parkir.views.core.bookings.composables.BookingCard
+import com.example.parkir.views.core.bookings.views.composables.BookingCard
 import com.example.parkir.views.router.Router
 import com.example.parkir.views.ui.composables.ParkirButton
 import com.example.parkir.views.ui.composables.ParkirField
