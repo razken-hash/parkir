@@ -1,5 +1,6 @@
 package com.example.parkir.views.core.home
 
+import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -23,8 +24,10 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -35,7 +38,11 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.navArgument
+import com.example.parkir.ParkirApplication
 import com.example.parkir.R
+import com.example.parkir.views.core.parkings.data.entity.Parking
+import com.example.parkir.views.core.parkings.views.ParkingsViewModel
 import com.example.parkir.views.router.Router
 import com.example.parkir.views.ui.composables.ParkirButton
 import com.example.parkir.views.ui.theme.primary
@@ -49,11 +56,25 @@ import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Marker
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeView(navController: NavHostController) {
+fun HomeView(navController: NavHostController, parkingsViewModel: ParkingsViewModel) {
+
+    LaunchedEffect(key1 = 1) {
+        CoroutineScope(Dispatchers.IO).launch {
+            parkingsViewModel.getAllParkings()
+        }
+    }
+
+    var selectedParking: Parking? by remember {
+        mutableStateOf(null)
+    }
+
+
     Box(
         modifier = Modifier.fillMaxSize(),
     ) {
@@ -67,28 +88,29 @@ fun HomeView(navController: NavHostController) {
             mutableStateOf(false)
         }
 
-        GoogleMap(
-            modifier = Modifier.fillMaxSize(), properties = MapProperties(
-                mapStyleOptions = MapStyleOptions(GoogleMapStyle.style),
-            ), uiSettings = MapUiSettings(
-                zoomControlsEnabled = true,
-                zoomGesturesEnabled = true,
-            ), cameraPositionState = CameraPositionState(
-                position = CameraPosition(
-                    LatLng(36.7538, 3.0588), 14F, 1F, 1F
+        if (parkingsViewModel.isLoading.value) {
+            GoogleMap(
+                modifier = Modifier.fillMaxSize(), properties = MapProperties(
+                    mapStyleOptions = MapStyleOptions(GoogleMapStyle.style),
+                ), uiSettings = MapUiSettings(
+                    zoomControlsEnabled = true,
+                    zoomGesturesEnabled = true,
+                ), cameraPositionState = CameraPositionState(
+                    position = CameraPosition(
+                        LatLng(36.7538, 3.0588), 14F, 1F, 1F
+                    )
                 )
-            )
-        ) {
-            Marker(
-                position = LatLng(36.7538, 3.0588),
-                onClick = {
-                    showParkingBottomSheet = true
-                    print("Helloo")
-                    return@Marker true
-                },
-            )
-            Marker(position = LatLng(36.7, 3.0)) {
-                showParkingBottomSheet = true
+            ) {
+                parkingsViewModel.parkings.value.forEach { parking ->
+                    Marker(
+                        position = LatLng(parking.address.longitude, parking.address.latitude),
+                        onClick = {
+                            selectedParking = parking
+                            showParkingBottomSheet = true
+                            return@Marker true
+                        },
+                    )
+                }
             }
         }
 
@@ -167,10 +189,10 @@ fun HomeView(navController: NavHostController) {
                             verticalArrangement = Arrangement.spacedBy(5.dp),
                         ) {
                             Text(
-                                text = "Parking Lot of San Manolia",
+                                text = "${selectedParking?.name}",
                                 style = MaterialTheme.typography.titleLarge,
                             )
-                            Text(text = "9565, Trantow Courts, San Manolia")
+                            Text(text = "${selectedParking?.address?.street}, ${selectedParking?.address?.city}")
                         }
                         Image(
                             painter = painterResource(id = R.drawable.bookmark_outline),
@@ -204,7 +226,7 @@ fun HomeView(navController: NavHostController) {
                             onClick = {
                                 scope.launch { parkingSheetState.hide() }.invokeOnCompletion {
                                     showParkingBottomSheet = false
-                                    navController.navigate(Router.ParkingDetailsScreen.route)
+                                    navController.navigate("/parkings/${selectedParking!!.id}")
                                 }
                             },
                             modifier = Modifier

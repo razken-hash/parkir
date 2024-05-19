@@ -23,6 +23,7 @@ import com.example.parkir.views.core.parkings.views.ParkingBookingDetailsScreen
 import com.example.parkir.views.core.parkings.views.ParkingDetailsView
 import com.example.parkir.views.core.parkings.views.ParkingsBrowserView
 import com.example.parkir.views.core.parkings.views.ParkingsView
+import com.example.parkir.views.core.parkings.views.ParkingsViewModel
 import com.example.parkir.views.core.payment.NewCardView
 import com.example.parkir.views.core.payment.ParkingTimerView
 import com.example.parkir.views.core.payment.PaymentMethodsView
@@ -36,9 +37,13 @@ import com.example.parkir.views.on_boarding.views.OnBoardingView
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun NavigationHost(authViewModel: AuthViewModel, navController: NavHostController) {
+fun NavigationHost(
+    authViewModel: AuthViewModel,
+    parkingsViewModel: ParkingsViewModel,
+    navController: NavHostController
+) {
 
-    NavHost(navController = navController, startDestination = Router.OnBoardingScreen.route) {
+    NavHost(navController = navController, startDestination = Router.LoginScreen.route) {
         composable(route = Router.OnBoardingScreen.route) {
             OnBoardingView(navController = navController)
         }
@@ -46,12 +51,13 @@ fun NavigationHost(authViewModel: AuthViewModel, navController: NavHostControlle
             AuthView(navController = navController)
         }
         composable(route = Router.RegisterScreen.route) {
-            RegisterView(navController = navController)
+            RegisterView(navController = navController, authViewModel = authViewModel)
         }
         composable(route = Router.LoginScreen.route) {
             LoginView(navController = navController, authViewModel = authViewModel)
         }
         composable(route = Router.ForgotPasswordScreen.route) {
+
             ForgotPasswordView(navController = navController)
         }
         composable(route = Router.OTPScreen.route) {
@@ -61,15 +67,15 @@ fun NavigationHost(authViewModel: AuthViewModel, navController: NavHostControlle
             ResetPasswordView(navController = navController)
         }
         composable(route = Router.ParkirNavScreen.route) {
-            ParkirNavView(navController = navController)
+            ParkirNavView(navController = navController, parkingsViewModel = parkingsViewModel)
         }
         composable(route = Router.HomeScreen.route) {
-            HomeView(navController = navController)
+            HomeView(navController = navController, parkingsViewModel = parkingsViewModel)
         }
         composable(route = Router.BookmarksScreen.route) {
             BookmarksView(navController = navController)
         }
-        composable(route = Router.ParkingsScreen.route) {
+        composable(route = Router.ParkingsScreen.route) { backStackEntry ->
             ParkingsView(navController = navController)
         }
         composable(route = Router.BookingsScreen.route) {
@@ -99,8 +105,13 @@ fun NavigationHost(authViewModel: AuthViewModel, navController: NavHostControlle
         composable(route = Router.ParkingsBrowserScreen.route) {
             ParkingsBrowserView(navController = navController)
         }
-        composable(route = Router.ParkingDetailsScreen.route) {
-            ParkingDetailsView(navController = navController)
+        composable(route = Router.ParkingDetailsScreen.route) { backStackEntry ->
+            val parkingId: Int = backStackEntry.arguments?.getInt("parkingId")!!
+            ParkingDetailsView(
+                navController = navController,
+                parkingsViewModel = parkingsViewModel,
+                parkingId = parkingId
+            )
         }
         composable(route = Router.ParkingBookingDetailsScreen.route) {
             ParkingBookingDetailsScreen(navController = navController)

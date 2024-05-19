@@ -18,12 +18,17 @@ import com.example.parkir.views.ui.theme.ParkirTheme
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.parkir.views.auth.views.AuthViewModel
 import com.example.parkir.views.auth.views.LoginView
+import com.example.parkir.views.core.parkings.views.ParkingsViewModel
 import com.example.parkir.views.on_boarding.views.OnBoardingView
 
 class MainActivity : ComponentActivity() {
 
     private val authViewModel: AuthViewModel by viewModels {
         AuthViewModel.Factory((application as ParkirApplication).authRepository)
+    }
+
+    private val parkingsViewModel: ParkingsViewModel by viewModels {
+        ParkingsViewModel.Factory((application as ParkirApplication).parkingRepository)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -38,7 +43,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val navController = rememberNavController()
 
-                    NavigationHost(navController = navController, authViewModel = authViewModel)
+                    NavigationHost(navController = navController, authViewModel = authViewModel, parkingsViewModel = parkingsViewModel)
 //                    LoginView(authViewModel = authViewModel, navController = navController)
                 }
             }

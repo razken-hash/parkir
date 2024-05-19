@@ -1,12 +1,12 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="1024dp"
-    android:height="1024dp"
+    android:width="512dp"
+    android:height="512dp"
     android:viewportWidth="1024"
     android:viewportHeight="1024">
     <group
         android:name="totator"
-        android:pivotX="512"
-        android:pivotY="512">
+        android:pivotX="72"
+        android:pivotY="72">
         <path
             android:fillColor="#ffffff"
             android:pathData="M0,0h1024v1024h-1024z" />

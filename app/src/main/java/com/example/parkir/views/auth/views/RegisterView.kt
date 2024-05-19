@@ -26,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -55,18 +56,7 @@ import com.example.parkir.views.ui.theme.white
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegisterView(navController: NavHostController) {
-
-    var email by remember {
-        mutableStateOf("")
-    }
-    var password by remember {
-        mutableStateOf("")
-    }
-
-    var rememberMe by remember {
-        mutableStateOf(false)
-    }
+fun RegisterView(navController: NavHostController, authViewModel: AuthViewModel) {
 
     Column(
         modifier = Modifier
@@ -83,39 +73,38 @@ fun RegisterView(navController: NavHostController) {
         )
 
         ParkirField(
-            value = email,
+            value = authViewModel.email,
             onValueChange = {
-                email = it
+                authViewModel.email = it
             },
             placeHolderText = "Email",
             leadingIconId = R.drawable.message_bold,
         )
 
         ParkirField(
-            value = password,
+            value = authViewModel.password,
             onValueChange = {
-                password = it
+                authViewModel.password = it
             },
             placeHolderText = "Password",
             leadingIconId = R.drawable.lock_bold,
             trailingIconId = R.drawable.show_outline,
         )
 
-        Row (
+        Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            ParkirCheckBox(value = rememberMe) {
-                rememberMe = !rememberMe
+            ParkirCheckBox(value = authViewModel.rememberMe) {
+                authViewModel.rememberMe = !authViewModel.rememberMe
             }
             Spacer(modifier = Modifier.width(10.dp))
             Text(text = "Remember me")
         }
 
         ParkirButton(label = "Register", onClick = {
-
-            navController.navigate(Router.ParkirNavScreen.route)
+            authViewModel.register();
         })
 
         Row(
@@ -158,5 +147,11 @@ fun RegisterView(navController: NavHostController) {
             )
         }
         Box {}
+
+        if (authViewModel.authStatus) {
+            LaunchedEffect(Unit) {
+                navController.navigate(Router.ParkirNavScreen.route)
+            }
+        }
     }
 }

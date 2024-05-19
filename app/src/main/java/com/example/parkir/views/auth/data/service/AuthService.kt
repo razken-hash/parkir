@@ -1,7 +1,6 @@
 package com.example.parkir.views.auth.data.service
 
-import com.example.parkir.BASE_URL
-import com.example.parkir.utils.Resource
+import com.example.parkir.ParkirConsts
 import com.example.parkir.views.auth.data.service.request.AuthRequest
 import com.example.parkir.views.auth.data.service.response.AuthResponse
 import retrofit2.Response
@@ -22,7 +21,7 @@ interface AuthService {
         fun getInstance(): AuthService {
             if (authInterface == null) {
                 authInterface =
-                    Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(
+                    Retrofit.Builder().baseUrl(ParkirConsts.BASE_URL).addConverterFactory(
                         GsonConverterFactory.create()
                     ).build().create(AuthService::class.java)
             }

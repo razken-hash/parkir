@@ -21,13 +21,14 @@ import com.example.parkir.views.core.home.HomeView
 import com.example.parkir.views.core.navigation.composables.NavItemBox
 import com.example.parkir.views.core.navigation.model.NavItem
 import com.example.parkir.views.core.bookmarks.BookmarksView
+import com.example.parkir.views.core.parkings.views.ParkingsViewModel
 import com.example.parkir.views.core.profile.ProfileView
 import com.example.parkir.views.router.Router
 import com.example.parkir.views.ui.theme.white
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ParkirNavView(navController: NavHostController) {
+fun ParkirNavView(navController: NavHostController, parkingsViewModel: ParkingsViewModel) {
 
 
     var selectedItem by remember {
@@ -67,7 +68,7 @@ fun ParkirNavView(navController: NavHostController) {
                 )
                 {
                     composable(route = Router.HomeScreen.route) {
-                        HomeView(navController = navController)
+                        HomeView(navController = navController, parkingsViewModel = parkingsViewModel)
                     }
                     composable(route = Router.BookmarksScreen.route) {
                         BookmarksView(navController = navController)

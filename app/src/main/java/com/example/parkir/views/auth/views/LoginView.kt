@@ -62,8 +62,6 @@ import java.util.logging.Logger
 @Composable
 fun LoginView(navController: NavHostController, authViewModel: AuthViewModel) {
 
-
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -114,11 +112,6 @@ fun LoginView(navController: NavHostController, authViewModel: AuthViewModel) {
             CoroutineScope(Dispatchers.IO).launch {
                 authViewModel.login()
             }
-//            val log = Logger.getLogger("Auther")
-//            log.info("Goooood")
-//            navController.clearBackStack(Router.HomeScreen.route)
-//            navController.popBackStack()
-//            navController.navigate(Router.ParkirNavScreen.route)
         })
 
         Text(
@@ -173,5 +166,11 @@ fun LoginView(navController: NavHostController, authViewModel: AuthViewModel) {
             )
         }
         Box {}
+
+        if (authViewModel.authStatus) {
+            LaunchedEffect(Unit) {
+                navController.navigate(Router.ParkirNavScreen.route)
+            }
+        }
     }
 }

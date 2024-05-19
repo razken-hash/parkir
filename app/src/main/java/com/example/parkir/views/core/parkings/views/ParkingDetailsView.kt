@@ -40,7 +40,7 @@ import com.example.parkir.views.ui.theme.primary1A
 import com.example.parkir.views.ui.theme.white
 
 @Composable
-fun ParkingDetailsView(navController: NavHostController) {
+fun ParkingDetailsView(navController: NavHostController, parkingsViewModel: ParkingsViewModel,  parkingId: Int) {
 
     var vScrollState: ScrollState = rememberScrollState()
 
@@ -51,7 +51,7 @@ fun ParkingDetailsView(navController: NavHostController) {
             .verticalScroll(vScrollState),
         verticalArrangement = Arrangement.spacedBy(20.dp),
     ) {
-        BackUpBar(title = "Parking Details", navController = navController)
+        BackUpBar(title = "Parking Details" + parkingId.toString(), navController = navController)
         Image(
             painter = painterResource(id = R.drawable.parking),
             contentDescription = "Parking Screen",
