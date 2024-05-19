@@ -34,6 +34,7 @@ import com.example.parkir.views.core.profile.ProfileView
 import com.example.parkir.views.core.profile.SecurityView
 import com.example.parkir.views.core.profile.ThemesSettingsView
 import com.example.parkir.views.on_boarding.views.OnBoardingView
+import java.util.logging.Logger
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -43,7 +44,7 @@ fun NavigationHost(
     navController: NavHostController
 ) {
 
-    NavHost(navController = navController, startDestination = Router.LoginScreen.route) {
+    NavHost(navController = navController, startDestination = Router.ParkirNavScreen.route) {
         composable(route = Router.OnBoardingScreen.route) {
             OnBoardingView(navController = navController)
         }
@@ -106,7 +107,7 @@ fun NavigationHost(
             ParkingsBrowserView(navController = navController)
         }
         composable(route = Router.ParkingDetailsScreen.route) { backStackEntry ->
-            val parkingId: Int = backStackEntry.arguments?.getInt("parkingId")!!
+            val parkingId: Int = backStackEntry.arguments?.getString("parkingId")?.toInt()!!
             ParkingDetailsView(
                 navController = navController,
                 parkingsViewModel = parkingsViewModel,

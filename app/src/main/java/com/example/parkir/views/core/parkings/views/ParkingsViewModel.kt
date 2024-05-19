@@ -23,16 +23,16 @@ class ParkingsViewModel(val parkingRepository: ParkingRepository) : ViewModel() 
 
     var selectedParking: Parking? by mutableStateOf<Parking?>(null)
 
-    var isLoading = mutableStateOf(true)
+    var isLoading by mutableStateOf(true)
     fun getAllParkings() {
-        isLoading.value = true
+        isLoading = true
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 val data = parkingRepository.getAllParkings();
                 if (data.isSuccessful) {
                     if (data.body() != null) {
                         parkings.value = data.body()!!
-                        isLoading.value = false;
+                        isLoading = false;
                     }
                 }
             }
@@ -40,14 +40,20 @@ class ParkingsViewModel(val parkingRepository: ParkingRepository) : ViewModel() 
     }
 
     fun getParkingById(parkingId: Int) {
-        isLoading.value = true
+        isLoading = true
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 val data = parkingRepository.getParkingById(parkingId = parkingId);
+               val logger = Logger.getLogger("myprint")
+                logger.info("BEfire")
                 if (data.isSuccessful) {
+                    logger.info("Suceees")
+                    logger.info(data.body().toString())
                     if (data.body() != null) {
+                        logger.info("Body")
                         selectedParking = data.body()!!
-                        isLoading.value = false;
+                        isLoading = false;
+                        logger.info(selectedParking.toString())
                     }
                 }
             }

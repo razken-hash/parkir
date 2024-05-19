@@ -13,7 +13,9 @@ sealed class Router(val route: String) {
     object HomeScreen: Router("/home")
     object BookmarksScreen: Router("/bookmarks")
     object ParkingsScreen: Router("/parkings")
-    object ParkingDetailsScreen : Router("/parkings/{parkingId}")
+    object ParkingDetailsScreen : Router("/parkings/{parkingId}") {
+        fun createRoute(parkingId: Int) = "/parkings/$parkingId"
+    }
     object ParkingsBrowserScreen: Router("/parkings/browser")
     object ParkingBookingDetailsScreen: Router("/parkings/booking")
 

@@ -16,7 +16,7 @@ interface ParkingService {
     @GET("/api/v1/parkings")
     suspend fun getAllParkings(): Response<List<Parking>>
 
-    @GET("/api/v1/parkings/:parkingId")
+    @GET("/api/v1/parkings/{parkingId}")
     suspend fun getParkingById(@Path("parkingId") parkingId: Int): Response<Parking>
 
     companion object {

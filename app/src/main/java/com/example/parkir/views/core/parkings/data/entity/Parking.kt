@@ -9,4 +9,8 @@ data class Parking(
     val openingTime: String,
     val closingTime: String,
     val pricePerHour: Int
-)
+) {
+    override fun toString(): String {
+        return "Parking(id=$id, name='$name', description='$description', image='$image', address=$address, openingTime='$openingTime', closingTime='$closingTime', pricePerHour=$pricePerHour)"
+    }
+}

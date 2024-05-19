@@ -35,10 +35,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.navArgument
+import coil.compose.AsyncImage
 import com.example.parkir.ParkirApplication
 import com.example.parkir.R
 import com.example.parkir.views.core.parkings.data.entity.Parking
@@ -88,7 +90,7 @@ fun HomeView(navController: NavHostController, parkingsViewModel: ParkingsViewMo
             mutableStateOf(false)
         }
 
-        if (parkingsViewModel.isLoading.value) {
+        if (!parkingsViewModel.isLoading) {
             GoogleMap(
                 modifier = Modifier.fillMaxSize(), properties = MapProperties(
                     mapStyleOptions = MapStyleOptions(GoogleMapStyle.style),
@@ -174,10 +176,11 @@ fun HomeView(navController: NavHostController, parkingsViewModel: ParkingsViewMo
 
                     Divider()
 
-                    Image(
-                        painter = painterResource(id = R.drawable.parking),
-                        contentDescription = "Parking Screen",
-                        modifier = Modifier.clip(shape = RoundedCornerShape(10)),
+                    AsyncImage(
+                        model = selectedParking!!.image, contentDescription = "Parking Image", modifier =
+                        Modifier.fillMaxWidth().clip(shape = RoundedCornerShape(10)),
+                        placeholder = painterResource(id = R.drawable.parking),
+                        contentScale = ContentScale.FillWidth,
                     )
 
                     Row(
@@ -226,7 +229,11 @@ fun HomeView(navController: NavHostController, parkingsViewModel: ParkingsViewMo
                             onClick = {
                                 scope.launch { parkingSheetState.hide() }.invokeOnCompletion {
                                     showParkingBottomSheet = false
-                                    navController.navigate("/parkings/${selectedParking!!.id}")
+                                    navController.navigate(
+                                        Router.ParkingDetailsScreen.createRoute(
+                                            selectedParking!!.id
+                                        )
+                                    )
                                 }
                             },
                             modifier = Modifier
