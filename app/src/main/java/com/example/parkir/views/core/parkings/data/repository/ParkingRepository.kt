@@ -1,8 +1,5 @@
 package com.example.parkir.views.core.parkings.data.repository
 
-import com.example.parkir.views.auth.data.service.AuthService
-import com.example.parkir.views.auth.data.service.request.AuthRequest
-import com.example.parkir.views.auth.data.service.response.AuthResponse
 import com.example.parkir.views.core.parkings.data.entity.Parking
 import com.example.parkir.views.core.parkings.data.service.ParkingService
 import retrofit2.Response

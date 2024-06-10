@@ -70,7 +70,7 @@ fun BookingCard(navController: NavHostController, booking: Booking) {
                 modifier =
                 Modifier
                     .size(120.dp)
-                    .clip(RoundedCornerShape(size = 30.dp)),
+                    .clip(RoundedCornerShape(size = 10.dp)),
                 placeholder = painterResource(id = R.drawable.parking),
                 contentScale = ContentScale.FillBounds,
             )
@@ -109,7 +109,7 @@ fun BookingCard(navController: NavHostController, booking: Booking) {
                         )
                     }
                     Text(
-                        text = booking.status.name,
+                        text = booking.status?.name.toString(),
                         style = MaterialTheme.typography.bodySmall,
                         color = if (booking.status == BookingStatus.Canceled) red else if (booking.status == BookingStatus.Completed) green else primary,
                         modifier = Modifier
@@ -147,7 +147,7 @@ fun BookingCard(navController: NavHostController, booking: Booking) {
                     onClick = {
                         navController.navigate(
                             Router.BookingTicketScreen.createRoute(
-                                bookingId = booking.id,
+                                bookingId = booking.id!!,
                             )
                         )
                     },

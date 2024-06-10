@@ -1,14 +1,10 @@
 package com.example.parkir.views.core.parkings.data.service
 
 import com.example.parkir.ParkirConsts
-import com.example.parkir.views.auth.data.service.AuthService
-import com.example.parkir.views.auth.data.service.request.AuthRequest
-import com.example.parkir.views.auth.data.service.response.AuthResponse
 import com.example.parkir.views.core.parkings.data.entity.Parking
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Path
 

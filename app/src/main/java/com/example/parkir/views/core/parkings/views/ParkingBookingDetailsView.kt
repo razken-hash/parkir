@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -33,6 +34,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.parkir.R
+import com.example.parkir.views.core.bookings.views.BookingsViewModel
 import com.example.parkir.views.router.Router
 import com.example.parkir.views.ui.composables.BackUpBar
 import com.example.parkir.views.ui.composables.InfiniteCircularList
@@ -41,14 +43,16 @@ import com.example.parkir.views.ui.theme.grey
 import com.example.parkir.views.ui.theme.primary
 import com.example.parkir.views.ui.utils.TimeConsts
 import java.time.LocalDate
+import java.time.LocalTime
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun ParkingBookingDetailsScreen(navController: NavHostController) {
+fun ParkingBookingDetailsScreen(
+    navController: NavHostController,
+    bookingsViewModel: BookingsViewModel
+) {
 
     fun lastDayInMonth(month: Int, year: Int): Int {
-        Log.d("MyLogger", "Message $month")
-        Log.d("MyLogger", "Message $year")
         if (month != 2) {
             if (month in listOf<Int>(4, 6, 9, 11)) {
                 return 30
@@ -58,12 +62,15 @@ fun ParkingBookingDetailsScreen(navController: NavHostController) {
         if (year % 4 == 0) {
             return 29
         }
-        Log.d("MyLogger", "Message $29")
         return 28;
     }
 
     var selectedDate by remember {
         mutableStateOf(LocalDate.now())
+    }
+
+    var selectedTime by remember {
+        mutableStateOf(LocalTime.now())
     }
 
     var lastDayInMonth by remember {
@@ -85,13 +92,26 @@ fun ParkingBookingDetailsScreen(navController: NavHostController) {
         "DECEMBER",
     )
 
+    var date by remember {
+        mutableStateOf("${selectedDate.dayOfMonth}-${selectedDate.month}-${selectedDate.year}")
+    }
+
+    var beginTime by remember {
+        mutableStateOf("${selectedTime.hour}:${selectedTime.minute}:${selectedTime.second}")
+    }
+
+    var nbHour by remember {
+        mutableStateOf(1f)
+    }
+
+//    duration = duration,
+//    parkingSpot = parkingSpot,
 
     fun adjustDay(month: Int, year: Int) {
         val newLastDayInMonth = lastDayInMonth(month, year)
         if (lastDayInMonth != newLastDayInMonth) {
             lastDayInMonth = newLastDayInMonth
             if (selectedDate.dayOfMonth > newLastDayInMonth) {
-                Log.d("MyLogger", "I am here")
                 selectedDate = selectedDate.withDayOfMonth(lastDayInMonth)
             }
         }
@@ -100,8 +120,6 @@ fun ParkingBookingDetailsScreen(navController: NavHostController) {
     LaunchedEffect(1) {
         lastDayInMonth = lastDayInMonth(TimeConsts.currentMonth, TimeConsts.currentYear)
     }
-
-
 
     Column(
         modifier = Modifier
@@ -128,6 +146,7 @@ fun ParkingBookingDetailsScreen(navController: NavHostController) {
                 selectedTextColor = Color.Black
             ) { i, item ->
                 selectedDate = selectedDate.withDayOfMonth(item)
+                date = "${selectedDate.dayOfMonth}-${selectedDate.month}-${selectedDate.year}";
             }
 
             InfiniteCircularList(
@@ -141,6 +160,7 @@ fun ParkingBookingDetailsScreen(navController: NavHostController) {
             ) { i, item ->
                 selectedDate = selectedDate.withMonth(i + 1)
                 adjustDay(selectedDate.monthValue, selectedDate.year)
+                date = "${selectedDate.dayOfMonth}-${selectedDate.month}-${selectedDate.year}"
             }
             InfiniteCircularList(
                 width = 80.dp,
@@ -153,14 +173,17 @@ fun ParkingBookingDetailsScreen(navController: NavHostController) {
             ) { i, item ->
                 selectedDate = selectedDate.withYear(item)
                 adjustDay(selectedDate.monthValue, selectedDate.year)
+                date = "${selectedDate.dayOfMonth}-${selectedDate.month}-${selectedDate.year}"
             }
         }
 
         Column {
-            Text(text = "Duration", style = MaterialTheme.typography.titleLarge)
-
-            var nbHour by remember {
-                mutableStateOf(1f)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Text(text = "Duration", style = MaterialTheme.typography.titleLarge)
+                Text(text = "${nbHour.toInt()} Hrs", style = MaterialTheme.typography.titleLarge)
             }
 
             Slider(
@@ -176,35 +199,28 @@ fun ParkingBookingDetailsScreen(navController: NavHostController) {
                 steps = 10,
             )
         }
-
-        Row {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(150.dp)
+        ) {
             Text(
-
                 text = "Start Hour",
                 modifier = Modifier.weight(1f),
 
                 style = MaterialTheme.typography.titleLarge,
             )
-            Spacer(modifier = Modifier.width(100.dp))
-            Text(
-                text = "End Hour",
-                modifier = Modifier.weight(1f),
 
-                style = MaterialTheme.typography.titleLarge,
-            )
-        }
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-        ) {
             Row(
                 modifier = Modifier
-                    .background(Color.Transparent, shape = RoundedCornerShape(10))
-                    .weight(1f)
+                    .fillMaxWidth()
+                    .height(100.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
             ) {
+
                 InfiniteCircularList(
-                    width = 35.dp,
+                    width = 60.dp,
                     itemHeight = 35.dp,
                     items = (1..12).toMutableList(),
                     initialItem = 10,
@@ -212,10 +228,13 @@ fun ParkingBookingDetailsScreen(navController: NavHostController) {
                     textColor = Color.LightGray,
                     selectedTextColor = Color.Black,
                 ) { i, item ->
+                    selectedTime.withHour(item);
+                    beginTime = "${selectedTime.hour}:${selectedTime.minute}:${selectedTime.second}"
+
                 }
 
                 InfiniteCircularList(
-                    width = 35.dp,
+                    width = 60.dp,
                     itemHeight = 35.dp,
                     items = (0..55 step 5).toList(),
                     initialItem = 15,
@@ -223,9 +242,11 @@ fun ParkingBookingDetailsScreen(navController: NavHostController) {
                     textColor = Color.LightGray,
                     selectedTextColor = Color.Black,
                 ) { i, item ->
+                    selectedTime.withMinute(item);
+                    beginTime = "${selectedTime.hour}:${selectedTime.minute}:${selectedTime.second}"
                 }
                 InfiniteCircularList(
-                    width = 50.dp,
+                    width = 70.dp,
                     itemHeight = 35.dp,
                     items = listOf<String>("AM", "PM"),
                     initialItem = "AM",
@@ -233,56 +254,8 @@ fun ParkingBookingDetailsScreen(navController: NavHostController) {
                     textColor = Color.LightGray,
                     selectedTextColor = Color.Black,
                 ) { i, item ->
+
                 }
-
-            }
-
-            Image(
-                painter = painterResource(id = R.drawable.arrow_right_bold),
-                contentDescription = "Parking Screen",
-                modifier = Modifier
-                    .clip(shape = RoundedCornerShape(10))
-                    .width(100.dp)
-                    .padding(10.dp),
-            )
-
-            Row(
-                modifier = Modifier
-                    .background(Color.Transparent, shape = RoundedCornerShape(10))
-                    .weight(1f)
-            ) {
-                InfiniteCircularList(
-                    width = 35.dp,
-                    itemHeight = 35.dp,
-                    items = (1..12).toMutableList(),
-                    initialItem = 10,
-                    textStyle = MaterialTheme.typography.titleMedium,
-                    textColor = Color.LightGray,
-                    selectedTextColor = Color.Black,
-                ) { i, item ->
-                }
-
-                InfiniteCircularList(
-                    width = 35.dp,
-                    itemHeight = 35.dp,
-                    items = (0..55 step 5).toList(),
-                    initialItem = 15,
-                    textStyle = MaterialTheme.typography.titleMedium,
-                    textColor = Color.LightGray,
-                    selectedTextColor = Color.Black,
-                ) { i, item ->
-                }
-                InfiniteCircularList(
-                    width = 50.dp,
-                    itemHeight = 35.dp,
-                    items = listOf<String>("AM", "PM"),
-                    initialItem = "AM",
-                    textStyle = MaterialTheme.typography.titleMedium,
-                    textColor = Color.LightGray,
-                    selectedTextColor = Color.Black,
-                ) { i, item ->
-                }
-
             }
         }
 

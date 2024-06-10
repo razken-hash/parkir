@@ -7,6 +7,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -20,6 +21,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -192,20 +194,28 @@ fun BookingsView(navController: NavHostController, bookingsViewModel: BookingsVi
         }
 
         val bookingsScrollState = rememberScrollState()
-
-        bookingsViewModel.bookings?.let { bookings ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 20.dp)
-                    .verticalScroll(bookingsScrollState)
+        if (bookingsViewModel.isLoading) {
+            Box(
+                contentAlignment = Alignment.Center,
             ) {
-                for (booking in bookings) {
-                    BookingCard(navController = navController, booking = booking)
-                    Spacer(modifier = Modifier.height(20.dp))
+                CircularProgressIndicator()
+            }
+        } else {
+            bookingsViewModel.bookings?.let { bookings ->
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 20.dp)
+                        .verticalScroll(bookingsScrollState)
+                ) {
+                    for (booking in bookings) {
+                        BookingCard(navController = navController, booking = booking)
+                        Spacer(modifier = Modifier.height(20.dp))
+                    }
                 }
             }
         }
+
 
         if (showCancelBookingSheet) {
 

@@ -45,7 +45,7 @@ fun NavigationHost(
     navController: NavHostController
 ) {
 
-    NavHost(navController = navController, startDestination = Router.BookingsScreen.route) {
+    NavHost(navController = navController, startDestination = Router.ParkingBookingDetailsScreen.route) {
         composable(route = Router.OnBoardingScreen.route) {
             OnBoardingView(navController = navController)
         }
@@ -59,7 +59,6 @@ fun NavigationHost(
             LoginView(navController = navController, authViewModel = authViewModel)
         }
         composable(route = Router.ForgotPasswordScreen.route) {
-
             ForgotPasswordView(navController = navController)
         }
         composable(route = Router.OTPScreen.route) {
@@ -75,9 +74,11 @@ fun NavigationHost(
                 bookingsViewModel = bookingsViewModel
             )
         }
+
         composable(route = Router.HomeScreen.route) {
             HomeView(navController = navController, parkingsViewModel = parkingsViewModel)
         }
+
         composable(route = Router.BookmarksScreen.route) {
             BookmarksView(navController = navController)
         }
@@ -89,6 +90,7 @@ fun NavigationHost(
                 navController = navController, bookingsViewModel = bookingsViewModel
             )
         }
+
         composable(route = Router.BookingTicketScreen.route) { backStackEntry ->
             val bookingId: Int = backStackEntry.arguments?.getString("bookingId")?.toInt()!!
 
@@ -128,16 +130,16 @@ fun NavigationHost(
             )
         }
         composable(route = Router.ParkingBookingDetailsScreen.route) {
-            ParkingBookingDetailsScreen(navController = navController)
+            ParkingBookingDetailsScreen(navController = navController, bookingsViewModel = bookingsViewModel)
         }
         composable(route = Router.PaymentMethodsScreen.route) {
-            PaymentMethodsView(navController = navController)
+            PaymentMethodsView(navController = navController, bookingsViewModel = bookingsViewModel)
         }
         composable(route = Router.NewCardScreen.route) {
             NewCardView(navController = navController)
         }
         composable(route = Router.SummaryReviewScreen.route) {
-            ReviewSummaryView(navController = navController)
+            ReviewSummaryView(navController = navController, bookingsViewModel = bookingsViewModel)
         }
         composable(route = Router.ParkingTimerScreen.route) {
             ParkingTimerView(navController = navController)

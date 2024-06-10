@@ -38,6 +38,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.parkir.R
+import com.example.parkir.views.core.bookings.views.BookingsViewModel
 import com.example.parkir.views.router.Router
 import com.example.parkir.views.ui.composables.BackUpBar
 import com.example.parkir.views.ui.composables.ParkirButton
@@ -49,7 +50,7 @@ import com.example.parkir.views.ui.theme.white
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun PaymentMethodsView(navController: NavHostController) {
+fun PaymentMethodsView(navController: NavHostController, bookingsViewModel: BookingsViewModel) {
 
     Column(
         modifier = Modifier

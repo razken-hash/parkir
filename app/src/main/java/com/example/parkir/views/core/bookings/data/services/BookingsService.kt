@@ -5,7 +5,9 @@ import com.example.parkir.views.core.bookings.data.entity.Booking
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface BookingsService {
@@ -17,6 +19,9 @@ interface BookingsService {
 
     @GET("/api/v1/bookings/1/{status}")
     suspend fun getBookingsByStatus(@Path("status") status: String): Response<List<Booking>>
+
+    @POST("/api/v1/bookings/book")
+    suspend fun bookParking(@Body booking: Booking): Response<Booking>
 
     companion object {
         private var bookingsService: BookingsService? = null

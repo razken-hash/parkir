@@ -1,15 +1,20 @@
 package com.example.parkir.views.core.payment.data.entity
 
-import com.example.parkir.views.core.bookings.data.entity.Booking
-import java.time.LocalDate
-import java.time.LocalTime
+import com.google.gson.annotations.SerializedName
 
 data class Payment(
-    val id: Int,
-    val date: LocalDate,
-    val time: LocalTime,
+    @SerializedName("id")
+    val id: Int? = null,
+    @SerializedName("date")
+    val date: String,
+    @SerializedName("time")
+    val time: String,
+    @SerializedName("cardNumber")
     val cardNumber: String,
+    @SerializedName("cardCVC")
+    val cardDate: String,
+    @SerializedName("cardDate")
     val cardCVC: String,
+    @SerializedName("amount")
     val amount: Double,
-    val booking: Booking
 )

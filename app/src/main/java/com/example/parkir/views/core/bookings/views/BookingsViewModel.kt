@@ -6,10 +6,14 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.parkir.views.auth.data.entity.User
 import com.example.parkir.views.core.bookings.data.entity.Booking
 import com.example.parkir.views.core.bookings.data.entity.BookingStatus
 import com.example.parkir.views.core.bookings.data.repository.BookingsRepository
+import com.example.parkir.views.core.parkings.data.entity.ParkingSpot
 import com.example.parkir.views.core.parkings.data.repository.ParkingRepository
+import com.example.parkir.views.core.payment.data.entity.Payment
+import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -68,6 +72,49 @@ class BookingsViewModel(val bookingsRepository: BookingsRepository) : ViewModel(
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 val data = bookingsRepository.getBookingById(bookingId = bookingId);
+                if (data.isSuccessful) {
+                    if (data.body() != null) {
+                        selectedBooking = data.body()!!
+                        isLoading = false;
+                    }
+                }
+            }
+        }
+    }
+
+
+    fun bookParking(
+        parkingSpot: ParkingSpot,
+        date: String,
+        beginTime: String,
+        endTime: String,
+        duration: String,
+        user: User,
+    ) {
+        isLoading = true
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                val payment: Payment = Payment(
+                    cardNumber = "1234567890123456",
+                    cardCVC = "123",
+                    cardDate = "12/25",
+                    amount = 120.0,
+                    date = "2024-12-23",
+                    time = "12:34:23",
+                    id = 12434
+                )
+
+                val booking: Booking = Booking(
+                    date = date,
+                    beginTime = beginTime,
+                    duration = duration,
+                    parkingSpot = parkingSpot,
+                    user = user,
+                    payment = payment
+                )
+
+                val data = bookingsRepository.bookParking(booking = booking);
+
                 if (data.isSuccessful) {
                     if (data.body() != null) {
                         selectedBooking = data.body()!!

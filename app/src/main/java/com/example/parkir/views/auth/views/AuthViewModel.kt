@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.parkir.views.auth.data.repository.AuthRepository
 import com.example.parkir.views.auth.data.service.request.AuthRequest
-import com.example.parkir.views.auth.data.service.response.AuthResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
