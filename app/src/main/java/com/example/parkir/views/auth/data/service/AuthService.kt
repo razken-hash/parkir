@@ -16,6 +16,9 @@ interface AuthService {
     @POST("/api/v1/auth/register")
     suspend fun register(@Body registerRequest: AuthRequest): Response<AuthResponse>
 
+    @POST("/api/v1/auth/signinwithgoogle")
+    suspend fun signInWithGoogle(@Body registerRequest: AuthRequest): Response<AuthResponse>
+
     companion object {
         private var authInterface: AuthService? = null
         fun getInstance(): AuthService {

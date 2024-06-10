@@ -68,16 +68,10 @@ class BookingsViewModel(val bookingsRepository: BookingsRepository) : ViewModel(
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 val data = bookingsRepository.getBookingById(bookingId = bookingId);
-                val logger = Logger.getLogger("myprint")
-                logger.info("BEfire")
                 if (data.isSuccessful) {
-                    logger.info("Suceees")
-                    logger.info(data.body().toString())
                     if (data.body() != null) {
-                        logger.info("Body")
                         selectedBooking = data.body()!!
                         isLoading = false;
-                        logger.info(selectedBooking.toString())
                     }
                 }
             }

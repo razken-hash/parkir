@@ -70,6 +70,12 @@ dependencies {
     // Splash Screen
     implementation("androidx.core:core-splashscreen:1.0.1")
 
+    // Google Sign-In
+    // implementation("com.google.android.gms:play-services-auth:20.0.0")
+    implementation("androidx.credentials:credentials:1.3.0-alpha04")
+    implementation("androidx.credentials:credentials-play-services-auth:1.3.0-alpha04")
+    implementation("com.google.android.libraries.identity.googleid:googleid:1.1.0")
+
     // Compose dependencies
     implementation("com.google.maps.android:maps-compose:1.0.0")
 

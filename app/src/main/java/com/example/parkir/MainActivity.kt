@@ -1,7 +1,7 @@
 package com.example.parkir
 
-import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -9,18 +9,30 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
-import com.example.parkir.views.router.NavigationHost
 import com.example.parkir.views.ui.theme.ParkirTheme
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.parkir.views.auth.views.AuthViewModel
-import com.example.parkir.views.auth.views.LoginView
 import com.example.parkir.views.core.bookings.views.BookingsViewModel
 import com.example.parkir.views.core.parkings.views.ParkingsViewModel
-import com.example.parkir.views.on_boarding.views.OnBoardingView
+import androidx.compose.foundation.layout.Box
+import androidx.compose.ui.platform.LocalContext
+import androidx.credentials.Credential
+import androidx.credentials.CredentialManager
+import androidx.credentials.GetCredentialRequest
+import androidx.credentials.exceptions.GetCredentialException
+import com.example.parkir.views.router.NavigationHost
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
+import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
 
@@ -36,12 +48,15 @@ class MainActivity : ComponentActivity() {
         BookingsViewModel.Factory((application as ParkirApplication).bookingsRepository)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    @RequiresApi(34)
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         installSplashScreen()
         setContent {
             ParkirTheme {
+                val context = LocalContext.current;
+
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -54,7 +69,9 @@ class MainActivity : ComponentActivity() {
                         parkingsViewModel = parkingsViewModel,
                         bookingsViewModel = bookingsViewModel,
                     )
+
                 }
+
             }
         }
     }

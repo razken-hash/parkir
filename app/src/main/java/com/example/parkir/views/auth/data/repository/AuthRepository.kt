@@ -18,4 +18,8 @@ class AuthRepository(
     suspend fun register(user: AuthRequest): Response<AuthResponse> {
         return authService.register(user)
     }
+
+    suspend fun signInWithGoogle(user: AuthRequest): Response<AuthResponse> {
+        return authService.signInWithGoogle(user)
+    }
 }

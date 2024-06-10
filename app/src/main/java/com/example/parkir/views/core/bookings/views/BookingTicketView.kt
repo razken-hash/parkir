@@ -1,17 +1,25 @@
 package com.example.parkir.views.core.bookings.views
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,11 +35,15 @@ import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathOperation
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.layout.VerticalAlignmentLine
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.NavHostController
 import com.example.parkir.R
 import com.example.parkir.views.ui.theme.black
@@ -42,10 +54,29 @@ import com.example.parkir.views.ui.theme.white
 import com.lightspark.composeqr.DotShape
 import com.lightspark.composeqr.QrCodeColors
 import com.lightspark.composeqr.QrCodeView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.util.logging.Logger
 import kotlin.math.roundToInt
 
 @Composable
-fun BookingTicketView(navController: NavHostController) {
+fun BookingTicketView(
+    navController: NavHostController,
+    bookingsViewModel: BookingsViewModel,
+    bookingId: Int
+) {
+
+    var vScrollState: ScrollState = rememberScrollState()
+    val logger: Logger = Logger.getLogger("naving")
+    logger.info("id $bookingId")
+
+    LaunchedEffect(key1 = 1) {
+        CoroutineScope(Dispatchers.IO).launch {
+            bookingsViewModel.getBookingById(bookingId = bookingId)
+        }
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -61,62 +92,119 @@ fun BookingTicketView(navController: NavHostController) {
             ),
         contentAlignment = Alignment.Center,
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(600.dp)
-                .padding(30.dp)
-                .background(
-                    white, TicketShape2(20.dp, CornerSize(20.dp))
-                )
-                .padding(horizontal = 20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
+        if (!bookingsViewModel.isLoading) {
 
-            val purple = Color(0xFF552583)
-            val gold = Color(0xFFFDB927)
-            Box (
-                modifier = Modifier.weight(1f),
-                contentAlignment = Alignment.Center,
+            val booking = bookingsViewModel.selectedBooking;
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(600.dp)
+                    .padding(30.dp)
+                    .background(
+                        white, TicketShape2(20.dp, CornerSize(20.dp))
+                    )
+                    .padding(horizontal = 20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                QrCodeView(
-                    data = "ParkirBookingId",
-                    modifier = Modifier
-                        .size(200.dp),
-                    colors = QrCodeColors(
-                        background = white,
-                        foreground = black
-                    ),
-                    dotShape = DotShape.Square,
+
+                val purple = Color(0xFF552583)
+                val gold = Color(0xFFFDB927)
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    
                 ) {
-                    Box(
-                        contentAlignment = Alignment.Center,
+                    Text(text = "${booking?.parkingSpot?.number} ${booking?.parkingSpot?.floor?.name}")
+                    Spacer(modifier = Modifier.height(15.dp))
+                    QrCodeView(
+                        data = bookingsViewModel.selectedBooking?.id.toString(),
                         modifier = Modifier
-                            .clip(CircleShape)
-                            .background(white)
-                            .padding(5.dp),
+                            .size(200.dp),
+                        colors = QrCodeColors(
+                            background = white,
+                            foreground = black
+                        ),
+                        dotShape = DotShape.Square,
                     ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.parkir),
-                            contentDescription = "Parkir",
+                        Box(
+                            contentAlignment = Alignment.Center,
                             modifier = Modifier
-                                .size(50.dp)
-                                .clip(CircleShape),
-                        )
+                                .clip(CircleShape)
+                                .background(white)
+                                .padding(5.dp),
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.parkir),
+                                contentDescription = "Parkir",
+                                modifier = Modifier
+                                    .size(50.dp)
+                                    .clip(CircleShape),
+                            )
+                        }
                     }
                 }
-            }
-            Box(
-                Modifier
-                    .height(1.dp)
-                    .fillMaxWidth()
-                    .background(grey, shape = DottedShape(step = 10.dp))
-            )
-            Box(
-                modifier = Modifier.weight(1f)
-            ) {}
+                Box(
+                    Modifier
+                        .height(1.dp)
+                        .fillMaxWidth()
+                        .background(grey, shape = DottedShape(step = 10.dp))
+                )
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(top = 30.dp),
+                    verticalArrangement = Arrangement.spacedBy(15.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Row {
+                        Column (
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text("Name", style = MaterialTheme.typography.bodyMedium)
+                            Text("KENNICHE AbdErrazak", style = MaterialTheme.typography.titleMedium)
+                        }
 
-        }
+                        Column(modifier = Modifier.weight(1f)) {
+
+                        }
+
+                    }
+
+                    Row {
+                        Column (
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text("Parking Area", style = MaterialTheme.typography.bodyMedium)
+                            Text("${booking?.parkingSpot?.floor?.parking?.address?.city}", style = MaterialTheme.typography.titleMedium)
+                        }
+
+                        Column (
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text("Parking Spot", style = MaterialTheme.typography.bodyMedium)
+                            Text("${booking?.parkingSpot?.number} ${booking?.parkingSpot?.floor?.name}", style = MaterialTheme.typography.titleMedium)
+                        }
+                    }
+
+                    Row {
+                        Column (
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text("Date", style = MaterialTheme.typography.bodyMedium)
+                            Text("${booking?.date}", style = MaterialTheme.typography.titleMedium)
+                        }
+
+                        Column (
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text("Duration", style = MaterialTheme.typography.bodyMedium)
+                            Text("${booking?.duration} Hours", style = MaterialTheme.typography.titleMedium)
+                        }
+                    }
+                }
+            }}
 
     }
 }

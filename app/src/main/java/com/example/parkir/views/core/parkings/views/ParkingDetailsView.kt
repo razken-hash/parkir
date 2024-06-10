@@ -62,11 +62,6 @@ fun ParkingDetailsView(
         }
     }
 
-
-
-
-
-//
     parkingsViewModel.selectedParking?.let {
 
         Column(

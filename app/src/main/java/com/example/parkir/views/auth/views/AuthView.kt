@@ -32,7 +32,7 @@ import com.example.parkir.views.ui.theme.grey06
 import com.example.parkir.views.ui.theme.primary
 
 @Composable
-fun AuthView(navController: NavHostController) {
+fun AuthView(navController: NavHostController, authViewModel: AuthViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -48,7 +48,7 @@ fun AuthView(navController: NavHostController) {
             modifier = Modifier.align(Alignment.CenterHorizontally),
         )
 
-        OAuthSection(viewMode = 0)
+        OAuthSection(viewMode = 0, navController = navController, authViewModel = authViewModel)
 
         Row(
             modifier = Modifier.fillMaxWidth(),

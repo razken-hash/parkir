@@ -145,7 +145,11 @@ fun BookingCard(navController: NavHostController, booking: Booking) {
                 ParkirButton(
                     label = "View Ticket",
                     onClick = {
-                        navController.navigate(Router.BookingTicketScreen.route)
+                        navController.navigate(
+                            Router.BookingTicketScreen.createRoute(
+                                bookingId = booking.id,
+                            )
+                        )
                     },
                     modifier = Modifier
                         .height(40.dp)

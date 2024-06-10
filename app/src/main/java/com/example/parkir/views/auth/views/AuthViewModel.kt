@@ -1,6 +1,8 @@
 package com.example.parkir.views.auth.views
 
+import android.content.Context
 import android.text.BoringLayout
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -14,6 +16,17 @@ import com.example.parkir.views.auth.data.service.response.AuthResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import androidx.compose.ui.platform.LocalContext
+import androidx.credentials.Credential
+import androidx.credentials.CredentialManager
+import androidx.credentials.GetCredentialRequest
+import androidx.credentials.exceptions.GetCredentialException
+import com.example.parkir.utils.PasswordGenerator
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
+import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import java.util.logging.Logger
 
 class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
@@ -50,6 +63,59 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
                 }
             }
         }
+    }
+
+    fun signInWthGoogle(context: Context) {
+
+        val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
+            .setFilterByAuthorizedAccounts(false) // Query all google accounts on the device
+            .setServerClientId("98997096205-7fn1pkd5mbomsuephopc7o092vgffuf2.apps.googleusercontent.com")
+            .build()
+
+        val request =
+            GetCredentialRequest.Builder().addCredentialOption(googleIdOption)
+                .build()
+
+        val credentialManager = CredentialManager.create(context)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val result =
+                    credentialManager.getCredential(context, request)
+
+                when (val credential = result.credential) {
+                    is Credential -> {
+                        if (credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
+                            try {
+                                val googleIdTokenCredential =
+                                    GoogleIdTokenCredential.createFrom(credential.data)
+
+                                val body = AuthRequest(
+                                    email = googleIdTokenCredential.id,
+                                    password = PasswordGenerator.generatePassword(50)
+                                )
+                                val data = authRepository.signInWithGoogle(body)
+                                if (data.isSuccessful) {
+                                    if (data.body() != null) {
+                                        authStatus = true
+                                    }
+                                }
+
+
+                                authStatus = true
+
+                            } catch (e: GoogleIdTokenParsingException) {
+                                Log.e("MainActivity", "GetCredentialException", e)
+                            }
+                        }
+                    }
+
+                }
+            } catch (e: GetCredentialException) {
+                Log.e("MainActivity", "GetCredentialException", e)
+            }
+        }
+
     }
 
     class Factory(private val authRepository: AuthRepository) :

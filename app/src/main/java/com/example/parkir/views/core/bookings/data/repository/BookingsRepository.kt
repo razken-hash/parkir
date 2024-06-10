@@ -12,7 +12,7 @@ class BookingsRepository (
     }
 
     suspend fun getBookingById(bookingId: Int): Response<Booking> {
-        return bookingService.getBookingByStatus(bookingId = bookingId)
+        return bookingService.getBookingById(bookingId = bookingId)
     }
 
     suspend fun getBookingsByStatus(status: BookingStatus): Response<List<Booking>> {

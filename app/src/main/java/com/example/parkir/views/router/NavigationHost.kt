@@ -45,12 +45,12 @@ fun NavigationHost(
     navController: NavHostController
 ) {
 
-    NavHost(navController = navController, startDestination = Router.ParkirNavScreen.route) {
+    NavHost(navController = navController, startDestination = Router.BookingsScreen.route) {
         composable(route = Router.OnBoardingScreen.route) {
             OnBoardingView(navController = navController)
         }
         composable(route = Router.AuthScreen.route) {
-            AuthView(navController = navController)
+            AuthView(navController = navController, authViewModel = authViewModel)
         }
         composable(route = Router.RegisterScreen.route) {
             RegisterView(navController = navController, authViewModel = authViewModel)
@@ -69,7 +69,11 @@ fun NavigationHost(
             ResetPasswordView(navController = navController)
         }
         composable(route = Router.ParkirNavScreen.route) {
-            ParkirNavView(navController = navController, parkingsViewModel = parkingsViewModel, bookingsViewModel = bookingsViewModel)
+            ParkirNavView(
+                navController = navController,
+                parkingsViewModel = parkingsViewModel,
+                bookingsViewModel = bookingsViewModel
+            )
         }
         composable(route = Router.HomeScreen.route) {
             HomeView(navController = navController, parkingsViewModel = parkingsViewModel)
@@ -85,8 +89,14 @@ fun NavigationHost(
                 navController = navController, bookingsViewModel = bookingsViewModel
             )
         }
-        composable(route = Router.BookingTicketScreen.route) {
-            BookingTicketView(navController = navController)
+        composable(route = Router.BookingTicketScreen.route) { backStackEntry ->
+            val bookingId: Int = backStackEntry.arguments?.getString("bookingId")?.toInt()!!
+
+            BookingTicketView(
+                navController = navController,
+                bookingsViewModel = bookingsViewModel,
+                bookingId = bookingId
+            )
         }
         composable(route = Router.ProfileScreen.route) {
             ProfileView(navController = navController)

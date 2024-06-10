@@ -12,8 +12,8 @@ interface BookingsService {
     @GET("/api/v1/bookings/1")
     suspend fun getAllBookings(): Response<List<Booking>>
 
-    @GET("/api/v1/bookings/1/{bookingId}")
-    suspend fun getBookingByStatus(@Path("bookingId") bookingId: Int): Response<Booking>
+    @GET("/api/v1/bookings/1/id={bookingId}")
+    suspend fun getBookingById(@Path("bookingId") bookingId: Int): Response<Booking>
 
     @GET("/api/v1/bookings/1/{status}")
     suspend fun getBookingsByStatus(@Path("status") status: String): Response<List<Booking>>

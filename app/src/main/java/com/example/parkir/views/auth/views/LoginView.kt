@@ -142,7 +142,7 @@ fun LoginView(navController: NavHostController, authViewModel: AuthViewModel) {
             )
         }
 
-        OAuthSection(viewMode = 1)
+        OAuthSection(viewMode = 1, navController = navController, authViewModel = authViewModel)
 
         Row(
             modifier = Modifier.fillMaxWidth(),
