@@ -9,21 +9,21 @@ import java.time.LocalDate
 
 data class Booking(
     @SerializedName("id")
-    val id: Int? = null,
+    var id: Int? = null,
     @SerializedName("parkingSpot")
-    val parkingSpot: ParkingSpot,
+    var parkingSpot: ParkingSpot? = null,
     @SerializedName("date")
-    val date: String,
+    var date: String = "",
     @SerializedName("beginTime")
-    val beginTime: String,
+    var beginTime: String = "",
     @SerializedName("duration")
-    val duration: String,
+    var duration: String = "",
     @SerializedName("status")
-    val status: BookingStatus? = null,
+    var status: BookingStatus? = null,
     @SerializedName("user")
-    val user: User,
+    var user: User? = null,
     @SerializedName("bookingPayment")
-    val payment: Payment? = null,
+    var payment: Payment? = null,
 )
 
 enum class BookingStatus {

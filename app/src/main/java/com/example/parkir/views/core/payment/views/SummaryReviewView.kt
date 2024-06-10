@@ -1,6 +1,7 @@
 package com.example.parkir.views.core.payment.views
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -40,6 +41,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun ReviewSummaryView(navController: NavHostController, bookingsViewModel: BookingsViewModel) {
 
+    val booking = bookingsViewModel.newBooking
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -56,12 +59,12 @@ fun ReviewSummaryView(navController: NavHostController, bookingsViewModel: Booki
                 .padding(15.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
-            SummaryItem(title = "Parking Area", value = "Parking Lot of San Manolia")
-            SummaryItem(title = "Address", value = "9569, Trantow Courts")
-            SummaryItem(title = "Parking Spot", value = "1st Floor (A05)")
-            SummaryItem(title = "Date", value = "Dec. 16, 2023")
-            SummaryItem(title = "Time", value = "09:00 AM - 01:00 PM")
-            SummaryItem(title = "Duration", value = "Parking Lot of San Manolia")
+            SummaryItem(title = "Parking Area", value = "${booking.parkingSpot!!.floor.parking.name}")
+            SummaryItem(title = "Address", value = "${booking.parkingSpot!!.floor.parking.address.street}, ${booking.parkingSpot!!.floor.parking.address.city}")
+            SummaryItem(title = "Parking Spot", value = "${booking.parkingSpot!!.floor.number} Floor (${booking.parkingSpot!!.floor.name})")
+            SummaryItem(title = "Date", value = "${booking.date}") // Dec. 16, 2023
+            SummaryItem(title = "Time", value = "${booking.beginTime}") // 09:00 AM - 01:00 PM
+            SummaryItem(title = "Duration", value = "${booking.duration} Hours")
         }
 
         Column(
@@ -71,11 +74,10 @@ fun ReviewSummaryView(navController: NavHostController, bookingsViewModel: Booki
                 .padding(15.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
-            SummaryItem(title = "Ammount", value = "$8")
-            SummaryItem(title = "Taxes & Fees", value = "$0.8")
+            SummaryItem(title = "Ammount", value = "${booking.parkingSpot!!.floor.parking.pricePerHour * booking.duration.substring(2, 4).toInt()}")
+            SummaryItem(title = "Taxes & Fees", value = "${booking.parkingSpot!!.floor.parking.pricePerHour * booking.duration.substring(2, 4).toInt() * 0.05}")
             Divider()
-            SummaryItem(title = "Total", value = "$8.8")
-
+            SummaryItem(title = "Total", value = "${booking.parkingSpot!!.floor.parking.pricePerHour * booking.duration.substring(2, 4).toInt()} + ${booking.parkingSpot!!.floor.parking.pricePerHour * booking.duration.substring(2, 4).toInt() * 0.05}")
         }
 
         Row(
@@ -116,7 +118,8 @@ fun ReviewSummaryView(navController: NavHostController, bookingsViewModel: Booki
             label = "Confirm Payment",
             onClick = {
                 CoroutineScope(Dispatchers.IO).launch {
-//                    bookingsViewModel.bookParking()
+                    Log.i("HIIIIER", "PIWWWW")
+                    bookingsViewModel.bookParking()
                 }
             },
         )

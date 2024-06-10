@@ -23,7 +23,6 @@ class BookingsRepository (
     }
 
     suspend fun bookParking(booking: Booking): Response<Booking> {
-        //TODO: payment
         return bookingService.bookParking(booking = booking)
     }
 }

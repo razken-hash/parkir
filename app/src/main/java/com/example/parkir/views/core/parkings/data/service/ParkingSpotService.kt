@@ -12,10 +12,14 @@ import retrofit2.http.Path
 
 interface ParkingSpotService {
 
-    @GET("/parkings/{parkingId}/floors/{floorId}/parking_spots")
+    @GET("/parkings/floors/parkingspots")
     suspend fun getAllParkingSpots(
         @Path("parkingId") parkingId: Int, @Path("floorId") floorId: Int
     ): Response<List<ParkingSpot>>
+
+    @GET("/api/v1/parkings/floors/parkingspots/{parkingSpotId}")
+    suspend fun getParkingSpotById(@Path("parkingSpotId") parkingSpotId: Int): Response<ParkingSpot>
+
 
     companion object {
         private var parkingSpotService: ParkingSpotService? = null

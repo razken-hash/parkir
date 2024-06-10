@@ -2,6 +2,7 @@ package com.example.parkir.views.core.parkings.data.service
 
 import com.example.parkir.ParkirConsts
 import com.example.parkir.views.core.parkings.data.entity.Parking
+import com.example.parkir.views.core.parkings.data.entity.ParkingSpot
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -14,6 +15,9 @@ interface ParkingService {
 
     @GET("/api/v1/parkings/{parkingId}")
     suspend fun getParkingById(@Path("parkingId") parkingId: Int): Response<Parking>
+
+    @GET("/api/v1/parkings/floors/parkingspots/{parkingSpotId}")
+    suspend fun getParkingSpotById(@Path("parkingSpotId") parkingSpotId: Int): Response<ParkingSpot>
 
     companion object {
         private var parkingService: ParkingService? = null

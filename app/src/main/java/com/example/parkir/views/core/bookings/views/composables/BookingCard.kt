@@ -65,7 +65,7 @@ fun BookingCard(navController: NavHostController, booking: Booking) {
 //            )
 
             AsyncImage(
-                model = booking.parkingSpot.floor.parking.image,
+                model = booking.parkingSpot!!.floor.parking.image,
                 contentDescription = "Parking Image",
                 modifier =
                 Modifier
@@ -83,10 +83,10 @@ fun BookingCard(navController: NavHostController, booking: Booking) {
                 verticalArrangement = Arrangement.SpaceEvenly,
             ) {
                 Text(
-                    text = booking.parkingSpot.floor.parking.name,
+                    text = booking.parkingSpot!!.floor.parking.name,
                     style = MaterialTheme.typography.headlineLarge,
                 )
-                Text(text = booking.parkingSpot.floor.parking.address.street)
+                Text(text = booking.parkingSpot!!.floor.parking.address.street)
                 Spacer(modifier = Modifier.height(10.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),

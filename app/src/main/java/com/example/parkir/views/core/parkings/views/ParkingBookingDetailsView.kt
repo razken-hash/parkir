@@ -1,9 +1,8 @@
 package com.example.parkir.views.core.parkings.views
 
+import android.icu.util.Calendar
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
@@ -28,12 +26,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.parkir.R
 import com.example.parkir.views.core.bookings.views.BookingsViewModel
 import com.example.parkir.views.router.Router
 import com.example.parkir.views.ui.composables.BackUpBar
@@ -42,13 +37,18 @@ import com.example.parkir.views.ui.composables.ParkirButton
 import com.example.parkir.views.ui.theme.grey
 import com.example.parkir.views.ui.theme.primary
 import com.example.parkir.views.ui.utils.TimeConsts
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ParkingBookingDetailsScreen(
     navController: NavHostController,
+    parkingsViewModel: ParkingsViewModel,
     bookingsViewModel: BookingsViewModel
 ) {
 
@@ -65,12 +65,8 @@ fun ParkingBookingDetailsScreen(
         return 28;
     }
 
-    var selectedDate by remember {
-        mutableStateOf(LocalDate.now())
-    }
-
-    var selectedTime by remember {
-        mutableStateOf(LocalTime.now())
+    var time by remember {
+        mutableStateOf(LocalDateTime.now())
     }
 
     var lastDayInMonth by remember {
@@ -92,33 +88,34 @@ fun ParkingBookingDetailsScreen(
         "DECEMBER",
     )
 
-    var date by remember {
-        mutableStateOf("${selectedDate.dayOfMonth}-${selectedDate.month}-${selectedDate.year}")
-    }
-
-    var beginTime by remember {
-        mutableStateOf("${selectedTime.hour}:${selectedTime.minute}:${selectedTime.second}")
-    }
-
-    var nbHour by remember {
+    var duration by remember {
         mutableStateOf(1f)
     }
-
-//    duration = duration,
-//    parkingSpot = parkingSpot,
 
     fun adjustDay(month: Int, year: Int) {
         val newLastDayInMonth = lastDayInMonth(month, year)
         if (lastDayInMonth != newLastDayInMonth) {
             lastDayInMonth = newLastDayInMonth
-            if (selectedDate.dayOfMonth > newLastDayInMonth) {
-                selectedDate = selectedDate.withDayOfMonth(lastDayInMonth)
+            if (time.dayOfMonth > newLastDayInMonth) {
+                time = time.withDayOfMonth(lastDayInMonth)
             }
         }
     }
 
+
     LaunchedEffect(1) {
         lastDayInMonth = lastDayInMonth(TimeConsts.currentMonth, TimeConsts.currentYear)
+        CoroutineScope(Dispatchers.IO).launch {
+            parkingsViewModel.getParkingSpotById(parkingSpotId = 1)
+            bookingsViewModel.newBooking.duration =
+                "PT${duration.toInt().toString().padStart(2, '0')}H"
+            bookingsViewModel.newBooking.beginTime = "${
+                time.hour.toString().padStart(2, '0')
+            }:${(time.minute - time.minute % 5).toString().padStart(2, '0')}:00"
+            bookingsViewModel.newBooking.date = "${time.year}-${
+                time.monthValue.toString().padStart(2, '0')
+            }-${time.dayOfMonth.toString().padStart(2, '0')}"
+        }
     }
 
     Column(
@@ -136,17 +133,20 @@ fun ParkingBookingDetailsScreen(
             horizontalArrangement = Arrangement.Center,
         ) {
 
+
             InfiniteCircularList(
                 width = 50.dp,
                 itemHeight = 35.dp,
                 items = (1..lastDayInMonth).toMutableList(),
-                initialItem = selectedDate.dayOfMonth,
+                initialItem = time.dayOfMonth,
                 textStyle = MaterialTheme.typography.titleMedium,
                 textColor = Color.LightGray,
                 selectedTextColor = Color.Black
             ) { i, item ->
-                selectedDate = selectedDate.withDayOfMonth(item)
-                date = "${selectedDate.dayOfMonth}-${selectedDate.month}-${selectedDate.year}";
+                time = time.withDayOfMonth(item)
+                bookingsViewModel.newBooking.date = "${time.year}-${
+                    time.monthValue.toString().padStart(2, '0')
+                }-${time.dayOfMonth.toString().padStart(2, '0')}"
             }
 
             InfiniteCircularList(
@@ -158,10 +158,9 @@ fun ParkingBookingDetailsScreen(
                 textColor = Color.LightGray,
                 selectedTextColor = Color.Black
             ) { i, item ->
-                selectedDate = selectedDate.withMonth(i + 1)
-                adjustDay(selectedDate.monthValue, selectedDate.year)
-                date = "${selectedDate.dayOfMonth}-${selectedDate.month}-${selectedDate.year}"
-            }
+                time = time.withMonth(i + 1)
+                adjustDay(time.monthValue, time.year)
+                bookingsViewModel.newBooking.date = "${time.year}-${time.monthValue.toString().padStart(2, '0')}-${time.dayOfMonth.toString().padStart(2, '0')}"     }
             InfiniteCircularList(
                 width = 80.dp,
                 itemHeight = 35.dp,
@@ -171,34 +170,14 @@ fun ParkingBookingDetailsScreen(
                 textColor = Color.LightGray,
                 selectedTextColor = Color.Black
             ) { i, item ->
-                selectedDate = selectedDate.withYear(item)
-                adjustDay(selectedDate.monthValue, selectedDate.year)
-                date = "${selectedDate.dayOfMonth}-${selectedDate.month}-${selectedDate.year}"
-            }
+                time = time.withYear(item)
+                adjustDay(time.monthValue, time.year)
+                bookingsViewModel.newBooking.date = "${time.year}-${time.monthValue.toString().padStart(2, '0')}-${time.dayOfMonth.toString().padStart(2, '0')}"   }
         }
 
-        Column {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ) {
-                Text(text = "Duration", style = MaterialTheme.typography.titleLarge)
-                Text(text = "${nbHour.toInt()} Hrs", style = MaterialTheme.typography.titleLarge)
-            }
+        Text("$time")
 
-            Slider(
-                value = nbHour / 10,
-                onValueChange = {
-                    nbHour = it * 10
-                },
-                colors = SliderDefaults.colors(
-                    thumbColor = primary,
-                    activeTickColor = primary,
-                    activeTrackColor = primary,
-                ),
-                steps = 10,
-            )
-        }
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -223,27 +202,31 @@ fun ParkingBookingDetailsScreen(
                     width = 60.dp,
                     itemHeight = 35.dp,
                     items = (1..12).toMutableList(),
-                    initialItem = 10,
+                    initialItem = time.hour % 12,
                     textStyle = MaterialTheme.typography.titleMedium,
                     textColor = Color.LightGray,
                     selectedTextColor = Color.Black,
                 ) { i, item ->
-                    selectedTime.withHour(item);
-                    beginTime = "${selectedTime.hour}:${selectedTime.minute}:${selectedTime.second}"
-
+                    time.withHour(item)
+                    bookingsViewModel.newBooking.beginTime = "${
+                        time.hour.toString().padStart(2, '0')
+                    }:${(time.minute - time.minute % 5).toString().padStart(2, '0')}:00"
                 }
 
                 InfiniteCircularList(
                     width = 60.dp,
                     itemHeight = 35.dp,
                     items = (0..55 step 5).toList(),
-                    initialItem = 15,
+                    initialItem = time.minute - time.minute % 5,
                     textStyle = MaterialTheme.typography.titleMedium,
                     textColor = Color.LightGray,
                     selectedTextColor = Color.Black,
                 ) { i, item ->
-                    selectedTime.withMinute(item);
-                    beginTime = "${selectedTime.hour}:${selectedTime.minute}:${selectedTime.second}"
+                    time.withMinute(item)
+                    bookingsViewModel.newBooking.beginTime = "${
+                        time.hour.toString().padStart(2, '0')
+                    }:${(time.minute - time.minute % 5).toString().padStart(2, '0')}:00"
+
                 }
                 InfiniteCircularList(
                     width = 70.dp,
@@ -259,19 +242,46 @@ fun ParkingBookingDetailsScreen(
             }
         }
 
+        Column {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Text(text = "Duration", style = MaterialTheme.typography.titleLarge)
+                Text(text = "${duration.toInt()} Hrs", style = MaterialTheme.typography.titleLarge)
+            }
+
+            Slider(
+                value = duration / 10,
+                onValueChange = {
+                    duration = it * 10
+                    if (duration < 1f) {
+                        duration = 1f
+                    }
+                    bookingsViewModel.newBooking.duration =
+                        "PT${duration.toInt().toString().padStart(2, '0')}H"
+                },
+                colors = SliderDefaults.colors(
+                    thumbColor = primary,
+                    activeTickColor = primary,
+                    activeTrackColor = primary,
+                ),
+                steps = 10,
+            )
+        }
+
         Text(text = "Total", style = MaterialTheme.typography.titleLarge)
 
         Row(
             verticalAlignment = Alignment.Bottom,
         ) {
-
             Text(
-                text = "$8.00",
+                text = "${duration.toInt() * parkingsViewModel.selectedParking!!.pricePerHour}",
                 color = primary,
                 style = MaterialTheme.typography.titleLarge,
             )
             Text(
-                text = " / 4 hours",
+                text = " / ${duration.toInt()} hours",
                 color = grey,
                 style = MaterialTheme.typography.bodyLarge,
             )
@@ -282,10 +292,8 @@ fun ParkingBookingDetailsScreen(
         Divider()
 
         ParkirButton(label = "Continue", onClick = {
+            bookingsViewModel.newBooking.parkingSpot = parkingsViewModel.selectedParkingSpot!!
             navController.navigate(Router.PaymentMethodsScreen.route)
         })
-
     }
-
-
 }

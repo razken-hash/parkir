@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private val bookingsViewModel: BookingsViewModel by viewModels {
-        BookingsViewModel.Factory((application as ParkirApplication).bookingsRepository)
+        BookingsViewModel.Factory((application as ParkirApplication).bookingsRepository, (application as ParkirApplication).paymentRepository)
     }
 
     @RequiresApi(34)
