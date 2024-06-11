@@ -24,8 +24,11 @@ import com.example.parkir.utils.PasswordGenerator
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
+import com.google.firebase.Firebase
+import com.google.firebase.messaging.messaging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import java.util.logging.Logger
 
 class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
@@ -39,6 +42,7 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
     fun login() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
+                val token:String =  Firebase.messaging.token.await()
                 val body = AuthRequest(email = email, password = password)
                 val data = authRepository.login(body)
                 if (data.isSuccessful) {
@@ -53,6 +57,7 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
     fun register() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
+                val token:String =  Firebase.messaging.token.await()
                 val body = AuthRequest(email = email, password = password)
                 val data = authRepository.register(body)
                 if (data.isSuccessful) {
@@ -86,6 +91,12 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
                     is Credential -> {
                         if (credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
                             try {
+                                val token:String =  Firebase.messaging.token.await()
+
+                                Log.i("Tokeners", token)
+
+
+                                // User Info Email
                                 val googleIdTokenCredential =
                                     GoogleIdTokenCredential.createFrom(credential.data)
 
@@ -99,8 +110,6 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
                                         authStatus = true
                                     }
                                 }
-
-
                                 authStatus = true
 
                             } catch (e: GoogleIdTokenParsingException) {

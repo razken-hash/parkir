@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "98997096205",
+    "project_id": "parkir-418401",
+    "storage_bucket": "parkir-418401.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:98997096205:android:e6d2e10bb32cfff96baa44",
+        "android_client_info": {
+          "package_name": "com.example.parkir"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "98997096205-8uaqd9ibq5imo1qdlcle6vhsf494mtbi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.parkir",
+            "certificate_hash": "37a0b3f3bce8a35a87e9702c09536ebc12436a8c"
+          }
+        },
+        {
+          "client_id": "98997096205-7fn1pkd5mbomsuephopc7o092vgffuf2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXIEUOovwkvAroIWbcDfyoPM3huTzc7jE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "98997096205-7fn1pkd5mbomsuephopc7o092vgffuf2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

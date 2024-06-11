@@ -11,9 +11,9 @@ data class Payment(
     val time: String,
     @SerializedName("cardNumber")
     val cardNumber: String,
-    @SerializedName("cardCVC")
-    val cardDate: String,
     @SerializedName("cardDate")
+    val cardDate: String,
+    @SerializedName("cardCVC")
     val cardCVC: String,
     @SerializedName("amount")
     val amount: Double,

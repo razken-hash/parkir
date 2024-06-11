@@ -64,7 +64,7 @@ fun ReviewSummaryView(navController: NavHostController, bookingsViewModel: Booki
             SummaryItem(title = "Parking Spot", value = "${booking.parkingSpot!!.floor.number} Floor (${booking.parkingSpot!!.floor.name})")
             SummaryItem(title = "Date", value = "${booking.date}") // Dec. 16, 2023
             SummaryItem(title = "Time", value = "${booking.beginTime}") // 09:00 AM - 01:00 PM
-            SummaryItem(title = "Duration", value = "${booking.duration} Hours")
+            SummaryItem(title = "Duration", value = "${booking.duration.substring(booking.duration.indexOf("T") + 1, booking.duration.indexOf("H"))} Hours")
         }
 
         Column(
@@ -118,9 +118,9 @@ fun ReviewSummaryView(navController: NavHostController, bookingsViewModel: Booki
             label = "Confirm Payment",
             onClick = {
                 CoroutineScope(Dispatchers.IO).launch {
-                    Log.i("HIIIIER", "PIWWWW")
                     bookingsViewModel.bookParking()
                 }
+                navController.navigate(Router.BookingTicketScreen.createRoute(bookingId = bookingsViewModel.selectedBooking!!.id!!))
             },
         )
     }

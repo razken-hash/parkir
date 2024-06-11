@@ -96,14 +96,13 @@ fun BookingCard(navController: NavHostController, booking: Booking) {
                     Row(
                         verticalAlignment = Alignment.Bottom,
                     ) {
-
                         Text(
-                            text = "$6.48",
+                            text = "$${booking.parkingSpot!!.floor.parking.pricePerHour * booking.duration.substring(booking.duration.indexOf("T") + 1, booking.duration.indexOf("H")).toInt()}",
                             color = primary,
                             style = MaterialTheme.typography.titleMedium,
                         )
                         Text(
-                            text = " / 4 hours",
+                            text = " / ${booking.duration.substring(booking.duration.indexOf("T") + 1, booking.duration.indexOf("H"))} hours",
                             color = grey,
                             style = MaterialTheme.typography.bodySmall,
                         )

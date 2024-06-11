@@ -1,5 +1,7 @@
 package com.example.parkir
 
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -20,19 +22,10 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.parkir.views.auth.views.AuthViewModel
 import com.example.parkir.views.core.bookings.views.BookingsViewModel
 import com.example.parkir.views.core.parkings.views.ParkingsViewModel
-import androidx.compose.foundation.layout.Box
 import androidx.compose.ui.platform.LocalContext
-import androidx.credentials.Credential
-import androidx.credentials.CredentialManager
-import androidx.credentials.GetCredentialRequest
-import androidx.credentials.exceptions.GetCredentialException
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.example.parkir.views.router.NavigationHost
-import com.google.android.libraries.identity.googleid.GetGoogleIdOption
-import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
-import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
 
@@ -45,12 +38,28 @@ class MainActivity : ComponentActivity() {
     }
 
     private val bookingsViewModel: BookingsViewModel by viewModels {
-        BookingsViewModel.Factory((application as ParkirApplication).bookingsRepository, (application as ParkirApplication).paymentRepository)
+        BookingsViewModel.Factory(
+            (application as ParkirApplication).bookingsRepository,
+            (application as ParkirApplication).paymentRepository
+        )
+    }
+
+    private fun requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT > -Build.VERSION_CODES.TIRAMISU) {
+            val hasPermission = ContextCompat.checkSelfPermission(
+                this, android.Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
+            if (!hasPermission) {
+                ActivityCompat.requestPermissions(
+                    this, arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 0
+                )
+            }
+        }
     }
 
     @RequiresApi(34)
     override fun onCreate(savedInstanceState: Bundle?) {
-
+        requestNotificationPermission();
         super.onCreate(savedInstanceState)
         installSplashScreen()
         setContent {

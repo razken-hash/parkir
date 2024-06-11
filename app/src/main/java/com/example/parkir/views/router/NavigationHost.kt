@@ -45,7 +45,7 @@ fun NavigationHost(
     navController: NavHostController
 ) {
 
-    NavHost(navController = navController, startDestination = Router.ParkirNavScreen.route) {
+    NavHost(navController = navController, startDestination = Router.AuthScreen.route) {
         composable(route = Router.OnBoardingScreen.route) {
             OnBoardingView(navController = navController)
         }

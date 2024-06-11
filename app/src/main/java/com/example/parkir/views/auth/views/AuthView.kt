@@ -16,6 +16,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -30,9 +31,13 @@ import com.example.parkir.views.ui.composables.ParkirButton
 import com.example.parkir.views.ui.theme.grey
 import com.example.parkir.views.ui.theme.grey06
 import com.example.parkir.views.ui.theme.primary
+import com.google.firebase.Firebase
+import com.google.firebase.messaging.messaging
+import kotlinx.coroutines.tasks.await
 
 @Composable
 fun AuthView(navController: NavHostController, authViewModel: AuthViewModel) {
+
     Column(
         modifier = Modifier
             .fillMaxSize()

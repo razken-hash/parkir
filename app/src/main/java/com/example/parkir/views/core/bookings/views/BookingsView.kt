@@ -91,6 +91,10 @@ fun BookingsView(navController: NavHostController, bookingsViewModel: BookingsVi
         mutableStateOf(false)
     }
 
+    var selectedCategory: String by remember {
+        mutableStateOf("All")
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -136,26 +140,28 @@ fun BookingsView(navController: NavHostController, bookingsViewModel: BookingsVi
             ParkirButton(
                 label = "All",
                 onClick = {
+                    selectedCategory = "All"
                     CoroutineScope(Dispatchers.IO).launch {
                         bookingsViewModel.getAllBookings()
                     }
                 },
-                bgColor = primary,
-                labelColor = white,
+                bgColor = if (selectedCategory == "All") primary else white,
+                labelColor = if (selectedCategory == "All") white else primary,
                 borderColor = primary,
                 modifier = Modifier
                     .width(140.dp)
                     .height(45.dp),
             )
             ParkirButton(
-                label = "On going",
+                label = "Paid",
                 onClick = {
+                    selectedCategory = "Paid"
                     CoroutineScope(Dispatchers.IO).launch {
-                        bookingsViewModel.getBookingsByStatus(BookingStatus.OnGoing)
+                        bookingsViewModel.getBookingsByStatus(BookingStatus.Paid)
                     }
                 },
-                bgColor = white,
-                labelColor = primary,
+                bgColor = if (selectedCategory == "Paid") primary else white,
+                labelColor = if (selectedCategory == "Paid") white else primary,
                 borderColor = primary,
                 modifier = Modifier
                     .width(140.dp)
@@ -164,12 +170,13 @@ fun BookingsView(navController: NavHostController, bookingsViewModel: BookingsVi
             ParkirButton(
                 label = "Completed",
                 onClick = {
+                    selectedCategory = "Completed"
                     CoroutineScope(Dispatchers.IO).launch {
                         bookingsViewModel.getBookingsByStatus(BookingStatus.Completed)
                     }
                 },
-                bgColor = white,
-                labelColor = primary,
+                bgColor = if (selectedCategory == "Completed") primary else white,
+                labelColor = if (selectedCategory == "Completed") white else primary,
                 borderColor = primary,
                 modifier = Modifier
                     .width(140.dp)
@@ -179,13 +186,14 @@ fun BookingsView(navController: NavHostController, bookingsViewModel: BookingsVi
             ParkirButton(
                 label = "Canceled",
                 onClick = {
+                    selectedCategory = "Canceled"
                     CoroutineScope(Dispatchers.IO).launch {
                         bookingsViewModel.getBookingsByStatus(BookingStatus.Canceled)
                     }
                 },
-                bgColor = white, labelColor = primary,
+                bgColor = if (selectedCategory == "Canceled") primary else white,
+                labelColor = if (selectedCategory == "Canceled") white else primary,
                 borderColor = primary,
-
                 modifier = Modifier
                     .width(140.dp)
                     .height(45.dp),
@@ -216,9 +224,7 @@ fun BookingsView(navController: NavHostController, bookingsViewModel: BookingsVi
             }
         }
 
-
         if (showCancelBookingSheet) {
-
             ModalBottomSheet(
                 sheetState = cancelBookingSheetState,
                 onDismissRequest = {

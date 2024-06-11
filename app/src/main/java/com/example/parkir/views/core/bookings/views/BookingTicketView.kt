@@ -200,7 +200,7 @@ fun BookingTicketView(
                             modifier = Modifier.weight(1f)
                         ) {
                             Text("Duration", style = MaterialTheme.typography.bodyMedium)
-                            Text("${booking?.duration} Hours", style = MaterialTheme.typography.titleMedium)
+                            Text("${booking!!.duration.substring(booking!!.duration.indexOf("T") + 1, booking!!.duration.indexOf("H"))}  Hours", style = MaterialTheme.typography.titleMedium)
                         }
                     }
                 }
