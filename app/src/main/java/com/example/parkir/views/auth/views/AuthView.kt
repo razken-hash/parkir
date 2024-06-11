@@ -16,6 +16,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -30,9 +31,18 @@ import com.example.parkir.views.ui.composables.ParkirButton
 import com.example.parkir.views.ui.theme.grey
 import com.example.parkir.views.ui.theme.grey06
 import com.example.parkir.views.ui.theme.primary
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Composable
 fun AuthView(navController: NavHostController, authViewModel: AuthViewModel) {
+//    LaunchedEffect(key1 = 1) {
+//        CoroutineScope(Dispatchers.IO).launch {
+//            authViewModel.getSavedUser(1)
+//        }
+//    }
+//    val user = authViewModel.user?.email
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -47,6 +57,8 @@ fun AuthView(navController: NavHostController, authViewModel: AuthViewModel) {
             textAlign = TextAlign.Center,
             modifier = Modifier.align(Alignment.CenterHorizontally),
         )
+
+//        Text(text = "$user")
 
         OAuthSection(viewMode = 0, navController = navController, authViewModel = authViewModel)
 

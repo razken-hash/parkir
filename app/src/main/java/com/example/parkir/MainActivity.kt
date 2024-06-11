@@ -1,5 +1,6 @@
 package com.example.parkir
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -62,12 +63,14 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
-
+                    val context = LocalContext.current;
+                    val pref = context.getSharedPreferences("local", Context.MODE_PRIVATE);
                     NavigationHost(
                         navController = navController,
                         authViewModel = authViewModel,
                         parkingsViewModel = parkingsViewModel,
                         bookingsViewModel = bookingsViewModel,
+                        pref = pref
                     )
 
                 }
