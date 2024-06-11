@@ -52,7 +52,7 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
                         userId = data.body()?.id?.toInt() ?: -1
                         authRepository.saveUserId(userId)
                         authRepository.saveUser(data.body()!!)
-                        authStatus = trueg}
+g                        authStatus = true}
                 }
             }
         }
