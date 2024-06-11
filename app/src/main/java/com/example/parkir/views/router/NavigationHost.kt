@@ -51,6 +51,9 @@ fun NavigationHost(
     val startScreen = if (userId == -1) Router.OnBoardingScreen.route else Router.ParkirNavScreen.route
 
     NavHost(navController = navController, startDestination = startScreen) {
+//=======
+//    NavHost(navController = navController, startDestination = Router.ParkirNavScreen.route) {
+//>>>>>>> 9bfc25e0ba77e4897494681e09042a32d7dae179
         composable(route = Router.OnBoardingScreen.route) {
             OnBoardingView(navController = navController)
         }
@@ -79,7 +82,6 @@ fun NavigationHost(
                 bookingsViewModel = bookingsViewModel
             )
         }
-
         composable(route = Router.HomeScreen.route) {
             HomeView(navController = navController, parkingsViewModel = parkingsViewModel)
         }
@@ -135,7 +137,7 @@ fun NavigationHost(
             )
         }
         composable(route = Router.ParkingBookingDetailsScreen.route) {
-            ParkingBookingDetailsScreen(navController = navController, bookingsViewModel = bookingsViewModel)
+            ParkingBookingDetailsScreen(navController = navController, parkingsViewModel= parkingsViewModel, bookingsViewModel = bookingsViewModel)
         }
         composable(route = Router.PaymentMethodsScreen.route) {
             PaymentMethodsView(navController = navController, bookingsViewModel = bookingsViewModel)

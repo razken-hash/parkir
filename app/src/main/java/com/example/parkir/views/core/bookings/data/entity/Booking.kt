@@ -1,8 +1,5 @@
 package com.example.parkir.views.core.bookings.data.entity
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import com.example.parkir.views.auth.data.entity.User
 import com.example.parkir.views.core.parkings.data.entity.Address
 import com.example.parkir.views.core.parkings.data.entity.ParkingSpot
@@ -10,32 +7,23 @@ import com.example.parkir.views.core.payment.data.entity.Payment
 import com.google.gson.annotations.SerializedName
 import java.time.LocalDate
 
-@Entity(tableName = "bookings")
-class Booking(
-    @PrimaryKey
+data class Booking(
     @SerializedName("id")
-    val id: Int,
-    @ColumnInfo(name = "parking_spot")
+    var id: Int? = null,
     @SerializedName("parkingSpot")
-    val parkingSpot: ParkingSpot,
-    @ColumnInfo(name = "date")
+    var parkingSpot: ParkingSpot? = null,
     @SerializedName("date")
-    val date: String,
-    @ColumnInfo(name = "begin_time")
+    var date: String = "",
     @SerializedName("beginTime")
-    val beginTime: String,
-    @ColumnInfo(name = "duration")
+    var beginTime: String = "",
     @SerializedName("duration")
-    val duration: String,
-    @ColumnInfo(name = "status")
+    var duration: String = "",
     @SerializedName("status")
-    val status: BookingStatus? = null,
-    @ColumnInfo("user")
+    var status: BookingStatus? = null,
     @SerializedName("user")
-    val user: User,
-    @ColumnInfo("booking_payment")
+    var user: User? = null,
     @SerializedName("bookingPayment")
-    val payment: Payment? = null,
+    var payment: Payment? = null,
 )
 
 enum class BookingStatus {

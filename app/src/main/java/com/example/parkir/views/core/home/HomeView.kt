@@ -1,5 +1,6 @@
 package com.example.parkir.views.core.home
 
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -68,6 +69,7 @@ fun HomeView(navController: NavHostController, parkingsViewModel: ParkingsViewMo
 
     LaunchedEffect(key1 = 1) {
         CoroutineScope(Dispatchers.IO).launch {
+            Log.i("myprint", "HOME")
             parkingsViewModel.getAllParkings()
         }
     }
