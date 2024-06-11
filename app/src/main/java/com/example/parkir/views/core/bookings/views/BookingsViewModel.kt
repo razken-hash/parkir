@@ -21,6 +21,7 @@ import java.util.logging.Logger
 
 class BookingsViewModel(val bookingsRepository: BookingsRepository) : ViewModel() {
 
+
     var bookings by mutableStateOf<List<Booking>>(emptyList())
 
     var selectedBooking: Booking? by mutableStateOf<Booking?>(null)
@@ -30,18 +31,25 @@ class BookingsViewModel(val bookingsRepository: BookingsRepository) : ViewModel(
         isLoading = true
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                val logger = Logger.getLogger("bookers")
-                val data = bookingsRepository.getAllBookings();
-                logger.info("HELLO")
-                if (data.isSuccessful) {
-                    logger.info("Success")
+//                val count = bookingsRepository.getCount()
+//                if(count!=0){
+//                    val logger = Logger.getLogger("bookers")
+//                    bookings = bookingsRepository.getAllSavedBookings()
+//                    logger.info("amchii")
+//                } else {
+                    val logger = Logger.getLogger("bookers")
+                    val data = bookingsRepository.getAllBookings();
+                    logger.info("HELLO")
+                    if (data.isSuccessful) {
+                        logger.info("Success")
 
-                    if (data.body() != null) {
-                        logger.info("Not null")
-                        bookings = data.body()!!
-                        isLoading = false;
+                        if (data.body() != null) {
+                            logger.info("Not null")
+                            bookings = data.body()!!
+                            isLoading = false;
+                        }
                     }
-                }
+//                }
             }
         }
     }
@@ -84,6 +92,7 @@ class BookingsViewModel(val bookingsRepository: BookingsRepository) : ViewModel(
 
 
     fun bookParking(
+        id:Int,
         parkingSpot: ParkingSpot,
         date: String,
         beginTime: String,
@@ -105,6 +114,7 @@ class BookingsViewModel(val bookingsRepository: BookingsRepository) : ViewModel(
                 )
 
                 val booking: Booking = Booking(
+                    id= id,
                     date = date,
                     beginTime = beginTime,
                     duration = duration,
@@ -121,6 +131,14 @@ class BookingsViewModel(val bookingsRepository: BookingsRepository) : ViewModel(
                         isLoading = false;
                     }
                 }
+            }
+        }
+    }
+
+    suspend fun getAllSavedBookings(){
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                bookings = bookingsRepository.getAllSavedBookings()
             }
         }
     }

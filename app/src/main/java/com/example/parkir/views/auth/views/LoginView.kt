@@ -109,6 +109,7 @@ fun LoginView(navController: NavHostController, authViewModel: AuthViewModel) {
 
 
         ParkirButton(label = "Login", onClick = {
+
             CoroutineScope(Dispatchers.IO).launch {
                 authViewModel.login()
             }

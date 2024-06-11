@@ -1,5 +1,6 @@
 package com.example.parkir.views.router
 
+import android.content.SharedPreferences
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
@@ -42,10 +43,14 @@ fun NavigationHost(
     authViewModel: AuthViewModel,
     parkingsViewModel: ParkingsViewModel,
     bookingsViewModel: BookingsViewModel,
-    navController: NavHostController
+    navController: NavHostController,
+    pref: SharedPreferences
 ) {
 
-    NavHost(navController = navController, startDestination = Router.ParkingBookingDetailsScreen.route) {
+    val userId = pref.getInt("userId",-1);
+    val startScreen = if (userId == -1) Router.OnBoardingScreen.route else Router.ParkirNavScreen.route
+
+    NavHost(navController = navController, startDestination = startScreen) {
         composable(route = Router.OnBoardingScreen.route) {
             OnBoardingView(navController = navController)
         }

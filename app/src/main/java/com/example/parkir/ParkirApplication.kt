@@ -11,12 +11,18 @@ import com.example.parkir.views.core.parkings.data.service.ParkingService
 class ParkirApplication : Application() {
 
     private val authService by lazy { AuthService.getInstance() }
-    val authRepository by lazy { AuthRepository(authService) }
+    private val db by lazy {ParkirDataBase.getInstance(this)}
+    private val userDao by lazy {db.getUserDao()}
+    val authRepository by lazy { AuthRepository(authService, this, userDao) }
 
     private val parkingService by lazy { ParkingService.getInstance() }
     val parkingRepository by lazy { ParkingRepository(parkingService) }
 
     private val bookingsService by lazy { BookingsService.getInstance() }
-    val bookingsRepository by lazy { BookingsRepository(bookingsService) }
+    private val bookingDAO by lazy {db.getBookingDAO()}
+    val bookingsRepository by lazy { BookingsRepository(bookingsService,bookingDAO) }
+
+
+
 
 }

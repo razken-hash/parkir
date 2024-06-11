@@ -4,6 +4,7 @@ import android.content.Context
 import android.text.BoringLayout
 import android.util.Log
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -21,11 +22,14 @@ import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.exceptions.GetCredentialException
 import com.example.parkir.utils.PasswordGenerator
+import com.example.parkir.views.auth.data.entity.User
+import com.example.parkir.views.core.parkings.data.entity.Parking
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import java.lang.Integer.parseInt
 import java.util.logging.Logger
 
 class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
@@ -35,6 +39,8 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
     var rememberMe: Boolean by mutableStateOf(false)
 
     var authStatus by mutableStateOf(false)
+    var userId by mutableStateOf(-1)
+    var user: User? by mutableStateOf<User?>(null)
 
     fun login() {
         viewModelScope.launch {
@@ -43,6 +49,9 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
                 val data = authRepository.login(body)
                 if (data.isSuccessful) {
                     if (data.body() != null) {
+                        userId = data.body()?.id?.toInt() ?: -1
+                        authRepository.saveUserId(userId)
+                        authRepository.saveUser(data.body()!!)
                         authStatus = true
                     }
                 }
@@ -116,6 +125,24 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
         }
 
     }
+    /**
+     * to get saved user info use this function
+     * this will retrieve user info from db
+     * to use this use the code to retrieve id from shared references
+     * to get from shared references you need the context  use this code
+     * val context = LocalContext.current;
+     * val pref = context.getSharedPreferences("local", Context.MODE_PRIVATE);
+     * val userId = pref.getInt("userId",-1);
+     * -1 is the default value when it's not set
+    **/
+
+    suspend fun getSavedUser(id: Int){
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                user = authRepository.getUser(id)
+            }
+        }
+    }
 
     class Factory(private val authRepository: AuthRepository) :
         ViewModelProvider.Factory {
@@ -123,4 +150,5 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
             return AuthViewModel(authRepository) as T
         }
     }
+
 }
