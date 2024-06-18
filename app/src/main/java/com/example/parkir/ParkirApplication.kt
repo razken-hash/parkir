@@ -13,7 +13,7 @@ import com.example.parkir.views.core.payment.data.services.PaymentService
 class ParkirApplication : Application() {
 
     private val authService by lazy { AuthService.getInstance() }
-    val authRepository by lazy { AuthRepository(authService) }
+    val authRepository by lazy { AuthRepository(authService, this) }
 
     private val parkingService by lazy { ParkingService.getInstance() }
     val parkingRepository by lazy { ParkingRepository(parkingService) }

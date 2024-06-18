@@ -1,5 +1,6 @@
 package com.example.parkir
 
+import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -27,6 +28,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.parkir.views.router.NavigationHost
 
+var userId = 1;
 class MainActivity : ComponentActivity() {
 
     private val authViewModel: AuthViewModel by viewModels {
@@ -72,11 +74,14 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val navController = rememberNavController()
 
+                    val context = LocalContext.current;
+                    val pref = context.getSharedPreferences("local", Context.MODE_PRIVATE);
                     NavigationHost(
                         navController = navController,
                         authViewModel = authViewModel,
                         parkingsViewModel = parkingsViewModel,
                         bookingsViewModel = bookingsViewModel,
+                        pref = pref
                     )
 
                 }

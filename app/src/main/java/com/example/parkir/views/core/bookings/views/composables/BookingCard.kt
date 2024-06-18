@@ -129,7 +129,13 @@ fun BookingCard(navController: NavHostController, booking: Booking) {
         if (booking.status == BookingStatus.Completed) {
             ParkirButton(
                 label = "View Ticket",
-                onClick = { },
+                onClick = {
+                    navController.navigate(
+                        Router.BookingTicketScreen.createRoute(
+                            bookingId = booking.id!!,
+                        )
+                    )
+                },
                 modifier = Modifier
                     .height(40.dp),
                 labelColor = primary,

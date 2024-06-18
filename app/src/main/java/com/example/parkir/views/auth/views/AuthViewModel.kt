@@ -4,6 +4,7 @@ import android.content.Context
 import android.text.BoringLayout
 import android.util.Log
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -21,6 +22,8 @@ import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.exceptions.GetCredentialException
 import com.example.parkir.utils.PasswordGenerator
+import com.example.parkir.views.auth.data.entity.User
+import com.example.parkir.views.core.parkings.data.entity.Parking
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
@@ -29,6 +32,7 @@ import com.google.firebase.messaging.messaging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import java.lang.Integer.parseInt
 import java.util.logging.Logger
 
 class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
@@ -38,15 +42,21 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
     var rememberMe: Boolean by mutableStateOf(false)
 
     var authStatus by mutableStateOf(false)
+    var userId by mutableStateOf(-1)
+    var user: User? by mutableStateOf<User?>(null)
 
     fun login() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                val token:String =  Firebase.messaging.token.await()
                 val body = AuthRequest(email = email, password = password)
                 val data = authRepository.login(body)
                 if (data.isSuccessful) {
                     if (data.body() != null) {
+                       var  token = Firebase.messaging.token.await();
+                        Log.i("TOKENNE", token)
+                        userId = data.body()?.id?.toInt() ?: -1
+                        authRepository.saveUserId(userId)
+//                        authRepository.saveUser(data.body()!!)
                         authStatus = true
                     }
                 }
@@ -57,7 +67,6 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
     fun register() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                val token:String =  Firebase.messaging.token.await()
                 val body = AuthRequest(email = email, password = password)
                 val data = authRepository.register(body)
                 if (data.isSuccessful) {
@@ -91,12 +100,6 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
                     is Credential -> {
                         if (credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
                             try {
-                                val token:String =  Firebase.messaging.token.await()
-
-                                Log.i("Tokeners", token)
-
-
-                                // User Info Email
                                 val googleIdTokenCredential =
                                     GoogleIdTokenCredential.createFrom(credential.data)
 
@@ -110,6 +113,8 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
                                         authStatus = true
                                     }
                                 }
+
+
                                 authStatus = true
 
                             } catch (e: GoogleIdTokenParsingException) {
@@ -126,10 +131,20 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
 
     }
 
+
+//    suspend fun getSavedUser(id: Int){
+//        viewModelScope.launch {
+//            withContext(Dispatchers.IO) {
+//                user = authRepository.getUser(id)
+//            }
+//        }
+//    }
+
     class Factory(private val authRepository: AuthRepository) :
         ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return AuthViewModel(authRepository) as T
         }
     }
+
 }

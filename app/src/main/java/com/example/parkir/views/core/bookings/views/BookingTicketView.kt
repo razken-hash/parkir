@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
@@ -46,6 +47,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.NavHostController
 import com.example.parkir.R
+import com.example.parkir.views.router.Router
+import com.example.parkir.views.ui.composables.ParkirButton
 import com.example.parkir.views.ui.theme.black
 import com.example.parkir.views.ui.theme.grey
 import com.example.parkir.views.ui.theme.primary
@@ -77,7 +80,7 @@ fun BookingTicketView(
         }
     }
 
-    Box(
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .background(
@@ -90,7 +93,7 @@ fun BookingTicketView(
                     end = androidx.compose.ui.geometry.Offset.Infinite
                 ),
             ),
-        contentAlignment = Alignment.Center,
+        verticalArrangement = Arrangement.Center,
     ) {
         if (!bookingsViewModel.isLoading) {
 
@@ -114,8 +117,8 @@ fun BookingTicketView(
                     modifier = Modifier.weight(1f),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    
-                ) {
+
+                    ) {
                     Text(text = "${booking?.parkingSpot?.number} ${booking?.parkingSpot?.floor?.name}")
                     Spacer(modifier = Modifier.height(15.dp))
                     QrCodeView(
@@ -159,11 +162,14 @@ fun BookingTicketView(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Row {
-                        Column (
+                        Column(
                             modifier = Modifier.weight(1f)
                         ) {
                             Text("Name", style = MaterialTheme.typography.bodyMedium)
-                            Text("KENNICHE AbdErrazak", style = MaterialTheme.typography.titleMedium)
+                            Text(
+                                "KENNICHE AbdErrazak",
+                                style = MaterialTheme.typography.titleMedium
+                            )
                         }
 
                         Column(modifier = Modifier.weight(1f)) {
@@ -173,38 +179,63 @@ fun BookingTicketView(
                     }
 
                     Row {
-                        Column (
+                        Column(
                             modifier = Modifier.weight(1f)
                         ) {
                             Text("Parking Area", style = MaterialTheme.typography.bodyMedium)
-                            Text("${booking?.parkingSpot?.floor?.parking?.address?.city}", style = MaterialTheme.typography.titleMedium)
+                            Text(
+                                "${booking?.parkingSpot?.floor?.parking?.name}, ${booking?.parkingSpot?.floor?.parking?.address?.city},",
+                                style = MaterialTheme.typography.titleMedium
+                            )
                         }
 
-                        Column (
+                        Column(
                             modifier = Modifier.weight(1f)
                         ) {
                             Text("Parking Spot", style = MaterialTheme.typography.bodyMedium)
-                            Text("${booking?.parkingSpot?.number} ${booking?.parkingSpot?.floor?.name}", style = MaterialTheme.typography.titleMedium)
+                            Text(
+                                "${booking?.parkingSpot?.number} ${booking?.parkingSpot?.floor?.name}",
+                                style = MaterialTheme.typography.titleMedium
+                            )
                         }
                     }
 
                     Row {
-                        Column (
+                        Column(
                             modifier = Modifier.weight(1f)
                         ) {
                             Text("Date", style = MaterialTheme.typography.bodyMedium)
                             Text("${booking?.date}", style = MaterialTheme.typography.titleMedium)
                         }
 
-                        Column (
+                        Column(
                             modifier = Modifier.weight(1f)
                         ) {
                             Text("Duration", style = MaterialTheme.typography.bodyMedium)
-                            Text("${booking!!.duration.substring(booking!!.duration.indexOf("T") + 1, booking!!.duration.indexOf("H"))}  Hours", style = MaterialTheme.typography.titleMedium)
+                            Text("10 Hours", style = MaterialTheme.typography.bodyMedium)
+//                            Text("${booking!!.duration.substring(booking!!.duration.indexOf("T") + 1, booking!!.duration.indexOf("H"))}  Hours", style = MaterialTheme.typography.titleMedium)
                         }
                     }
                 }
-            }}
+            }
+        }
+
+//        Spacer(modifier = Modifier.height(60.dp))
+        Row(modifier = Modifier.fillMaxWidth().padding(60.dp)) {
+            Spacer(modifier = Modifier.weight(1f))
+
+            ParkirButton(
+                label = "Go Home",
+                onClick = {
+                    navController.navigate(Router.ParkirNavScreen.route)
+                },
+                bgColor = white,
+                borderColor = white,
+                labelColor = primary,
+                modifier = Modifier.weight(1f)
+            )
+            Spacer(modifier = Modifier.weight(1f))
+        }
 
     }
 }

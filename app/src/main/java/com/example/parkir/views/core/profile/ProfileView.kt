@@ -1,5 +1,6 @@
 package com.example.parkir.views.core.profile
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -27,8 +28,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.core.content.edit
 import androidx.navigation.NavHostController
 import com.example.parkir.R
 import com.example.parkir.views.router.Router
@@ -164,10 +167,18 @@ fun ProfileView(navController: NavHostController) {
                         style = MaterialTheme.typography.titleMedium,
                     )
 
+                    val context = LocalContext.current
+
+                    val pref = context.getSharedPreferences("local", Context.MODE_PRIVATE)
+
                     ParkirButton(
                         label = "Logout",
                         onClick = {
+                            pref.getInt("userId", -1)
                             showLogoutBottomSheet = false
+                            pref.edit{
+                                putInt("userId", -1)
+                            }
                             navController.popBackStack()
                             navController.navigate(Router.AuthScreen.route)
                         },

@@ -120,12 +120,14 @@ class BookingsViewModel(
 
                 val paymentData = paymentRepository.pay(payment = payment);
 
+                Log.i("QOAY", "Am here")
+
                 if (paymentData.isSuccessful) {
-
+//
                     if (paymentData.body() != null) {
-
+//
                         val newPayment = paymentData.body()!!
-
+//
                         val user = User(
                             id = "1",
                             email = "ka_kenniche@esi.dz",
@@ -133,12 +135,13 @@ class BookingsViewModel(
                             phoneNumber = "9649163879134",
                             gender = "Male"
                         )
-
+//
                         newBooking.payment = newPayment
                         newBooking.user = user
-
+//
                         val data = bookingsRepository.bookParking(booking = newBooking);
                         if (data.isSuccessful) {
+                            Log.i("QOAY", "Am here")
                             if (data.body() != null) {
                                 selectedBooking = data.body()!!
                                 isLoading = false;
